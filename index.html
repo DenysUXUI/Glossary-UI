@@ -1907,7 +1907,14 @@ const DATA = [
 /* ============ J · СТАНИ Й АНАТОМІЯ ============ */
 {c:"J",n:"01",en:"Interaction states",alt:"component states",pl:"stany komponentu",
  ua:"Мінімальний набір для будь-якого інтерактивного елемента: default, hover, focus, active, disabled. Для полів додаються filled, error, read-only.",
+ o:{pl:"Minimalny zestaw dla każdego elementu interaktywnego: default, hover, focus, active, disabled. Dla pól dochodzą filled, error i read-only.",
+    en:"The minimum set for any interactive element: default, hover, focus, active, disabled. Fields add filled, error and read-only."},
+ ex:{ua:"У макеті є тільки default — домалюй hover, focus і disabled.",
+     pl:"W makiecie jest tylko stan domyślny — dorysuj hover, fokus i nieaktywny.",
+     en:"The mockup only has the default state — add hover, focus and disabled."},
  note:"Стани польською: <b>domyślny · najechanie · fokus · wciśnięty · nieaktywny</b>.",
+ nt:{pl:"Stany po polsku: <b>domyślny · najechanie · fokus · wciśnięty · nieaktywny</b>.",
+     en:"The Polish names: <b>domyślny · najechanie · fokus · wciśnięty · nieaktywny</b>."},
  d:`<div class="states">
   <button class="b b-p">domyślny</button>
   <button class="b b-p st-h">hover</button>
@@ -1918,16 +1925,31 @@ const DATA = [
 
 {c:"J",n:"02",en:"Focus ring",alt:"focus indicator, focus-visible",pl:"obramowanie fokusa",
  ua:"Видима рамка при навігації з клавіатури. Прибирати outline без заміни — пряме порушення WCAG 2.4.7. Контраст рамки — мінімум 3:1.",
+ o:{pl:"Widoczna ramka przy nawigacji z klawiatury. Usunięcie outline bez zamiennika to wprost złamanie WCAG 2.4.7. Kontrast ramki — minimum 3:1.",
+    en:"The visible ring shown when navigating by keyboard. Removing the outline without a replacement breaks WCAG 2.4.7 outright. The ring needs at least 3:1 contrast."},
+ ex:{ua:"Не прибирай focus ring — це не косметика, це вимога доступності.",
+     pl:"Nie usuwaj obramowania fokusa — to nie kosmetyka, to wymóg dostępności.",
+     en:"Don't remove the focus ring — that's not cosmetics, it's an accessibility requirement."},
  d:`<div class="row"><button class="b b-s st-f">Tab tutaj</button><span class="cap">outline 2px · offset 2px</span></div>`},
 
 {c:"J",n:"03",en:"Loading state",alt:"pending, busy state",pl:"stan ładowania",
  ua:"Стан кнопки під час запиту. Блокуй повторний клік, зберігай ширину кнопки — інакше макет стрибає.",
+ o:{pl:"Stan przycisku w trakcie żądania. Zablokuj ponowne kliknięcie i zachowaj szerokość przycisku — inaczej layout skacze.",
+    en:"The button's state while a request is in flight. Block the second click and keep the button's width — otherwise the layout jumps."},
+ ex:{ua:"Кнопка стрибає в лоадингу — зафіксуй ширину і заблокуй повторний клік.",
+     pl:"Przycisk skacze w stanie ładowania — ustal szerokość i zablokuj ponowne kliknięcie.",
+     en:"The button jumps while loading — lock its width and block the second click."},
  d:`<div class="row">
   <button class="b b-p" disabled style="opacity:1"><span class="spin" style="width:13px;height:13px;border-width:2px;border-top-color:#fff;border-color:rgba(255,255,255,.35);border-top-color:#fff"></span> Przetwarzanie…</button>
  </div>`},
 
 {c:"J",n:"04",en:"Leading / trailing icon",alt:"start / end icon",pl:"ikona wiodąca / końcowa",
  ua:"Іконка до або після тексту. Leading — категорія чи тип, trailing — напрямок дії (стрілка, шеврон, зовнішнє посилання).",
+ o:{pl:"Ikona przed tekstem albo po nim. Wiodąca oznacza kategorię lub typ, końcowa — kierunek akcji (strzałka, chevron, link zewnętrzny).",
+    en:"An icon before or after the label. A leading icon marks a category or type; a trailing icon shows the direction of the action (arrow, chevron, external link)."},
+ ex:{ua:"Постав стрілку як trailing icon, а не leading — вона про напрямок, а не про тип.",
+     pl:"Daj strzałkę jako ikonę końcową, nie wiodącą — ona mówi o kierunku, a nie o typie.",
+     en:"Put the arrow as a trailing icon, not leading — it's about direction, not type."},
  d:`<div class="row">
   <button class="b b-s"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v12M7.2 11.2 12 16l4.8-4.8M4 20.5h16"/></svg> Pobierz PDF</button>
   <button class="b b-s">Dalej →</button>
@@ -1935,10 +1957,20 @@ const DATA = [
 
 {c:"J",n:"05",en:"Chevron",alt:"caret, arrow",pl:"strzałka chevron",
  ua:"Кутова стрілка без «хвоста». Вниз — розкриття, вправо — перехід глибше. Обертання на 90° — стандартна анімація розгортання.",
+ o:{pl:"Kątowa strzałka bez «ogona». W dół — rozwinięcie, w prawo — przejście głębiej. Obrót o 90° to standardowa animacja rozwijania.",
+    en:"An angle bracket arrow with no tail. Pointing down means expand, pointing right means go deeper. A 90° rotation is the standard expand animation."},
+ ex:{ua:"Хай chevron обертається на 90° при розкритті — інакше незрозуміло, що відкрито.",
+     pl:"Niech chevron obraca się o 90° przy rozwinięciu — inaczej nie widać, co jest otwarte.",
+     en:"Have the chevron rotate 90° on expand — otherwise you can't tell what's open."},
  d:`<div class="row" style="font-size:15px;color:var(--pcb);gap:16px"><span>▾</span><span>▸</span><span>▴</span><span>◂</span></div>`},
 
 {c:"J",n:"06",en:"Thumb / track",alt:"handle / rail",pl:"uchwyt / tor",
  ua:"Анатомія слайдера: track (тор) — доріжка, thumb (uchwyt) — рухома ручка, fill — заповнена частина. Ті самі терміни в скролбарах.",
+ o:{pl:"Anatomia suwaka: tor to szyna, uchwyt to ruchoma gałka, fill to wypełniona część. Te same terminy stosuje się do pasków przewijania.",
+    en:"Slider anatomy: the track is the rail, the thumb is the draggable handle, the fill is the covered part. The same terms apply to scrollbars."},
+ ex:{ua:"Збільш thumb — 12 px замало, пальцем не влучиш.",
+     pl:"Powiększ uchwyt — 12 px to za mało, palcem się nie trafi.",
+     en:"Make the thumb bigger — 12 px is too small to hit with a finger."},
  d:`<div class="col" style="align-items:center;max-width:230px">
   <div class="dual"><div class="trk"></div><div class="fil" style="left:0;right:38%"></div><b style="right:38%"></b></div>
   <div class="row" style="font-size:9px;font-family:var(--mono);color:var(--brass);gap:16px"><span>track</span><span>fill</span><span>thumb</span></div>
@@ -1946,10 +1978,20 @@ const DATA = [
 
 {c:"J",n:"07",en:"Elevation",alt:"shadow, z-index layer",pl:"wyniesienie",
  ua:"Рівень «висоти» над поверхнею через тінь. Має бути дискретною шкалою (0/1/2/3), а не довільними значеннями — інакше ієрархія шарів розсипається.",
+ o:{pl:"Poziom «wysokości» nad powierzchnią wyrażony cieniem. Powinien być skalą dyskretną (0/1/2/3), a nie dowolnymi wartościami — inaczej hierarchia warstw się rozsypuje.",
+    en:"How high an element sits above the surface, expressed as a shadow. It should be a discrete scale (0/1/2/3) rather than arbitrary values — otherwise the layer hierarchy falls apart."},
+ ex:{ua:"Тінь не з нашої шкали — візьми elevation 2, а не власні значення.",
+     pl:"Ten cień nie jest z naszej skali — weź wyniesienie 2, a nie własne wartości.",
+     en:"That shadow isn't from our scale — use elevation 2 instead of custom values."},
  d:`<div class="elev"><div>0</div><div class="e1">1</div><div class="e2">2</div><div class="e3">3</div></div>`},
 
 {c:"J",n:"08",en:"Density",alt:"compact mode, spacing scale",pl:"gęstość interfejsu",
  ua:"Скільки даних вміщується на екрані. Для B2B-таблиць компактний режим — не опція, а базова потреба: користувач працює з сотнями рядків.",
+ o:{pl:"Ile danych mieści się na ekranie. W tabelach B2B tryb kompaktowy to nie opcja, tylko podstawowa potrzeba: użytkownik pracuje na setkach wierszy.",
+    en:"How much data fits on screen. In B2B tables a compact mode isn't optional, it's a baseline need: the user works with hundreds of rows."},
+ ex:{ua:"Додай компактний режим таблиці — у клієнта 400 позицій у замовленні.",
+     pl:"Dodaj kompaktowy tryb tabeli — klient ma 400 pozycji w zamówieniu.",
+     en:"Add a compact table mode — the customer has 400 line items in an order."},
  d:`<div class="dens">
   <div><div class="cap" style="margin-bottom:4px">domyślna</div><div class="lst"><div>LM358N</div><div>NE555P</div><div>TL072</div></div></div>
   <div><div class="cap" style="margin-bottom:4px">kompakt</div><div class="lst cz"><div>LM358N</div><div>NE555P</div><div>TL072</div><div>LM317</div><div>UA741</div></div></div>
@@ -1957,12 +1999,24 @@ const DATA = [
 
 {c:"J",n:"09",en:"Touch target",alt:"hit area, tap target",pl:"obszar dotyku",
  ua:"Зона реакції на дотик. Мінімум 44×44 px (Apple) / 48×48 dp (Material). Може бути більшою за видиму іконку — і зазвичай має бути.",
+ o:{pl:"Strefa reagująca na dotyk. Minimum 44×44 px (Apple) / 48×48 dp (Material). Może być większa niż widoczna ikona — i zwykle powinna.",
+    en:"The area that responds to touch. At least 44×44 px (Apple) / 48×48 dp (Material). It can be larger than the visible icon — and usually should be."},
+ ex:{ua:"Іконка 20 px, але зона дотику має бути 44 — розтягни хітбокс.",
+     pl:"Ikona ma 20 px, ale obszar dotyku musi mieć 44 — rozciągnij hitbox.",
+     en:"The icon is 20 px but the touch target has to be 44 — stretch the hit area."},
  d:`<div class="target"><div class="hit"></div><div class="ico"></div></div>
   <div class="cap" style="margin-top:6px">ikona 20 px · hit area 44 px</div>`},
 
 {c:"J",n:"10",en:"Design token",alt:"semantic token, variable",pl:"token projektowy",
  ua:"Названа змінна замість «сирого» значення. Семантичний рівень (surface, border, text-muted) переживає ребрендинг і темну тему; сирий hex — ні.",
+ o:{pl:"Nazwana zmienna zamiast «surowej» wartości. Poziom semantyczny (surface, border, text-muted) przetrwa rebranding i tryb ciemny; surowy hex — nie.",
+    en:"A named variable instead of a raw value. The semantic layer (surface, border, text-muted) survives a rebrand and dark mode; a raw hex doesn't."},
+ ex:{ua:"Не став сюди hex — бери токен surface, інакше темна тема поламається.",
+     pl:"Nie wstawiaj tu heksa — weź token surface, inaczej tryb ciemny się wysypie.",
+     en:"Don't hard-code the hex — use the surface token, or dark mode will break."},
  note:"У Figma це <b>zmienne</b> (variables). Рівні: primitive → semantic → component.",
+ nt:{pl:"W Figmie to <b>zmienne</b> (variables). Poziomy: primitive → semantic → component.",
+     en:"In Figma these are <b>variables</b>. The levels: primitive → semantic → component."},
  d:`<div class="tok">
   <div><b style="background:#0B5C43"></b>color.action.primary<span>#0B5C43</span></div>
   <div><b style="background:#A32B1C"></b>color.feedback.danger<span>#A32B1C</span></div>
@@ -1972,6 +2026,11 @@ const DATA = [
 
 {c:"J",n:"11",en:"Slot",alt:"content slot, children",pl:"slot",
  ua:"Місце в компоненті, куди вставляється довільний контент. У специфікації описуй слоти явно: що можна вкласти, а що ні.",
+ o:{pl:"Miejsce w komponencie, w które wstawia się dowolną treść. W specyfikacji opisuj sloty wprost: co wolno w nie włożyć, a czego nie.",
+    en:"A place inside a component where arbitrary content goes. Spell the slots out in the spec: what may go in and what may not."},
+ ex:{ua:"Зроби тут slot — у footer картки треба вставляти різні дії.",
+     pl:"Zrób tu slot — w stopce karty trzeba wstawiać różne akcje.",
+     en:"Make this a slot — the card footer needs to take different actions."},
  d:`<div style="width:100%;max-width:240px;border:1.5px dashed var(--brass);border-radius:var(--r);padding:9px;background:var(--surface)">
   <div class="cap" style="color:var(--brass);margin-bottom:6px">slot: header</div>
   <div style="font:600 12.5px var(--sans);margin-bottom:7px">Parametry</div>
@@ -1981,6 +2040,11 @@ const DATA = [
 
 {c:"J",n:"12",en:"Variant",alt:"property, component prop",pl:"wariant",
  ua:"Керована властивість компонента: size, tone, state. Правило: якщо різниця тільки візуальна — це варіант; якщо змінюється поведінка — окремий компонент.",
+ o:{pl:"Sterowana właściwość komponentu: size, tone, state. Zasada: jeśli różnica jest tylko wizualna — to wariant; jeśli zmienia się zachowanie — osobny komponent.",
+    en:"A controlled property of a component: size, tone, state. Rule: if the difference is only visual it's a variant; if the behaviour changes it's a separate component."},
+ ex:{ua:"Це не новий компонент, це варіант — міняється тільки розмір.",
+     pl:"To nie jest nowy komponent, tylko wariant — zmienia się sam rozmiar.",
+     en:"That's not a new component, it's a variant — only the size changes."},
  d:`<div class="col" style="max-width:250px">
   <div class="row"><span class="cap" style="width:44px;text-align:right">size</span><button class="b b-p" style="font-size:11px;padding:5px 9px">sm</button><button class="b b-p" style="font-size:12.5px;padding:8px 12px">md</button><button class="b b-p" style="font-size:14px;padding:10px 15px">lg</button></div>
   <div class="row"><span class="cap" style="width:44px;text-align:right">tone</span><button class="b b-p">primary</button><button class="b b-s">neutral</button><button class="b b-d">danger</button></div>
@@ -1988,6 +2052,11 @@ const DATA = [
 
 {c:"J",n:"13",en:"Affordance",alt:"perceived affordance",pl:"afordancja",
  ua:"Візуальна підказка, що з елементом можна зробити. Підкреслення = клікабельне, тінь = натискається, курсор-рука = інтерактивне. Плоский дизайн часто ламає це першим.",
+ o:{pl:"Wizualna podpowiedź, co można z elementem zrobić. Podkreślenie = klikalne, cień = da się wcisnąć, kursor-łapka = interaktywne. Płaski design łamie to jako pierwsze.",
+    en:"The visual hint about what you can do with an element. An underline means clickable, a shadow means pressable, a hand cursor means interactive. Flat design breaks this first."},
+ ex:{ua:"По цій картці не видно, що вона клікабельна — бракує афордансу.",
+     pl:"Po tej karcie nie widać, że jest klikalna — brakuje afordancji.",
+     en:"Nothing about that card says it's clickable — it has no affordance."},
  d:`<div class="col" style="max-width:230px">
   <button class="b b-p" style="justify-content:center;box-shadow:0 2px 0 #073C2C">wygląda na klikalny</button>
   <div style="text-align:center;padding:9px;border-radius:var(--r);background:var(--well);color:var(--muted);font-size:12px">nie wygląda</div>
@@ -1995,6 +2064,11 @@ const DATA = [
 
 {c:"J",n:"14",en:"Safe area",alt:"safe area insets",pl:"obszar bezpieczny",
  ua:"Зона екрана, вільна від системних елементів — вирізу, індикатора Home, закруглень. Кнопки в цій зоні недосяжні або перекриті.",
+ o:{pl:"Strefa ekranu wolna od elementów systemowych — wcięcia, wskaźnika Home, zaokrągleń. Przyciski w tej strefie są nieosiągalne albo zasłonięte.",
+    en:"The part of the screen clear of system elements — the notch, the home indicator, the rounded corners. Buttons placed there are unreachable or covered."},
+ ex:{ua:"Кнопка сидить під індикатором Home — підніми її в безпечну зону.",
+     pl:"Przycisk siedzi pod wskaźnikiem Home — podnieś go do obszaru bezpiecznego.",
+     en:"That button sits under the home indicator — lift it into the safe area."},
  d:`<div class="scene" style="max-width:130px;height:150px;border-radius:14px;border-width:2px">
   <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:44px;height:14px;background:var(--ink);border-radius:0 0 8px 8px"></div>
   <div style="position:absolute;inset:20px 8px 22px;border:1.5px dashed var(--brass);border-radius:5px"></div>
@@ -2004,20 +2078,39 @@ const DATA = [
 /* ============ K · ВІДСТУПИ Й СІТКА ============ */
 {c:"K",n:"01",en:"Padding",alt:"inner spacing",pl:"wypełnienie wewnętrzne",
  ua:"Відступ ВСЕРЕДИНІ елемента — між його межею і вмістом. Належить самому елементу: збільшив padding — кнопка стала більшою.",
+ o:{pl:"Odstęp WEWNĄTRZ elementu — między jego krawędzią a treścią. Należy do samego elementu: zwiększyłeś padding — przycisk zrobił się większy.",
+    en:"Spacing INSIDE an element — between its edge and its content. It belongs to the element itself: increase the padding and the button gets bigger."},
+ ex:{ua:"Тут не вистачає padding всередині картки — margin між картками нормальний.",
+     pl:"Tu brakuje paddingu w środku karty — margines między kartami jest OK.",
+     en:"The card needs more padding inside — the margin between cards is fine."},
  note:"Формально <b>wypełnienie</b>, але 99% розмов у польських командах — просто <b>padding</b>.",
+ nt:{pl:"Formalnie <b>wypełnienie</b>, ale 99% rozmów w polskich zespołach to po prostu <b>padding</b>.",
+     en:"Formally <b>wypełnienie</b> in Polish, but 99% of team talk is just <b>padding</b>."},
  d:`<div class="box-demo">
   <div class="pad-out"><span class="mk-lbl">padding 16</span><div class="pad-in">Treść</div></div>
  </div>`},
 
 {c:"K",n:"02",en:"Margin",alt:"outer spacing",pl:"margines",
  ua:"Відступ ЗЗОВНІ елемента — між ним і сусідами. Не належить елементу: це його особистий простір. Розмір самої кнопки не змінюється.",
+ o:{pl:"Odstęp NA ZEWNĄTRZ elementu — między nim a sąsiadami. Nie należy do elementu: to jego prywatna przestrzeń. Rozmiar samego przycisku się nie zmienia.",
+    en:"Spacing OUTSIDE an element — between it and its neighbours. It doesn't belong to the element: it is its personal space. The button's own size doesn't change."},
+ ex:{ua:"Збільш margin між секціями, вони злипаються.",
+     pl:"Zwiększ margines między sekcjami, bo się zlewają.",
+     en:"Increase the margin between the sections, they're running together."},
  note:"Головна пастка новачків: у Figma Auto Layout margin як такого немає — його роль виконують <b>gap</b> і <b>padding</b> контейнера.",
+ nt:{pl:"Główna pułapka początkujących: w Figmie Auto Layout marginesu jako takiego nie ma — jego rolę pełnią <b>gap</b> i <b>padding</b> kontenera.",
+     en:"The classic beginner trap: Figma Auto Layout has no margin as such — <b>gap</b> and the container's <b>padding</b> do that job."},
  d:`<div class="box-demo">
   <div class="mar-out"><span class="mk-lbl">margin 24</span><div class="mar-in">Element</div></div>
  </div>`},
 
 {c:"K",n:"03",en:"Gap",alt:"gutter (flex/grid)",pl:"odstęp",
  ua:"Проміжок МІЖ елементами в контейнері. Замінює margin у сучасній верстці: не треба прибирати відступ в останнього елемента — gap ставиться тільки між.",
+ o:{pl:"Przerwa MIĘDZY elementami w kontenerze. Zastępuje margines we współczesnym layoucie: nie trzeba zdejmować odstępu z ostatniego elementu — gap wchodzi tylko pomiędzy.",
+    en:"The space BETWEEN items in a container. It replaces margin in modern layout: no need to strip the spacing off the last item — gap only goes in between."},
+ ex:{ua:"Постав gap 16, а не margin на кожній картці — останню потім не треба чистити.",
+     pl:"Daj gap 16 zamiast marginesu na każdej karcie — wtedy ostatniej nie trzeba czyścić.",
+     en:"Use a 16 gap instead of a margin on every card — then you don't have to clean up the last one."},
  d:`<div class="gap-demo">
   <div class="gd"><i></i><span class="gap-m">gap 8</span><i></i><span class="gap-m">gap 8</span><i></i></div>
   <div class="cap" style="margin-top:9px;text-transform:none">крайніх відступів немає</div>
@@ -2025,7 +2118,14 @@ const DATA = [
 
 {c:"K",n:"04",en:"Gutter",alt:"column gutter",pl:"rynna",
  ua:"Проміжок між колонками модульної сітки. На відміну від gap це параметр СІТКИ, а не окремого контейнера. У 12-колонковій сітці зазвичай 16–32 px.",
+ o:{pl:"Przerwa między kolumnami siatki modułowej. W odróżnieniu od gapa to parametr SIATKI, a nie pojedynczego kontenera. W siatce 12-kolumnowej zwykle 16–32 px.",
+    en:"The space between the columns of a layout grid. Unlike gap, it is a property of the GRID, not of a single container. Usually 16–32 px in a 12-column grid."},
+ ex:{ua:"Візьмемо 12 колонок з gutter 24 — стандартна сітка, розробнику нічого пояснювати.",
+     pl:"Weźmy 12 kolumn z rynną 24 — standardowa siatka, deweloperowi nie trzeba nic tłumaczyć.",
+     en:"Let's go with 12 columns and a 24 gutter — a standard grid, nothing to explain to the developer."},
  note:"У польській типографіці <b>rynna</b> має ще одне значення — «річки» з пробілів у виключеному тексті. Контекст вирішує.",
+ nt:{pl:"W polskiej typografii <b>rynna</b> ma jeszcze jedno znaczenie — «rzeki» ze spacji w tekście justowanym. Decyduje kontekst.",
+     en:"In Polish typography <b>rynna</b> also means the rivers of white space in justified text. Context decides."},
  d:`<div class="grid-demo">
   <div class="gcol"></div><div class="ggut"><span>rynna</span></div>
   <div class="gcol"></div><div class="ggut"><span>rynna</span></div>
@@ -2034,7 +2134,14 @@ const DATA = [
 
 {c:"K",n:"05",en:"Spacing scale",alt:"4pt / 8pt grid",pl:"skala odstępów",
  ua:"Обмежений набір дозволених значень відступу: 4, 8, 12, 16, 24, 32, 48. Прибирає суперечку «17 чи 18 px» і робить макет передбачуваним для розробника.",
+ o:{pl:"Ograniczony zestaw dozwolonych wartości odstępu: 4, 8, 12, 16, 24, 32, 48. Kończy spór «17 czy 18 px» i robi makietę przewidywalną dla dewelopera.",
+    en:"A limited set of allowed spacing values: 4, 8, 12, 16, 24, 32, 48. It ends the 17-or-18-px argument and makes the layout predictable for the developer."},
+ ex:{ua:"Тримайся скейлу — 20 px не з нашої шкали, став 24.",
+     pl:"Trzymaj się skali — 20 px nie jest z naszej skali, daj 24.",
+     en:"Stick to the scale — 20 px isn't on it, make it 24."},
  note:"Правило: якщо в макеті з'явився відступ 13 px — це помилка, а не рішення.",
+ nt:{pl:"Zasada: jeśli w makiecie pojawił się odstęp 13 px — to błąd, a nie decyzja.",
+     en:"Rule of thumb: a 13 px gap in the layout is a mistake, not a decision."},
  d:`<div class="scale-demo">
   <div><i style="width:4px"></i><b>4</b></div>
   <div><i style="width:8px"></i><b>8</b></div>
@@ -2047,6 +2154,11 @@ const DATA = [
 
 {c:"K",n:"06",en:"Column grid",alt:"layout grid, 12-col",pl:"siatka kolumnowa",
  ua:"Вертикальні колонки, до яких прив'язується контент. Стандарт вебу — 12 колонок (ділиться на 2, 3, 4, 6). Мобільний — 4 колонки.",
+ o:{pl:"Pionowe kolumny, do których przypina się treść. Standard w webie to 12 kolumn (dzieli się przez 2, 3, 4, 6). Na mobile — 4 kolumny.",
+    en:"Vertical columns that content snaps to. The web standard is 12 columns (divisible by 2, 3, 4, 6). On mobile — 4 columns."},
+ ex:{ua:"Картка займає 4 колонки з 12 — тобто три в ряд на десктопі.",
+     pl:"Karta zajmuje 4 kolumny z 12 — czyli trzy w rzędzie na desktopie.",
+     en:"The card spans 4 of 12 columns — so three per row on desktop."},
  d:`<div class="colgrid">
   <div class="cg-row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="cg-blocks"><b style="flex:8">8 kolumn</b><b style="flex:4">4</b></div>
@@ -2054,6 +2166,11 @@ const DATA = [
 
 {c:"K",n:"07",en:"Baseline grid",alt:"vertical rhythm",pl:"siatka bazowa",
  ua:"Горизонтальні лінії з кроком 4 або 8 px, на яких «сидить» текст. Дає вертикальний ритм: різні блоки вирівнюються між собою навіть у сусідніх колонках.",
+ o:{pl:"Poziome linie co 4 lub 8 px, na których «siedzi» tekst. Daje rytm pionowy: różne bloki wyrównują się do siebie nawet w sąsiednich kolumnach.",
+    en:"Horizontal lines every 4 or 8 px that text sits on. It creates vertical rhythm: separate blocks line up with each other even across neighbouring columns."},
+ ex:{ua:"Заголовок вибивається з базової сітки — підправ line-height.",
+     pl:"Nagłówek wypada z siatki bazowej — popraw line-height.",
+     en:"The heading falls off the baseline grid — fix the line-height."},
  d:`<div class="baseline">
   <div class="bl-lines"></div>
   <div class="bl-txt"><b>Nagłówek sekcji</b><p>Tekst siada na liniach bazowych co 8 px.</p></div>
@@ -2061,6 +2178,11 @@ const DATA = [
 
 {c:"K",n:"08",en:"Container",alt:"max-width, wrapper",pl:"kontener",
  ua:"Обмежувач ширини контенту з центруванням. Без нього на моніторі 27″ рядок тексту стає нечитабельним. Типово 1200–1440 px.",
+ o:{pl:"Ogranicznik szerokości treści ze środkowaniem. Bez niego na monitorze 27″ wiersz tekstu staje się nieczytelny. Typowo 1200–1440 px.",
+    en:"A max-width wrapper that centres the content. Without it a line of text becomes unreadable on a 27″ monitor. Typically 1200–1440 px."},
+ ex:{ua:"Обмеж контейнер на 1280 — на широкому моніторі текст розповзається.",
+     pl:"Ogranicz kontener do 1280 — na szerokim monitorze tekst się rozjeżdża.",
+     en:"Cap the container at 1280 — the text sprawls on a wide monitor."},
  d:`<div class="cont-demo">
   <div class="cd-vp"><span class="cap">viewport</span>
    <div class="cd-inner">max-width 1200</div>
@@ -2069,6 +2191,11 @@ const DATA = [
 
 {c:"K",n:"09",en:"Breakpoint",alt:"media query",pl:"punkt załamania",
  ua:"Ширина екрана, на якій макет перебудовується. Не вигадуй їх з голови — став там, де ламається контент. Типово: 640 / 768 / 1024 / 1280.",
+ o:{pl:"Szerokość ekranu, przy której layout się przebudowuje. Nie wymyślaj ich z głowy — stawiaj tam, gdzie treść się łamie. Typowo: 640 / 768 / 1024 / 1280.",
+    en:"The screen width at which the layout rearranges. Don't invent them — put them where the content actually breaks. Typically 640 / 768 / 1024 / 1280."},
+ ex:{ua:"На брейкпойнті 768 таблиця не влазить — переводимо її в картки.",
+     pl:"Na punkcie załamania 768 tabela się nie mieści — zamieniamy ją na karty.",
+     en:"The table doesn't fit at the 768 breakpoint — we switch it to cards."},
  d:`<div class="bp-demo">
   <div class="bp"><b>360</b><span>mobile · 4 kol.</span></div>
   <div class="bp"><b>768</b><span>tablet · 8 kol.</span></div>
@@ -2077,7 +2204,14 @@ const DATA = [
 
 {c:"K",n:"10",en:"Hug / Fill / Fixed",alt:"auto layout sizing",pl:"dopasuj / wypełnij / stała",
  ua:"Три режими розміру у Figma Auto Layout. Hug — обгортає вміст, Fill — розтягується на весь доступний простір, Fixed — жорстке значення. Найчастіша причина «поламаного» макета при зміні тексту.",
+ o:{pl:"Trzy tryby rozmiaru w Figma Auto Layout. Hug — opina treść, Fill — rozciąga się na całą dostępną przestrzeń, Fixed — sztywna wartość. Najczęstsza przyczyna «rozjechanej» makiety przy zmianie tekstu.",
+    en:"The three sizing modes in Figma Auto Layout. Hug wraps the content, Fill stretches to all available space, Fixed is a hard value. The most common reason a layout breaks when the text changes."},
+ ex:{ua:"Постав тут Fill замість Fixed — на довгій назві компонент розлазиться.",
+     pl:"Daj tu Fill zamiast Fixed — przy długiej nazwie komponent się rozjeżdża.",
+     en:"Set this to Fill instead of Fixed — the component breaks with a long name."},
  note:"У CSS відповідники: <b>fit-content</b> · <b>flex:1</b> · фіксований <b>width</b>.",
+ nt:{pl:"Odpowiedniki w CSS: <b>fit-content</b> · <b>flex:1</b> · sztywny <b>width</b>.",
+     en:"CSS equivalents: <b>fit-content</b> · <b>flex:1</b> · a fixed <b>width</b>."},
  d:`<div class="col" style="max-width:250px;gap:9px">
   <div class="hff"><span class="hff-t">HUG</span><b style="width:auto">Tekst</b></div>
   <div class="hff"><span class="hff-t">FILL</span><b style="flex:1">Tekst</b></div>
@@ -2086,6 +2220,11 @@ const DATA = [
 
 {c:"K",n:"11",en:"Constraints",alt:"anchoring, pinning",pl:"ograniczenia",
  ua:"Правило, як елемент поводиться при зміні розміру батька: приліпитись до лівого краю, до правого, розтягнутись, лишитись по центру. Основа адаптивних компонентів у Figma.",
+ o:{pl:"Reguła, jak element zachowuje się przy zmianie rozmiaru rodzica: przykleić się do lewej, do prawej, rozciągnąć, zostać na środku. Podstawa responsywnych komponentów w Figmie.",
+    en:"The rule for how an element behaves when its parent resizes: pin left, pin right, stretch, stay centred. The basis of responsive components in Figma."},
+ ex:{ua:"Приліпи іконку до правого краю через constraints, інакше вона поїде.",
+     pl:"Przypnij ikonę do prawej krawędzi przez constraints, inaczej ucieknie.",
+     en:"Pin the icon to the right edge with constraints, otherwise it drifts."},
  d:`<div class="constr">
   <div class="cr-box"><i class="tl"></i><i class="tr"></i><span class="cap">pin: top · right</span></div>
   <div class="cr-arrows">→</div>
@@ -2094,6 +2233,11 @@ const DATA = [
 
 {c:"K",n:"12",en:"Alignment",alt:"align",pl:"wyrównanie",
  ua:"Прив'язка елементів до спільної осі: ліворуч, по центру, праворуч, по верху, по базовій лінії. Найдешевший спосіб зробити макет охайним.",
+ o:{pl:"Przypięcie elementów do wspólnej osi: do lewej, do środka, do prawej, do góry, do linii bazowej. Najtańszy sposób, żeby makieta wyglądała schludnie.",
+    en:"Snapping elements to a shared axis: left, centre, right, top, baseline. The cheapest way to make a layout look tidy."},
+ ex:{ua:"Вирівняй підписи по лівому краю — зараз кожен по-своєму.",
+     pl:"Wyrównaj etykiety do lewej — teraz każda jest po swojemu.",
+     en:"Align the labels to the left — right now each one does its own thing."},
  d:`<div class="align-demo">
   <div class="ad"><i style="width:70%"></i><i style="width:45%"></i><i style="width:88%"></i><span class="cap">left</span></div>
   <div class="ad ctr"><i style="width:70%"></i><i style="width:45%"></i><i style="width:88%"></i><span class="cap">center</span></div>
@@ -2101,6 +2245,11 @@ const DATA = [
 
 {c:"K",n:"13",en:"Distribution",alt:"space-between, justify",pl:"rozmieszczenie",
  ua:"Як вільний простір розподіляється між елементами: рівні проміжки, притиснуто до країв, по центру. У CSS — justify-content.",
+ o:{pl:"Jak wolna przestrzeń rozkłada się między elementami: równe przerwy, dociśnięte do krawędzi, na środku. W CSS — justify-content.",
+    en:"How free space is distributed between items: equal gaps, pushed to the edges, centred. In CSS — justify-content."},
+ ex:{ua:"Розкидай кнопки space-between — назва ліворуч, дії праворуч.",
+     pl:"Rozłóż przyciski przez space-between — nazwa po lewej, akcje po prawej.",
+     en:"Lay the buttons out with space-between — name on the left, actions on the right."},
  d:`<div class="col" style="max-width:240px;gap:10px">
   <div class="dist"><i></i><i></i><i></i><span class="dist-l">space-between</span></div>
   <div class="dist ctr"><i></i><i></i><i></i><span class="dist-l">center</span></div>
@@ -2109,7 +2258,14 @@ const DATA = [
 
 {c:"K",n:"14",en:"Whitespace",alt:"negative space",pl:"biała przestrzeń",
  ua:"Порожній простір як повноцінний елемент композиції. Не «незаповнене місце», а інструмент групування: те, що поруч — пов'язане, те, що далеко — ні.",
+ o:{pl:"Pusta przestrzeń jako pełnoprawny element kompozycji. Nie «niezapełnione miejsce», tylko narzędzie grupowania: co blisko — jest powiązane, co daleko — nie.",
+    en:"Empty space as a full member of the composition. Not unfilled area but a grouping tool: what's close is related, what's far apart isn't."},
+ ex:{ua:"Не бійся порожнечі тут — вона розділяє блоки краще за лінію.",
+     pl:"Nie bój się tu światła — dzieli bloki lepiej niż kreska.",
+     en:"Don't be afraid of the whitespace here — it separates the blocks better than a rule."},
  note:"Польською також <b>światło</b> — типографічний термін, який дизайнери переносять на макет загалом.",
+ nt:{pl:"Po polsku także <b>światło</b> — termin typograficzny, który projektanci przenoszą na cały layout.",
+     en:"Polish also says <b>światło</b> — a typographic term designers apply to the whole layout."},
  d:`<div class="ws-demo">
   <div class="ws-bad"><span class="ws-t">bez światła</span><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="ws-good"><span class="ws-t">z grupowaniem</span><div><i></i><i></i><i></i></div><div><i></i><i></i><i></i></div></div>
@@ -2117,6 +2273,11 @@ const DATA = [
 
 {c:"K",n:"15",en:"Optical alignment",alt:"visual centering",pl:"wyrównanie optyczne",
  ua:"Вирівнювання на око, а не за числами. Математично центрована іконка «Play» виглядає зміщеною ліворуч — її треба посунути вправо на 1–2 px. Око головніше за лінійку.",
+ o:{pl:"Wyrównanie na oko, a nie według liczb. Matematycznie wyśrodkowana ikona «Play» wygląda na przesuniętą w lewo — trzeba ją przesunąć w prawo o 1–2 px. Oko jest ważniejsze od linijki.",
+    en:"Aligning by eye rather than by numbers. A mathematically centred Play icon looks shifted left — nudge it 1–2 px right. The eye beats the ruler."},
+ ex:{ua:"Іконка математично по центру, але виглядає зміщеною — посунь на 1 px оптично.",
+     pl:"Ikona jest matematycznie na środku, ale wygląda na przesuniętą — przesuń ją optycznie o 1 px.",
+     en:"The icon is mathematically centred but looks off — nudge it 1 px optically."},
  d:`<div class="opt-demo">
   <div><span class="opt-c math">▶</span><span class="cap">matematycznie</span></div>
   <div><span class="opt-c opt">▶</span><span class="cap">optycznie</span></div>
@@ -2124,6 +2285,11 @@ const DATA = [
 
 {c:"K",n:"16",en:"Aspect ratio",alt:"proportions",pl:"proporcje",
  ua:"Співвідношення ширини до висоти: 16:9, 4:3, 1:1. Фіксуй його для зображень у сітці — інакше картки різної висоти й макет «стрибає» під час завантаження.",
+ o:{pl:"Stosunek szerokości do wysokości: 16:9, 4:3, 1:1. Ustal go dla zdjęć w siatce — inaczej karty mają różną wysokość i layout «skacze» podczas ładowania.",
+    en:"Width-to-height ratio: 16:9, 4:3, 1:1. Fix it for images in a grid — otherwise the cards end up different heights and the layout jumps while loading."},
+ ex:{ua:"Зафіксуй пропорцію 4:3 для фото товару, бо картки стрибають.",
+     pl:"Ustal proporcję 4:3 dla zdjęć produktu, bo karty skaczą.",
+     en:"Lock the product photos to 4:3, the cards are jumping."},
  d:`<div class="row" style="gap:9px;align-items:flex-end">
   <div class="ar" style="width:76px;height:43px"><span>16:9</span></div>
   <div class="ar" style="width:60px;height:45px"><span>4:3</span></div>
@@ -2132,6 +2298,11 @@ const DATA = [
 
 {c:"K",n:"17",en:"Overflow",alt:"clipping, scroll",pl:"przepełnienie",
  ua:"Що робити, коли вміст не влазить: обрізати (hidden), показати скрол (scroll), випустити назовні (visible). Проєктуй це свідомо — інакше вирішить браузер.",
+ o:{pl:"Co zrobić, gdy treść się nie mieści: przyciąć (hidden), pokazać scroll (scroll), wypuścić na zewnątrz (visible). Zaprojektuj to świadomie — inaczej zdecyduje przeglądarka.",
+    en:"What to do when content doesn't fit: clip it (hidden), show a scrollbar (scroll), let it spill out (visible). Decide deliberately — otherwise the browser decides for you."},
+ ex:{ua:"Що робимо з довгою назвою — обрізаємо трьома крапками чи переносимо в два рядки?",
+     pl:"Co robimy z długą nazwą — przycinamy wielokropkiem czy łamiemy na dwie linie?",
+     en:"What do we do with a long name — truncate with an ellipsis or wrap to two lines?"},
  d:`<div class="row" style="gap:9px">
   <div class="ovf hid"><span>hidden</span>Bardzo długi tekst produktu</div>
   <div class="ovf scr2"><span>scroll</span>Bardzo długi tekst produktu ciąg dalszy</div>
@@ -2139,12 +2310,22 @@ const DATA = [
 
 {c:"K",n:"18",en:"Z-index",alt:"stacking order",pl:"kolejność nakładania",
  ua:"Порядок шарів по глибині. У дизайн-системі має бути шкала (dropdown 100, sticky 200, modal 300, toast 400) — інакше з'являються z-index: 99999.",
+ o:{pl:"Kolejność warstw w głąb. W systemie projektowym powinna być skala (dropdown 100, sticky 200, modal 300, toast 400) — inaczej pojawiają się z-index: 99999.",
+    en:"The depth order of layers. A design system needs a scale (dropdown 100, sticky 200, modal 300, toast 400) — otherwise you end up with z-index: 99999."},
+ ex:{ua:"Модалка ховається під липкою шапкою — z-index не з нашої шкали.",
+     pl:"Modal chowa się pod sticky headerem — z-index jest spoza naszej skali.",
+     en:"The modal hides under the sticky header — that z-index isn't from our scale."},
  d:`<div class="zdemo">
   <b class="z1">z 100 · dropdown</b><b class="z2">z 300 · modal</b><b class="z3">z 400 · toast</b>
  </div>`},
 
 {c:"K",n:"19",en:"Full-bleed",alt:"edge to edge",pl:"na spad",
  ua:"Блок, що виходить за межі контейнера на всю ширину екрана. Типово для банерів і секцій з фоном. Термін прийшов із поліграфії.",
+ o:{pl:"Blok wychodzący poza kontener na całą szerokość ekranu. Typowe dla banerów i sekcji z tłem. Termin przyszedł z poligrafii.",
+    en:"A block that breaks out of the container to the full screen width. Typical for banners and sections with a background. The term comes from print."},
+ ex:{ua:"Зроби банер на всю ширину, він не має сидіти в контейнері.",
+     pl:"Zrób ten baner na spad, nie powinien siedzieć w kontenerze.",
+     en:"Make that banner full-bleed, it shouldn't sit inside the container."},
  d:`<div class="cont-demo">
   <div class="cd-vp"><span class="cap">viewport</span>
    <div class="cd-bleed">full-bleed</div>
@@ -2154,6 +2335,11 @@ const DATA = [
 
 {c:"K",n:"20",en:"Responsive vs adaptive",alt:"fluid vs breakpoint-based",pl:"responsywny vs adaptacyjny",
  ua:"Responsive — макет тече плавно за будь-якої ширини. Adaptive — кілька фіксованих розкладок, що перемикаються на брейкпойнтах. Сучасний веб змішує обидва.",
+ o:{pl:"Responsywny — layout płynie przy dowolnej szerokości. Adaptacyjny — kilka sztywnych układów przełączanych na punktach załamania. Współczesny web miesza oba.",
+    en:"Responsive — the layout flows at any width. Adaptive — a few fixed layouts that switch at breakpoints. The modern web mixes both."},
+ ex:{ua:"Робимо responsive, а не три фіксовані макети — інакше на планшеті буде дірка.",
+     pl:"Robimy responsywnie, a nie trzy sztywne układy — inaczej na tablecie będzie dziura.",
+     en:"Let's go responsive rather than three fixed layouts — otherwise there's a hole on tablet."},
  d:`<div class="col" style="max-width:250px;gap:11px">
   <div><span class="cap">responsive · płynnie</span><div class="resp"><i style="width:100%"></i><i style="width:78%"></i><i style="width:56%"></i></div></div>
   <div><span class="cap">adaptive · skokowo</span><div class="adap"><i></i><i></i><i></i></div></div>
@@ -2162,7 +2348,14 @@ const DATA = [
 /* ============ L · ТИПОГРАФІКА ============ */
 {c:"L",n:"01",en:"Typeface vs Font",alt:"family vs file",pl:"krój pisma vs font",
  ua:"Krój pisma — це дизайн гарнітури (IBM Plex Sans). Font — конкретний файл із накресленням і кеглем (IBM Plex Sans Bold 16). Аналогія: пісня і mp3-файл.",
+ o:{pl:"Krój pisma to projekt garnitury (IBM Plex Sans). Font to konkretny plik z odmianą i stopniem (IBM Plex Sans Bold 16). Analogia: piosenka i plik mp3.",
+    en:"A typeface is the design of a family (IBM Plex Sans). A font is the specific file with a weight and size (IBM Plex Sans Bold 16). Like a song and an mp3 file."},
+ ex:{ua:"Це не інший font, це те саме накреслення — просто інший кегль.",
+     pl:"To nie jest inny font, to ta sama odmiana — po prostu inny stopień pisma.",
+     en:"That's not a different font, it's the same weight — just a different size."},
  note:"Польське <b>czcionka</b> історично означає металеву літеру, а не файл. У побуті кажуть «czcionka», у фаховій розмові — <b>krój</b> або <b>font</b>.",
+ nt:{pl:"<b>Czcionka</b> historycznie oznacza metalową literę, a nie plik. W mowie potocznej mówi się «czcionka», w rozmowie fachowej — <b>krój</b> albo <b>font</b>.",
+     en:"Polish <b>czcionka</b> historically means a metal sort, not a file. Casual speech says czcionka; professionals say <b>krój</b> or <b>font</b>."},
  d:`<div class="col" style="max-width:250px">
   <div class="tf-row"><span class="cap">krój</span><b>IBM Plex Sans</b></div>
   <div class="tf-row"><span class="cap">fonty</span><div><i>Regular</i><i style="font-weight:500">Medium</i><i style="font-weight:600">SemiBold</i><i style="font-style:italic">Italic</i></div></div>
@@ -2170,6 +2363,11 @@ const DATA = [
 
 {c:"L",n:"02",en:"Type scale",alt:"modular scale",pl:"skala typograficzna",
  ua:"Набір дозволених розмірів тексту з єдиним коефіцієнтом (1.125, 1.25, 1.333). Замість «зроблю тут 19 px» — обираєш зі шкали. Основа типографічної ієрархії.",
+ o:{pl:"Zestaw dozwolonych rozmiarów tekstu z jednym współczynnikiem (1.125, 1.25, 1.333). Zamiast «dam tu 19 px» wybierasz ze skali. Podstawa hierarchii typograficznej.",
+    en:"A set of allowed text sizes built on one ratio (1.125, 1.25, 1.333). Instead of 'I'll put 19 px here' you pick from the scale. The basis of type hierarchy."},
+ ex:{ua:"19 px не зі шкали — бери 18 або 20, інакше розробник питатиме, чому саме так.",
+     pl:"19 px nie jest ze skali — weź 18 albo 20, inaczej deweloper zapyta, dlaczego akurat tyle.",
+     en:"19 px isn't on the scale — take 18 or 20, otherwise the developer will ask why."},
  d:`<div class="tscale">
   <div style="font-size:26px">32 · H1</div>
   <div style="font-size:20px">24 · H2</div>
@@ -2181,7 +2379,14 @@ const DATA = [
 
 {c:"L",n:"03",en:"Line height",alt:"leading",pl:"interlinia",
  ua:"Відстань між базовими лініями рядків. Для основного тексту 1.4–1.6, для заголовків 1.1–1.25. Чим довший рядок — тим більша потрібна інтерлінія.",
+ o:{pl:"Odległość między liniami bazowymi wierszy. Dla tekstu podstawowego 1.4–1.6, dla nagłówków 1.1–1.25. Im dłuższy wiersz, tym większa interlinia jest potrzebna.",
+    en:"The distance between the baselines of consecutive lines. 1.4–1.6 for body text, 1.1–1.25 for headings. The longer the line, the more leading it needs."},
+ ex:{ua:"Збільш інтерлінію в описі — рядки злипаються, читати важко.",
+     pl:"Zwiększ interlinię w opisie — wiersze się zlewają, ciężko to czytać.",
+     en:"Increase the line height in the description — the lines are running together."},
  note:"Термін <b>leading</b> (вимовляється «ледінг») — від свинцевих смужок, які вставляли між рядками металевого набору.",
+ nt:{pl:"Termin <b>leading</b> (czyt. «leding») pochodzi od ołowianych pasków wkładanych między wiersze w składzie metalowym.",
+     en:"The term <b>leading</b> comes from the strips of lead inserted between lines in metal typesetting."},
  d:`<div class="col" style="max-width:250px;gap:9px">
   <div class="lh-box"><span class="cap">1.1 — ciasno</span><p style="line-height:1.1">Rezystor grubowarstwowy SMD o tolerancji jednego procenta.</p></div>
   <div class="lh-box"><span class="cap">1.55 — dobrze</span><p style="line-height:1.55">Rezystor grubowarstwowy SMD o tolerancji jednego procenta.</p></div>
@@ -2189,7 +2394,14 @@ const DATA = [
 
 {c:"L",n:"04",en:"Letter spacing",alt:"tracking",pl:"światło międzyliterowe",
  ua:"Рівномірний проміжок між УСІМА літерами. Великий кегль — трохи від'ємний, дрібний і капслок — трохи додатний. Основний текст майже завжди чіпати не треба.",
+ o:{pl:"Równomierny odstęp między WSZYSTKIMI literami. Duży stopień — lekko ujemny, mały i wersaliki — lekko dodatni. Tekstu podstawowego prawie nigdy nie trzeba ruszać.",
+    en:"An even space between ALL letters. Slightly negative at large sizes, slightly positive for small text and all caps. Body text almost never needs touching."},
+ ex:{ua:"Додай трохи трекінгу до цього капслоку, літери злипаються.",
+     pl:"Dodaj trochę światła międzyliterowego do tych wersalików, litery się zlewają.",
+     en:"Add a bit of tracking to those caps, the letters are too tight."},
  note:"Англійською <b>tracking</b>. Не плутати з кернінгом — той працює з окремими парами.",
+ nt:{pl:"Po angielsku <b>tracking</b>. Nie mylić z kerningiem — ten działa na pojedynczych parach.",
+     en:"Called <b>tracking</b> in English. Not to be confused with kerning, which works on individual pairs."},
  d:`<div class="col" style="max-width:240px;gap:7px">
   <div class="ls-row" style="letter-spacing:-.04em">−0.04em ciasno</div>
   <div class="ls-row">0 domyślnie</div>
@@ -2198,6 +2410,11 @@ const DATA = [
 
 {c:"L",n:"05",en:"Kerning",alt:"pair spacing",pl:"kerning",
  ua:"Підганяння відстані між КОНКРЕТНОЮ парою літер: AV, To, Wa. Без нього в заголовках з'являються дірки. Гарний шрифт має тисячі кернінг-пар усередині файлу.",
+ o:{pl:"Dopasowanie odstępu między KONKRETNĄ parą liter: AV, To, Wa. Bez tego w nagłówkach pojawiają się dziury. Dobry font ma w pliku tysiące par kerningowych.",
+    en:"Adjusting the space between a SPECIFIC pair of letters: AV, To, Wa. Without it, headings develop holes. A good font ships thousands of kerning pairs inside the file."},
+ ex:{ua:"У логотипі дірка між A і V — це кернінг, а не трекінг, правимо пару.",
+     pl:"W logotypie jest dziura między A i V — to kerning, nie tracking, poprawiamy parę.",
+     en:"There's a hole between the A and the V in the logo — that's kerning, not tracking, fix the pair."},
  d:`<div class="col" style="align-items:center;gap:9px">
   <div class="kern bad"><span>A</span><span>V</span><span>A</span><span>T</span><span>A</span><span>R</span><i class="cap">bez kerningu</i></div>
   <div class="kern"><span>AVATAR</span><i class="cap">z kerningiem</i></div>
@@ -2205,6 +2422,11 @@ const DATA = [
 
 {c:"L",n:"06",en:"Measure",alt:"line length",pl:"długość wiersza",
  ua:"Кількість символів у рядку. Оптимум 45–75 знаків із пробілами. Коротше — око стрибає, довше — губиться початок наступного рядка.",
+ o:{pl:"Liczba znaków w wierszu. Optimum to 45–75 znaków ze spacjami. Krócej — oko skacze, dłużej — gubi się początek następnego wiersza.",
+    en:"The number of characters per line. The optimum is 45–75 including spaces. Shorter and the eye jumps; longer and you lose the start of the next line."},
+ ex:{ua:"Рядок задовгий — 110 знаків, звузь колонку до 65.",
+     pl:"Wiersz jest za długi — 110 znaków, zwęź kolumnę do 65.",
+     en:"That line is too long — 110 characters, narrow the column to 65."},
  d:`<div class="col" style="max-width:255px;gap:9px">
   <div class="ms-box"><span class="cap">≈ 40 znaków · za krótko</span><p style="max-width:150px">Rezystor grubowarstwowy SMD o tolerancji jednego procenta i mocy.</p></div>
   <div class="ms-box"><span class="cap">≈ 65 znaków · optimum</span><p>Rezystor grubowarstwowy SMD o tolerancji jednego procenta i mocy.</p></div>
@@ -2212,6 +2434,11 @@ const DATA = [
 
 {c:"L",n:"07",en:"Font weight",alt:"boldness",pl:"grubość kroju",
  ua:"Товщина штриха: 100–900. У продукті достатньо 2–3 накреслення. Не імітуй жирність програмно (fake bold) — бери справжнє накреслення шрифту.",
+ o:{pl:"Grubość kreski: 100–900. W produkcie wystarczą 2–3 odmiany. Nie udawaj pogrubienia programowo (fake bold) — bierz prawdziwą odmianę fontu.",
+    en:"Stroke thickness: 100–900. Two or three weights are enough in a product. Never fake bold in software — use the font's real weight."},
+ ex:{ua:"Це fake bold, браузер сам домалював — постав справжній Semibold.",
+     pl:"To jest fake bold, przeglądarka sama pogrubiła — daj prawdziwy Semibold.",
+     en:"That's fake bold, the browser synthesised it — use the real Semibold."},
  d:`<div class="col" style="max-width:230px;gap:2px;font-size:15px">
   <div style="font-weight:400">400 Regular · Zamówienie</div>
   <div style="font-weight:500">500 Medium · Zamówienie</div>
@@ -2221,6 +2448,11 @@ const DATA = [
 
 {c:"L",n:"08",en:"x-height",alt:"lowercase height",pl:"wysokość x",
  ua:"Висота малої літери «x» без виносних елементів. Головний фактор читабельності: шрифт з великим x-height здається більшим за той самий кегль і краще читається дрібним.",
+ o:{pl:"Wysokość małej litery «x» bez wydłużeń. Główny czynnik czytelności: font o dużej wysokości x wydaje się większy przy tym samym stopniu i lepiej czyta się w małych rozmiarach.",
+    en:"The height of a lowercase x without ascenders or descenders. The main readability factor: a font with a large x-height looks bigger at the same size and reads better when small."},
+ ex:{ua:"Цей шрифт має малий x-height — на 12 px підписи будуть нечитабельні.",
+     pl:"Ten font ma niską wysokość x — przy 12 px etykiety będą nieczytelne.",
+     en:"This font has a small x-height — the labels will be unreadable at 12 px."},
  d:`<div class="anatomy">
   <div class="an-lines"><i class="an-asc">ascender</i><i class="an-cap">cap height</i><i class="an-x">x-height</i><i class="an-base">baseline</i><i class="an-desc">descender</i></div>
   <div class="an-word">Hxpb</div>
@@ -2228,6 +2460,11 @@ const DATA = [
 
 {c:"L",n:"09",en:"Baseline",alt:"cap height, ascender, descender",pl:"linia bazowa",
  ua:"Лінія, на якій «стоять» літери. Ascender — виносний угору (h, b), descender — униз (p, g). Вирівнювання іконки з текстом робиться по базовій лінії, а не по центру блоку.",
+ o:{pl:"Linia, na której «stoją» litery. Wydłużenie górne (h, b) i dolne (p, g). Ikonę wyrównuje się z tekstem do linii bazowej, a nie do środka bloku.",
+    en:"The line letters sit on. Ascenders go up (h, b), descenders go down (p, g). Align an icon to the text baseline, not to the centre of the block."},
+ ex:{ua:"Іконка з'їхала — вирівняй по базовій лінії, а не по центру рядка.",
+     pl:"Ikona się rozjechała — wyrównaj do linii bazowej, a nie do środka wiersza.",
+     en:"The icon looks off — align it to the baseline, not the centre of the line."},
  d:`<div class="baseline-al">
   <div class="ba-row bad"><span class="ic-sq"></span>Wyrównanie do środka<i class="cap">źle</i></div>
   <div class="ba-row"><span class="ic-sq"></span>Wyrównanie do linii bazowej<i class="cap">dobrze</i></div>
@@ -2235,6 +2472,11 @@ const DATA = [
 
 {c:"L",n:"10",en:"Type hierarchy",alt:"visual hierarchy",pl:"hierarchia typograficzna",
  ua:"Порядок читання, заданий розміром, вагою і кольором. Правило: розрізняй рівні мінімум двома параметрами одразу — лише розмір читається слабо.",
+ o:{pl:"Kolejność czytania nadana rozmiarem, grubością i kolorem. Zasada: odróżniaj poziomy co najmniej dwoma parametrami naraz — sam rozmiar czyta się słabo.",
+    en:"The reading order set by size, weight and colour. Rule: separate levels with at least two parameters at once — size alone reads weakly."},
+ ex:{ua:"Два рівні заголовків відрізняються тільки розміром — додай ще вагу.",
+     pl:"Dwa poziomy nagłówków różnią się tylko rozmiarem — dodaj jeszcze grubość.",
+     en:"Your two heading levels differ only in size — add weight as well."},
  d:`<div class="hier">
   <b>Rezystor SMD 4,7 kΩ</b>
   <i>RS-4K7-0805 · Texas Instruments</i>
@@ -2244,7 +2486,14 @@ const DATA = [
 
 {c:"L",n:"11",en:"Widow / Orphan",alt:"runt line",pl:"wdowa / bękart",
  ua:"Обрубок тексту, що псує композицію: одне слово в останньому рядку абзацу або самотній рядок на початку колонки. У вебі лікується через text-wrap: pretty / balance.",
+ o:{pl:"Resztka tekstu psująca kompozycję: jedno słowo w ostatnim wierszu akapitu albo samotny wiersz na początku łamu. W webie leczy się przez text-wrap: pretty / balance.",
+    en:"A stray bit of text that ruins the block: one word on the last line of a paragraph, or a lone line at the top of a column. On the web, text-wrap: pretty / balance fixes it."},
+ ex:{ua:"В останньому рядку висить одне слово — прибери вдову, вона псує блок.",
+     pl:"W ostatnim wierszu wisi jedno słowo — usuń tę wdowę, psuje blok.",
+     en:"One word is hanging on the last line — kill that widow, it breaks the block."},
  note:"Увага: польська термінологія тут <b>жаргонна й суперечлива</b> — «bękart», «szewc», «wdowa» різні джерела визначають по-різному. Не сперечайся про назву, показуй проблему.",
+ nt:{pl:"Uwaga: polska terminologia jest tu <b>żargonowa i sprzeczna</b> — «bękart», «szewc», «wdowa» bywają definiowane różnie. Nie kłóć się o nazwę, pokaż problem.",
+     en:"Careful: the Polish terms here are <b>slang and contradictory</b> — bękart, szewc and wdowa are defined differently by different sources. Don't argue about the name, point at the problem."},
  d:`<div class="col" style="max-width:250px;gap:9px">
   <div class="wid bad"><p>Zamówienie zostanie zrealizowane w ciągu dwóch dni roboczych od momentu<br><span>potwierdzenia.</span></p><i class="cap">wdowa — jedno słowo</i></div>
   <div class="wid"><p>Zamówienie zostanie zrealizowane w ciągu dwóch dni od chwili potwierdzenia zamówienia.</p><i class="cap">poprawnie</i></div>
@@ -2252,7 +2501,14 @@ const DATA = [
 
 {c:"L",n:"12",en:"Hanging conjunction",alt:"orphan word (PL rule)",pl:"sierota / wiszący spójnik",
  ua:"Специфічно польське правило: односимвольні слова (i, a, o, w, z, u) НЕ можна лишати в кінці рядка — переносяться разом з наступним словом через нерозривний пробіл.",
+ o:{pl:"Reguła typowo polska: jednoliterowych słów (i, a, o, w, z, u) NIE zostawia się na końcu wiersza — przenosi się je razem z następnym słowem twardą spacją.",
+    en:"A rule specific to Polish: single-letter words (i, a, o, w, z, u) must not be left at the end of a line — they move to the next line with the following word via a non-breaking space."},
+ ex:{ua:"Тут «w» лишилось у кінці рядка — постав nbsp, поляк це одразу помітить.",
+     pl:"Tu «w» zostało na końcu wiersza — daj nbsp, Polak od razu to zauważy.",
+     en:"The 'w' is stranded at the end of the line — add an nbsp, a Polish reader will notice straight away."},
  note:"Критично для tme.eu. Технічно — <b>&amp;nbsp;</b> після спілки. Польський користувач це помічає одразу, як українець помітив би «в кінці рядка».",
+ nt:{pl:"Krytyczne dla tme.eu. Technicznie — <b>&amp;nbsp;</b> po spójniku. Polski użytkownik zauważa to od razu.",
+     en:"Critical for tme.eu. Technically an <b>&amp;nbsp;</b> after the conjunction. A Polish reader spots it immediately."},
  d:`<div class="col" style="max-width:245px;gap:9px">
   <div class="wid bad"><p>Rezystory i<br>kondensatory dostępne od ręki</p><i class="cap">źle — „i" wisi</i></div>
   <div class="wid"><p>Rezystory<br>i&nbsp;kondensatory dostępne od ręki</p><i class="cap">dobrze — i&amp;nbsp;kondensatory</i></div>
@@ -2260,6 +2516,11 @@ const DATA = [
 
 {c:"L",n:"13",en:"Text alignment",alt:"ragged right, justified",pl:"wyrównanie tekstu",
  ua:"Ліворуч (ragged right) — стандарт для екрана. Виключка (justowanie) в вебі створює «річки» з пробілів, бо браузер не вміє переносити так, як InDesign. По центру — тільки короткі блоки.",
+ o:{pl:"Do lewej (ragged right) to standard na ekranie. Justowanie w webie tworzy «rzeki» ze spacji, bo przeglądarka nie dzieli wyrazów tak jak InDesign. Do środka — tylko krótkie bloki.",
+    en:"Left-aligned (ragged right) is the screen standard. Justified text on the web creates rivers of white space because browsers don't hyphenate like InDesign. Centred — short blocks only."},
+ ex:{ua:"Не роби виключку в вебі — підуть річки, браузер не переносить як InDesign.",
+     pl:"Nie justuj tego w webie — zrobią się rzeki, przeglądarka nie dzieli wyrazów jak InDesign.",
+     en:"Don't justify this on the web — you'll get rivers, the browser doesn't hyphenate like InDesign."},
  d:`<div class="col" style="max-width:250px;gap:9px">
   <div class="ta-box"><span class="cap">do lewej — standard</span><p>Rezystor grubowarstwowy SMD o tolerancji jednego procenta.</p></div>
   <div class="ta-box"><span class="cap">justowanie — rzeki</span><p style="text-align:justify">Rezystor grubowarstwowy SMD o tolerancji jednego procenta.</p></div>
@@ -2267,7 +2528,14 @@ const DATA = [
 
 {c:"L",n:"14",en:"Tabular figures",alt:"lining vs proportional",pl:"cyfry tabelaryczne",
  ua:"Цифри однакової ширини — вирівнюються в колонку. Обов'язкові для таблиць, цін і будь-яких числових даних. Пропорційні красивіші в тексті, але в таблиці «пливуть».",
+ o:{pl:"Cyfry o jednakowej szerokości — równają się w kolumnie. Obowiązkowe w tabelach, cenach i wszelkich danych liczbowych. Proporcjonalne są ładniejsze w tekście, ale w tabeli się rozjeżdżają.",
+    en:"Digits of identical width that line up in a column. Mandatory for tables, prices and any numeric data. Proportional figures look better in running text but drift in a table."},
+ ex:{ua:"Увімкни табличні цифри в колонці з цінами, вони розповзаються.",
+     pl:"Włącz cyfry tabelaryczne w kolumnie z cenami, bo się rozjeżdżają.",
+     en:"Turn on tabular figures in the price column, the numbers don't line up."},
  note:"CSS: <b>font-variant-numeric: tabular-nums</b>. Одне з найдешевших покращень B2B-таблиці.",
+ nt:{pl:"CSS: <b>font-variant-numeric: tabular-nums</b>. Jedno z najtańszych ulepszeń tabeli B2B.",
+     en:"CSS: <b>font-variant-numeric: tabular-nums</b>. One of the cheapest wins for a B2B table."},
  d:`<div class="row" style="gap:14px;align-items:flex-start">
   <div class="fig prop"><span class="cap">proporcjonalne</span><i>1 240,00</i><i>987,50</i><i>11 118,00</i></div>
   <div class="fig tab"><span class="cap">tabelaryczne</span><i>1 240,00</i><i>987,50</i><i>11 118,00</i></div>
@@ -2275,6 +2543,11 @@ const DATA = [
 
 {c:"L",n:"15",en:"Uppercase / Small caps",alt:"all caps, versals",pl:"wersaliki / kapitaliki",
  ua:"Капслок читається на 10–20% повільніше — тільки для коротких міток. Капітеліки (малі великі літери) — елегантніша альтернатива для підзаголовків і абревіатур.",
+ o:{pl:"Wersaliki czyta się o 10–20% wolniej — tylko do krótkich etykiet. Kapitaliki (małe wersaliki) to elegantsza alternatywa dla podtytułów i skrótów.",
+    en:"All caps reads 10–20% slower — use it only for short labels. Small caps are a more elegant option for subheads and acronyms."},
+ ex:{ua:"Ціле речення капслоком не читається — лиши капс тільки на мітці.",
+     pl:"Całe zdanie wersalikami się nie czyta — zostaw wersaliki tylko na etykiecie.",
+     en:"A whole sentence in caps doesn't read — keep the caps for the label only."},
  d:`<div class="col" style="max-width:240px;gap:7px">
   <div class="uc-row">Zwykły tekst</div>
   <div class="uc-row" style="text-transform:uppercase;letter-spacing:.09em">wersaliki + światło</div>
@@ -2283,6 +2556,11 @@ const DATA = [
 
 {c:"L",n:"16",en:"Optical size",alt:"opsz, size-specific design",pl:"rozmiar optyczny",
  ua:"Варіативні шрифти вміють міняти малюнок літери залежно від кегля: у дрібному — товщі штрихи й більше світла, у великому — тонші й щільніше. Раніше це були окремі накреслення Display і Text.",
+ o:{pl:"Fonty zmienne potrafią zmieniać rysunek litery zależnie od stopnia: w małym — grubsze kreski i więcej światła, w dużym — cieńsze i ciaśniej. Kiedyś były to osobne odmiany Display i Text.",
+    en:"Variable fonts can reshape the letterforms by size: heavier strokes and more spacing when small, finer and tighter when large. This used to require separate Display and Text cuts."},
+ ex:{ua:"Візьми Display-накреслення на великий заголовок, Text там задрібний.",
+     pl:"Weź odmianę Display na duży nagłówek, Text jest tam za drobny.",
+     en:"Use the Display cut for the big heading, Text is too fine at that size."},
  d:`<div class="col" style="align-items:center;gap:4px">
   <div style="font-size:30px;letter-spacing:-.03em;font-weight:600">Display 32</div>
   <div style="font-size:13px;letter-spacing:.01em">Text 16 — ten sam krój, inny rysunek</div>
