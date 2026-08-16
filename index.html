@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Katalog UI — глосарій інтерфейсних елементів (EN · PL · UA)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14181A;
+  --paper:#ECEEEA;
+  --surface:#FFFFFF;
+  --well:#F5F7F3;
+  --line:#D2D7D1;
+  --line-soft:#E3E7E2;
+  --muted:#5C6660;
+  --pcb:#0B5C43;
+  --pcb-soft:#E4EFE9;
+  --brass:#8A6516;
+  --brass-soft:#F3EDDD;
+  --danger:#A32B1C;
+  --danger-soft:#FBE9E6;
+  --warn:#8A5A00;
+  --warn-soft:#FBF0DC;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  --r:3px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--pcb)}
+
+/* ---------- masthead ---------- */
+.masthead{
+  position:sticky;top:0;z-index:50;
+  background:var(--paper);border-bottom:1px solid var(--line);
+}
+.masthead-in{max-width:1180px;margin:0 auto;padding:14px 18px 12px}
+.brandline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand{
+  font-family:var(--mono);font-weight:600;font-size:15px;
+  letter-spacing:.14em;text-transform:uppercase;margin:0;
+}
+.brand em{font-style:normal;color:var(--pcb)}
+.brandsub{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em}
+.searchrow{display:flex;gap:8px;align-items:center;margin-top:11px}
+.searchbox{position:relative;flex:1}
+.searchbox svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.45}
+#q{
+  width:100%;padding:9px 12px 9px 32px;font:400 14px/1.2 var(--sans);
+  background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);border-radius:var(--r);
+}
+#q::placeholder{color:#95A09A}
+#q:focus{outline:2px solid var(--pcb);outline-offset:1px;border-color:var(--pcb)}
+.count{
+  font-family:var(--mono);font-size:11px;color:var(--muted);
+  white-space:nowrap;letter-spacing:.04em;
+}
+.cats{
+  display:flex;gap:6px;overflow-x:auto;margin-top:10px;padding-bottom:2px;
+  scrollbar-width:none;
+}
+.cats::-webkit-scrollbar{display:none}
+.cat{
+  flex:0 0 auto;font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+  padding:5px 9px;border:1px solid var(--line);border-radius:99px;
+  background:var(--surface);color:var(--muted);text-decoration:none;white-space:nowrap;
+}
+.cat:hover{border-color:var(--pcb);color:var(--pcb)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:22px 18px 80px}
+.sec{margin:0 0 34px;scroll-margin-top:150px}
+.sechead{
+  display:flex;align-items:baseline;gap:10px;
+  padding-bottom:7px;border-bottom:1.5px solid var(--ink);margin-bottom:14px;
+}
+.secnum{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.08em}
+.sectitle{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin:0}
+.secpl{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:auto;letter-spacing:.04em}
+
+/* ---------- entry ---------- */
+.entry{
+  display:grid;grid-template-columns:1fr;gap:0;
+  background:var(--surface);border:1px solid var(--line-soft);
+  border-radius:var(--r);margin-bottom:10px;overflow:hidden;
+}
+@media(min-width:820px){
+  .entry{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}
+}
+.entry-txt{padding:14px 16px 15px;min-width:0}
+.code{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  color:var(--brass);display:block;margin-bottom:5px;
+}
+.en{font-size:17px;font-weight:600;margin:0 0 2px;letter-spacing:-.01em}
+.alt{font-family:var(--mono);font-size:11px;color:var(--muted);margin:0 0 8px}
+.pl{
+  display:inline-flex;align-items:center;gap:7px;margin:0 0 9px;
+  font-family:var(--mono);font-size:13px;color:var(--pcb);
+  background:var(--pcb-soft);border:1px solid #C6DED4;
+  padding:3px 8px;border-radius:var(--r);cursor:pointer;
+  text-align:left;
+}
+.pl:hover{background:#D7E9E0}
+.pl b{font-weight:600}
+.pl .tagpl{
+  font-size:9px;letter-spacing:.1em;color:#fff;background:var(--pcb);
+  padding:1px 4px;border-radius:2px;flex:0 0 auto;
+}
+.ua{margin:0;font-size:14.5px}
+.note{
+  margin:9px 0 0;font-size:12.5px;color:var(--muted);
+  border-left:2px solid var(--brass);padding-left:9px;
+}
+.note b{color:var(--ink);font-weight:600}
+
+/* ---------- sample well ---------- */
+.sample{
+  border-top:1px solid var(--line-soft);
+  background:var(--well);
+  background-image:radial-gradient(var(--line) .9px,transparent .9px);
+  background-size:11px 11px;background-position:-1px -1px;
+  padding:20px 16px;display:flex;align-items:center;justify-content:center;
+  min-height:120px;
+}
+@media(min-width:820px){
+  .sample{border-top:0;border-left:1px solid var(--line-soft)}
+}
+.sample>*{max-width:100%}
+.empty{padding:36px 18px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:12px}
+
+/* ---------- toast on copy ---------- */
+#copied{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,14px);
+  background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;
+  padding:8px 14px;border-radius:var(--r);opacity:0;pointer-events:none;
+  transition:opacity .18s,transform .18s;z-index:99;
+}
+#copied.on{opacity:1;transform:translate(-50%,0)}
+
+/* ================= DEMO PRIMITIVES ================= */
+.d{font-family:var(--sans);font-size:13px;color:var(--ink)}
+.ic{width:15px;height:15px;display:inline-block;vertical-align:-2.5px;flex:0 0 auto}
+.b .ic,.rail .ic,.bnav .ic{pointer-events:none}
+.rail .ic,.bnav .ic{width:16px;height:16px;display:block;margin:0 auto 2px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+.col{display:flex;flex-direction:column;gap:8px;width:100%;max-width:270px}
+.cap{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+
+/* buttons */
+.b{
+  font:500 13px/1 var(--sans);padding:9px 14px;border-radius:var(--r);
+  border:1px solid transparent;cursor:pointer;display:inline-flex;
+  align-items:center;gap:7px;
+}
+.b-p{background:var(--pcb);color:#fff}
+.b-p:hover{background:#0A4E39}
+.b-s{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.b-s:hover{border-color:var(--ink)}
+.b-t{background:transparent;color:var(--pcb);padding-left:6px;padding-right:6px}
+.b-t:hover{background:var(--pcb-soft)}
+.b-d{background:var(--danger);color:#fff}
+.b[disabled]{opacity:.42;cursor:not-allowed}
+.b-i{padding:8px;border-radius:var(--r)}
+.b:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.fab{
+  width:44px;height:44px;border-radius:14px;background:var(--pcb);color:#fff;
+  border:0;display:grid;place-items:center;cursor:pointer;
+  box-shadow:0 3px 9px rgba(11,92,67,.32);
+}
+.bgroup{display:inline-flex}
+.bgroup .b{border-radius:0;border-color:var(--line);background:var(--surface);color:var(--ink)}
+.bgroup .b:first-child{border-radius:var(--r) 0 0 var(--r)}
+.bgroup .b:last-child{border-radius:0 var(--r) var(--r) 0;margin-left:-1px}
+.bgroup .b:not(:first-child):not(:last-child){margin-left:-1px}
+.split{display:inline-flex}
+.split .b:first-child{border-radius:var(--r) 0 0 var(--r)}
+.split .b:last-child{border-radius:0 var(--r) var(--r) 0;border-left:1px solid rgba(255,255,255,.3);padding:9px 8px}
+.lnk{color:var(--pcb);text-decoration:underline;text-underline-offset:2.5px;cursor:pointer}
+
+/* inputs */
+.in,.ta,.sel{
+  width:100%;font:400 13px/1.3 var(--sans);color:var(--ink);
+  padding:8px 10px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r);
+}
+.in:focus,.ta:focus,.sel:focus{outline:2px solid var(--pcb);outline-offset:0;border-color:var(--pcb)}
+.ta{resize:none;height:62px}
+.lab{font-size:12px;font-weight:600;display:block;margin-bottom:4px}
+.lab .req{color:var(--danger)}
+.hint{font-size:11.5px;color:var(--muted);margin-top:4px}
+.err{font-size:11.5px;color:var(--danger);margin-top:4px;display:flex;gap:5px;align-items:center}
+.in.bad{border-color:var(--danger);background:var(--danger-soft)}
+.in.bad:focus{outline-color:var(--danger)}
+.affix{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.affix span{
+  background:var(--well);padding:8px 10px;font-family:var(--mono);font-size:12px;
+  color:var(--muted);display:grid;place-items:center;
+}
+.affix span:first-child{border-right:1px solid var(--line)}
+.affix span:last-child{border-left:1px solid var(--line)}
+.affix .in{border:0;border-radius:0}
+.affix .in:focus{outline-offset:-2px}
+.otp{display:flex;gap:6px}
+.otp i{
+  width:32px;height:38px;border:1px solid var(--line);border-radius:var(--r);
+  background:var(--surface);display:grid;place-items:center;
+  font:500 15px/1 var(--mono);font-style:normal;
+}
+.otp i.act{border-color:var(--pcb);outline:2px solid var(--pcb-soft)}
+.drop{
+  border:1.5px dashed var(--line);border-radius:var(--r);background:var(--surface);
+  padding:16px;text-align:center;width:100%;max-width:250px;
+}
+.drop b{display:block;font-size:12.5px}
+.drop small{color:var(--muted);font-size:11px}
+.counter{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:4px}
+
+/* choice controls */
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:13px;cursor:pointer}
+.chk input{accent-color:var(--pcb);width:15px;height:15px;margin:2px 0 0;flex:0 0 auto}
+.sw{position:relative;display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-size:13px}
+.sw input{position:absolute;opacity:0;width:0;height:0}
+.sw i{
+  width:36px;height:20px;border-radius:99px;background:#BFC7C1;position:relative;
+  transition:background .16s;flex:0 0 auto;
+}
+.sw i::after{
+  content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;
+  border-radius:50%;background:#fff;transition:transform .16s;
+  box-shadow:0 1px 2px rgba(0,0,0,.22);
+}
+.sw input:checked + i{background:var(--pcb)}
+.sw input:checked + i::after{transform:translateX(16px)}
+.sw input:focus-visible + i{outline:2px solid var(--ink);outline-offset:2px}
+input[type=range]{accent-color:var(--pcb);width:100%}
+.dual{position:relative;height:26px;width:100%;max-width:230px}
+.dual .trk{position:absolute;top:11px;left:0;right:0;height:4px;background:#CBD3CD;border-radius:9px}
+.dual .fil{position:absolute;top:11px;left:26%;right:22%;height:4px;background:var(--pcb);border-radius:9px}
+.dual b{
+  position:absolute;top:6px;width:14px;height:14px;border-radius:50%;
+  background:#fff;border:2px solid var(--pcb);
+}
+.stp{display:inline-flex;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.stp button{width:32px;border:0;background:transparent;font-size:15px;cursor:pointer;color:var(--ink)}
+.stp button:hover{background:var(--well)}
+.stp input{width:46px;border:0;border-left:1px solid var(--line);border-right:1px solid var(--line);text-align:center;font:500 13px var(--mono);padding:8px 0}
+.stp input:focus{outline:2px solid var(--pcb);outline-offset:-2px}
+.stars{display:flex;gap:2px;color:var(--brass);font-size:17px;letter-spacing:1px}
+.stars .off{color:#C9D0CA}
+.swatch{display:flex;gap:6px;align-items:center}
+.swatch b{width:26px;height:26px;border-radius:var(--r);border:1px solid rgba(0,0,0,.14);display:block}
+
+/* calendar */
+.cal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:9px;width:196px}
+.cal-h{display:flex;justify-content:space-between;align-items:center;font:600 11.5px var(--sans);margin-bottom:6px}
+.cal-h span{font-family:var(--mono);color:var(--muted);cursor:pointer}
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center}
+.cal-g div{font-size:10.5px;padding:3.5px 0;border-radius:2px}
+.cal-g .dow{color:var(--muted);font-family:var(--mono);font-size:9px}
+.cal-g .mut{color:#B4BCB6}
+.cal-g .sel{background:var(--pcb);color:#fff;font-weight:600}
+.cal-g .rng{background:var(--pcb-soft)}
+
+/* navigation */
+.crumb{display:flex;gap:6px;align-items:center;font-size:12px;flex-wrap:wrap;color:var(--muted)}
+.crumb a{color:var(--pcb);text-decoration:none}
+.crumb b{color:var(--ink);font-weight:600}
+.pag{display:flex;gap:4px;align-items:center}
+.pag a{
+  min-width:29px;height:29px;display:grid;place-items:center;font:500 12px var(--mono);
+  border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+  color:var(--ink);text-decoration:none;padding:0 6px;
+}
+.pag a.on{background:var(--pcb);border-color:var(--pcb);color:#fff}
+.pag span{color:var(--muted);padding:0 2px}
+.tabs{width:100%;max-width:270px}
+.tabs input{position:absolute;opacity:0;pointer-events:none}
+.tabs .tl{display:flex;border-bottom:1px solid var(--line)}
+.tabs .tl label{
+  padding:8px 12px;font-size:12.5px;cursor:pointer;color:var(--muted);
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.tabs .tp{padding:11px 2px;font-size:12.5px;display:none;color:var(--muted)}
+.tabs #t1:checked~.tl label[for=t1],
+.tabs #t2:checked~.tl label[for=t2],
+.tabs #t3:checked~.tl label[for=t3]{color:var(--pcb);border-bottom-color:var(--pcb);font-weight:600}
+.tabs #t1:checked~.p1,.tabs #t2:checked~.p2,.tabs #t3:checked~.p3{display:block}
+.menu{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:0 6px 18px rgba(20,24,26,.11);padding:4px;width:170px;
+}
+.menu a{
+  display:flex;justify-content:space-between;gap:10px;padding:6px 8px;font-size:12.5px;
+  color:var(--ink);text-decoration:none;border-radius:2px;
+}
+.menu a:hover{background:var(--well)}
+.menu a kbd{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.menu hr{border:0;border-top:1px solid var(--line-soft);margin:4px 0}
+.menu .dg{color:var(--danger)}
+.rail{
+  display:flex;flex-direction:column;gap:2px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r);padding:6px;width:66px;text-align:center;
+}
+.rail div{padding:6px 0;font-size:9px;font-family:var(--mono);color:var(--muted);border-radius:2px}
+.rail div.on{background:var(--pcb-soft);color:var(--pcb)}
+.rail div b{display:block;font-size:15px;font-family:var(--sans);margin-bottom:1px}
+.bnav{
+  display:flex;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);width:100%;max-width:240px;
+}
+.bnav div{flex:1;text-align:center;padding:7px 0;font-size:9px;font-family:var(--mono);color:var(--muted)}
+.bnav div b{display:block;font-size:15px;font-family:var(--sans)}
+.bnav div.on{color:var(--pcb)}
+.steps{display:flex;align-items:center;gap:0;width:100%;max-width:260px}
+.steps .s{display:flex;flex-direction:column;align-items:center;gap:4px;flex:0 0 auto}
+.steps .s b{
+  width:23px;height:23px;border-radius:50%;display:grid;place-items:center;
+  font:500 11px var(--mono);border:1.5px solid var(--line);background:var(--surface);color:var(--muted);
+}
+.steps .s.done b{background:var(--pcb);border-color:var(--pcb);color:#fff}
+.steps .s.now b{border-color:var(--pcb);color:var(--pcb)}
+.steps .s span{font-size:9.5px;font-family:var(--mono);color:var(--muted)}
+.steps .ln{flex:1;height:1.5px;background:var(--line);margin:0 4px 15px}
+.steps .ln.done{background:var(--pcb)}
+.cmdk{background:var(--surface);border:1px solid var(--line);border-radius:5px;width:100%;max-width:250px;box-shadow:0 8px 22px rgba(20,24,26,.13);overflow:hidden}
+.cmdk .q{padding:9px 11px;border-bottom:1px solid var(--line-soft);font-size:12.5px;color:var(--muted);display:flex;gap:7px}
+.cmdk .g{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--muted);padding:7px 11px 3px}
+.cmdk .it{padding:6px 11px;font-size:12.5px;display:flex;justify-content:space-between}
+.cmdk .it.on{background:var(--pcb-soft)}
+.tbar{display:inline-flex;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.tbar button{border:0;background:transparent;padding:7px 9px;cursor:pointer;font:500 13px var(--sans);color:var(--muted)}
+.tbar button.on{background:var(--well);color:var(--pcb)}
+.tbar .sp{width:1px;background:var(--line);margin:5px 2px}
+.skip{background:var(--pcb);color:#fff;font-size:12px;padding:6px 11px;border-radius:var(--r)}
+
+/* containment */
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  width:100%;max-width:230px;overflow:hidden;
+}
+.card .ph{height:66px;background:linear-gradient(115deg,#DDE4DE,#EDF1EC)}
+.card .bd{padding:10px 11px}
+.card h4{margin:0 0 3px;font-size:13.5px}
+.card p{margin:0 0 9px;font-size:11.5px;color:var(--muted);line-height:1.45}
+details.acc{width:100%;max-width:260px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+details.acc+details.acc{margin-top:-1px}
+details.acc summary{
+  padding:9px 11px;font-size:12.5px;font-weight:600;cursor:pointer;
+  list-style:none;display:flex;justify-content:space-between;gap:8px;
+}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-family:var(--mono);color:var(--pcb)}
+details.acc[open] summary::after{content:"–"}
+details.acc p{margin:0;padding:0 11px 11px;font-size:12px;color:var(--muted)}
+.divi{width:100%;max-width:240px}
+.divi hr{border:0;border-top:1px solid var(--line);margin:9px 0}
+.divi .lbl{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:10.5px;font-family:var(--mono)}
+.divi .lbl::before,.divi .lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+.lst{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);width:100%;max-width:250px}
+.lst div{padding:8px 11px;font-size:12.5px;display:flex;justify-content:space-between;gap:8px}
+.lst div+div{border-top:1px solid var(--line-soft)}
+.lst small{color:var(--muted);font-family:var(--mono);font-size:11px}
+table.t{
+  border-collapse:collapse;background:var(--surface);font-size:11.5px;
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+}
+table.t th{
+  background:var(--well);font:600 9.5px/1 var(--mono);letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);padding:7px 9px;text-align:left;
+  border-bottom:1px solid var(--line);white-space:nowrap;
+}
+table.t td{padding:6px 9px;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+table.t tr:last-child td{border-bottom:0}
+table.t td.n{font-family:var(--mono);text-align:right}
+.tree{font-size:12.5px;width:100%;max-width:220px}
+.tree details{margin-left:12px}
+.tree>details{margin-left:0}
+.tree summary{cursor:pointer;padding:2.5px 0;list-style:none;color:var(--ink)}
+.tree summary::-webkit-details-marker{display:none}
+.tree summary::before{content:"▸";color:var(--pcb);margin-right:6px;font-size:10px;display:inline-block}
+.tree details[open]>summary::before{transform:rotate(90deg)}
+.tree i{display:block;padding:2.5px 0 2.5px 26px;color:var(--muted);font-style:normal}
+.scr{
+  height:96px;overflow-y:auto;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:9px 11px;font-size:12px;width:100%;max-width:230px;color:var(--muted);
+}
+.split2{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);width:100%;max-width:250px;height:88px;overflow:hidden}
+.split2 .p1{width:38%;background:var(--well);padding:9px;font-size:11px;color:var(--muted)}
+.split2 .hnd{width:5px;background:var(--line-soft);cursor:col-resize;display:grid;place-items:center}
+.split2 .hnd::after{content:"";width:1px;height:18px;background:var(--muted)}
+.split2 .p2{flex:1;padding:9px;font-size:11px;color:var(--muted)}
+
+/* scene = mini viewport for overlays */
+.scene{
+  position:relative;width:100%;max-width:236px;height:148px;background:var(--surface);
+  border:1px solid var(--line);border-radius:5px;overflow:hidden;
+}
+.scene .pg{padding:9px}
+.scene .pg .bar{height:7px;background:var(--line-soft);border-radius:9px;margin-bottom:6px}
+.scene .pg .bar.s{width:56%}
+.scene .pg .bar.m{width:78%}
+.scrim{position:absolute;inset:0;background:rgba(20,24,26,.42)}
+.dlg{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:83%;background:var(--surface);border-radius:5px;padding:11px;
+  box-shadow:0 10px 26px rgba(0,0,0,.26);
+}
+.dlg h5{margin:0 0 4px;font-size:12.5px}
+.dlg p{margin:0 0 10px;font-size:11px;color:var(--muted);line-height:1.4}
+.dlg .act{display:flex;gap:6px;justify-content:flex-end}
+.dlg .b{padding:6px 10px;font-size:11.5px}
+.drw{
+  position:absolute;top:0;right:0;bottom:0;width:62%;background:var(--surface);
+  box-shadow:-6px 0 18px rgba(0,0,0,.18);padding:11px;
+}
+.drw h5{margin:0 0 8px;font-size:12px;display:flex;justify-content:space-between}
+.sheet{
+  position:absolute;left:0;right:0;bottom:0;background:var(--surface);
+  border-radius:11px 11px 0 0;padding:9px 11px 13px;box-shadow:0 -6px 18px rgba(0,0,0,.16);
+}
+.sheet .grab{width:32px;height:3.5px;border-radius:9px;background:var(--line);margin:0 auto 9px}
+.pop{
+  position:absolute;left:14px;top:52px;width:72%;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r);padding:9px;
+  box-shadow:0 7px 18px rgba(0,0,0,.15);font-size:11px;color:var(--muted);
+}
+.pop::before{
+  content:"";position:absolute;top:-5px;left:16px;width:8px;height:8px;
+  background:var(--surface);border-left:1px solid var(--line);border-top:1px solid var(--line);
+  transform:rotate(45deg);
+}
+.lb{position:absolute;inset:0;background:rgba(20,24,26,.78);display:grid;place-items:center}
+.lb .im{width:64%;height:60%;background:linear-gradient(115deg,#5C6660,#8E9A93);border-radius:3px}
+.lb .x{position:absolute;top:7px;right:9px;color:#fff;font-size:14px}
+
+/* tooltip (live) */
+.tipw{position:relative;display:inline-block}
+.tipw .trg{
+  border-bottom:1.5px dotted var(--muted);cursor:help;font-size:13px;
+}
+.tip{
+  position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);
+  background:var(--ink);color:#fff;font-size:11px;padding:5px 9px;border-radius:3px;
+  white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .13s;
+}
+.tip::after{
+  content:"";position:absolute;top:100%;left:50%;margin-left:-4px;
+  border:4px solid transparent;border-top-color:var(--ink);
+}
+.tipw:hover .tip,.tipw:focus-within .tip,.tipw:active .tip{opacity:1}
+@media (hover:none){.sample .tip,.qstage .tip{opacity:1;position:static;transform:none;display:inline-block;margin-left:9px;white-space:normal}.sample .tip::after,.qstage .tip::after{display:none}}
+.hcard{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:10px;width:190px;box-shadow:0 7px 18px rgba(0,0,0,.12);
+}
+.hcard .hd{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.hcard p{margin:0;font-size:11px;color:var(--muted);line-height:1.42}
+
+/* feedback */
+.toast{
+  display:flex;gap:9px;align-items:center;background:var(--ink);color:#fff;
+  padding:9px 12px;border-radius:var(--r);font-size:12.5px;max-width:250px;
+}
+.toast .un{margin-left:auto;color:#8FD3BB;font-weight:600;font-size:11.5px;cursor:pointer}
+.al{
+  display:flex;gap:9px;padding:9px 11px;border-radius:var(--r);font-size:12px;
+  width:100%;max-width:250px;line-height:1.42;border:1px solid;
+}
+.al b{display:block;font-size:12.5px;margin-bottom:1px}
+.al-i{background:var(--pcb-soft);border-color:#C6DED4;color:#0A4433}
+.al-w{background:var(--warn-soft);border-color:#EBD9B4;color:#6B4700}
+.al-e{background:var(--danger-soft);border-color:#F1CDC7;color:#842317}
+.bnr{
+  display:flex;gap:9px;align-items:center;background:var(--ink);color:#fff;
+  padding:8px 11px;font-size:12px;width:100%;max-width:255px;border-radius:var(--r);
+}
+.bnr .x{margin-left:auto;opacity:.6}
+.badge{
+  display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 5px;
+  border-radius:99px;background:var(--danger);color:#fff;font:600 10px/1 var(--mono);
+}
+.badge.dot{min-width:8px;width:8px;height:8px;padding:0}
+.bwrap{position:relative;display:inline-flex}
+.bwrap .badge{position:absolute;top:-5px;right:-7px;border:1.5px solid var(--well)}
+.pill{
+  display:inline-flex;gap:5px;align-items:center;font:500 11px var(--sans);
+  padding:3px 8px;border-radius:99px;border:1px solid;
+}
+.pill i{width:6px;height:6px;border-radius:50%;background:currentColor;font-style:normal}
+.pill.ok{background:var(--pcb-soft);border-color:#C6DED4;color:#0A4433}
+.pill.wr{background:var(--warn-soft);border-color:#EBD9B4;color:#6B4700}
+.pill.no{background:var(--danger-soft);border-color:#F1CDC7;color:#842317}
+.prog{width:100%;max-width:230px}
+.prog .tr{height:6px;background:#D8DED9;border-radius:9px;overflow:hidden}
+.prog .fl{height:100%;background:var(--pcb);border-radius:9px;width:64%}
+.prog .mt{display:flex;justify-content:space-between;font:500 10.5px var(--mono);color:var(--muted);margin-top:5px}
+.prog.ind .fl{width:38%;animation:sl 1.5s ease-in-out infinite}
+@keyframes sl{0%{margin-left:-38%}100%{margin-left:100%}}
+.spin{
+  width:22px;height:22px;border:2.5px solid #D2DAD5;border-top-color:var(--pcb);
+  border-radius:50%;animation:sp .8s linear infinite;
+}
+@keyframes sp{to{transform:rotate(360deg)}}
+.dots span{
+  display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--pcb);
+  margin:0 1.5px;animation:bo 1.1s ease-in-out infinite;
+}
+.dots span:nth-child(2){animation-delay:.16s}
+.dots span:nth-child(3){animation-delay:.32s}
+@keyframes bo{0%,80%,100%{opacity:.28}40%{opacity:1}}
+.skel{width:100%;max-width:240px}
+.skel div{
+  height:9px;border-radius:3px;margin-bottom:7px;
+  background:linear-gradient(90deg,#E1E6E1 25%,#EFF3EE 37%,#E1E6E1 63%);
+  background-size:400% 100%;animation:sh 1.35s ease infinite;
+}
+.skel div.t{height:44px}
+.skel div.w6{width:62%}
+.skel div.w8{width:82%;margin-bottom:0}
+@keyframes sh{0%{background-position:100% 50%}100%{background-position:0 50%}}
+.mty{text-align:center;max-width:220px}
+.mty .ic{
+  width:38px;height:38px;border:1.5px dashed var(--line);border-radius:var(--r);
+  margin:0 auto 9px;display:grid;place-items:center;color:var(--muted);
+}
+.mty b{display:block;font-size:12.5px;margin-bottom:3px}
+.mty p{margin:0 0 10px;font-size:11.5px;color:var(--muted);line-height:1.42}
+.err404{text-align:center}
+.err404 b{font:600 30px/1 var(--mono);color:var(--pcb);display:block}
+.err404 p{margin:6px 0 0;font-size:11.5px;color:var(--muted)}
+.gauge{text-align:center}
+.gauge .tr{width:120px;height:7px;background:linear-gradient(90deg,var(--pcb) 0 40%,var(--warn) 40% 72%,var(--danger) 72% 100%);border-radius:9px;position:relative}
+.gauge .nd{position:absolute;top:-4px;left:56%;width:2.5px;height:15px;background:var(--ink);border-radius:2px}
+.gauge small{display:block;font:500 10.5px var(--mono);color:var(--muted);margin-top:7px}
+
+/* content */
+.av{
+  width:32px;height:32px;border-radius:50%;background:var(--pcb);color:#fff;
+  display:grid;place-items:center;font:600 12px var(--sans);flex:0 0 auto;
+}
+.av.sq{border-radius:var(--r)}
+.av.br{background:var(--brass)}
+.av.gr{background:#5C6660}
+.avg{display:flex}
+.avg .av{border:2px solid var(--well);margin-left:-9px}
+.avg .av:first-child{margin-left:0}
+.avg .more{background:var(--line);color:var(--muted)}
+.chip{
+  display:inline-flex;gap:6px;align-items:center;font-size:12px;padding:4px 9px;
+  border-radius:99px;background:var(--surface);border:1px solid var(--line);
+}
+.chip.on{background:var(--pcb);border-color:var(--pcb);color:#fff}
+.chip .x{opacity:.55;cursor:pointer;font-size:13px;line-height:1}
+.thumb{width:52px;height:52px;border-radius:var(--r);background:linear-gradient(115deg,#DDE4DE,#EDF1EC);border:1px solid var(--line)}
+.carou{width:100%;max-width:240px}
+.carou .fr{display:flex;gap:7px;overflow:hidden}
+.carou .fr div{
+  flex:0 0 44%;height:60px;border-radius:var(--r);
+  background:linear-gradient(115deg,#DDE4DE,#EDF1EC);border:1px solid var(--line);
+}
+.carou .dt{display:flex;gap:5px;justify-content:center;margin-top:9px}
+.carou .dt i{width:5px;height:5px;border-radius:50%;background:#C4CCC6}
+.carou .dt i.on{background:var(--pcb);width:14px;border-radius:9px}
+.chart{display:flex;align-items:flex-end;gap:5px;height:66px}
+.chart b{width:15px;background:var(--pcb);border-radius:2px 2px 0 0;display:block;opacity:.85}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;min-width:132px}
+.stat .k{font:500 9.5px var(--mono);letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.stat .v{font:600 22px/1.1 var(--sans);margin:4px 0 2px}
+.stat .d{font-size:11px;color:var(--pcb);font-weight:500}
+.tml{border-left:1.5px solid var(--line);padding-left:14px;font-size:12px;max-width:220px}
+.tml div{position:relative;padding-bottom:11px}
+.tml div:last-child{padding-bottom:0}
+.tml div::before{
+  content:"";position:absolute;left:-19.5px;top:4px;width:8px;height:8px;
+  border-radius:50%;background:var(--surface);border:1.5px solid var(--line);
+}
+.tml div.on::before{background:var(--pcb);border-color:var(--pcb)}
+.tml small{display:block;font-family:var(--mono);font-size:10px;color:var(--muted)}
+kbd.k{
+  font:500 11px var(--mono);background:var(--surface);border:1px solid var(--line);
+  border-bottom-width:2px;border-radius:3px;padding:2.5px 6px;
+}
+pre.code2{
+  background:var(--ink);color:#D8E4DE;font:400 11px/1.6 var(--mono);
+  padding:10px 12px;border-radius:var(--r);margin:0;overflow:auto;max-width:250px;
+}
+pre.code2 .c{color:#7E9A8E}
+pre.code2 .s{color:#D9B980}
+.trunc{width:100%;max-width:220px;font-size:12.5px}
+.trunc .one{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:6px 9px}
+.trunc .two{
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:6px 9px;margin-top:7px;color:var(--muted);font-size:11.5px;
+}
+
+/* e-commerce */
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);width:100%;max-width:186px;padding:10px}
+.pcard .im{height:56px;background:linear-gradient(115deg,#DDE4DE,#EDF1EC);border-radius:2px;margin-bottom:8px}
+.pcard .sym{font:500 10px var(--mono);color:var(--muted)}
+.pcard h4{margin:2px 0 5px;font-size:12px;line-height:1.3}
+.pcard .pr{font:600 14px var(--sans)}
+.pcard .pr s{font:400 10.5px var(--mono);color:var(--muted);margin-left:5px}
+.ptable{border-collapse:collapse;font-size:11px;background:var(--surface);border:1px solid var(--line)}
+.ptable td{padding:4px 9px;border-bottom:1px solid var(--line-soft);font-family:var(--mono)}
+.ptable tr:last-child td{border-bottom:0}
+.ptable tr.on td{background:var(--pcb-soft);color:var(--pcb);font-weight:600}
+.facet{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px;width:100%;max-width:190px;font-size:12px}
+.facet .ft{font:600 9.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.facet label{display:flex;gap:7px;align-items:center;padding:2.5px 0;cursor:pointer}
+.facet label span{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.facet input{accent-color:var(--pcb);width:14px;height:14px}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);width:100%;max-width:220px;padding:10px}
+.mini .li{display:flex;gap:8px;align-items:center;padding:5px 0;font-size:11.5px}
+.mini .li+.li{border-top:1px solid var(--line-soft)}
+.mini .th{width:26px;height:26px;border-radius:2px;background:linear-gradient(115deg,#DDE4DE,#EDF1EC);flex:0 0 auto}
+.mini .pz{margin-left:auto;font-family:var(--mono);font-size:11px}
+.mini .tot{display:flex;justify-content:space-between;border-top:1.5px solid var(--line);margin-top:7px;padding-top:7px;font:600 12px var(--sans)}
+.cmp{border-collapse:collapse;font-size:11px;background:var(--surface);border:1px solid var(--line)}
+.cmp th{font:600 9.5px var(--mono);text-transform:uppercase;color:var(--muted);padding:6px 8px;text-align:left;border-bottom:1px solid var(--line)}
+.cmp td{padding:5px 8px;border-bottom:1px solid var(--line-soft);font-family:var(--mono)}
+.cmp td.hl{background:var(--pcb-soft);color:var(--pcb);font-weight:600}
+
+/* states & anatomy */
+.states{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;max-width:270px}
+.states .b{font-size:11.5px;padding:7px 11px}
+.st-h{background:#0A4E39}
+.st-f{outline:2px solid var(--ink);outline-offset:2px}
+.st-a{background:#083F2E}
+.anat{position:relative;padding:14px 0}
+.anat .b{position:relative}
+.anat .mk{
+  position:absolute;font:500 9px var(--mono);color:var(--brass);white-space:nowrap;
+}
+.tok{font:400 11px var(--mono);width:100%;max-width:250px}
+.tok div{display:flex;gap:8px;align-items:center;padding:3.5px 0;border-bottom:1px solid var(--line-soft)}
+.tok div:last-child{border-bottom:0}
+.tok b{width:15px;height:15px;border-radius:2px;flex:0 0 auto;border:1px solid rgba(0,0,0,.12)}
+.tok span{margin-left:auto;color:var(--muted)}
+.target{position:relative;display:grid;place-items:center;padding:12px}
+.target .hit{position:absolute;width:44px;height:44px;border:1.5px dashed var(--brass);border-radius:var(--r)}
+.target .ico{width:20px;height:20px;background:var(--pcb);border-radius:3px}
+.elev{display:flex;gap:9px;align-items:flex-end}
+.elev div{width:44px;height:38px;background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--r);display:grid;place-items:center;font:500 9px var(--mono);color:var(--muted)}
+.elev div.e1{box-shadow:0 1px 2px rgba(20,24,26,.09)}
+.elev div.e2{box-shadow:0 3px 8px rgba(20,24,26,.13)}
+.elev div.e3{box-shadow:0 8px 20px rgba(20,24,26,.18)}
+.dens{display:flex;gap:9px}
+.dens .lst{max-width:110px}
+.dens .lst.cz div{padding:4px 8px;font-size:11px}
+
+@media print{
+  .masthead{position:static;border-bottom:2px solid #14181A}
+  .searchrow,.cats,#copied,.tabsnav,#v-learn,#v-prog{display:none!important}
+  #v-cat{display:block!important}
+  .badge-state{display:none}
+  body{background:#fff}
+  .entry{break-inside:avoid;page-break-inside:avoid;border:1px solid #D2D7D1}
+  .sample{background:#F5F7F3}
+  .tip{opacity:1!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+
+/* ================= K · SPACING DEMOS ================= */
+.box-demo{display:grid;place-items:center}
+.pad-out{position:relative;background:repeating-linear-gradient(45deg,#DCEBE3,#DCEBE3 4px,#EAF4EF 4px,#EAF4EF 8px);border:1px solid var(--pcb);border-radius:var(--r);padding:17px}
+.pad-in{background:var(--surface);border:1px solid var(--line);padding:9px 16px;font-size:12px;border-radius:2px}
+.mk-lbl{position:absolute;top:3px;left:5px;font:500 8.5px var(--mono);color:var(--pcb)}
+.mar-out{position:relative;background:repeating-linear-gradient(45deg,#F6E7D5,#F6E7D5 4px,#FBF3E8 4px,#FBF3E8 8px);border:1px dashed var(--brass);border-radius:var(--r);padding:22px}
+.mar-out .mk-lbl{color:var(--brass)}
+.mar-in{background:var(--pcb);color:#fff;padding:9px 16px;font-size:12px;border-radius:2px}
+.gap-demo{text-align:center}
+.gd{display:flex;align-items:center}
+.gd i{width:40px;height:34px;background:var(--pcb);border-radius:2px;display:block}
+.gap-m{width:16px;height:34px;background:repeating-linear-gradient(45deg,#F6E7D5,#F6E7D5 3px,#FBF3E8 3px,#FBF3E8 6px);border-left:1px solid var(--brass);border-right:1px solid var(--brass);font:500 7px/34px var(--mono);color:var(--brass);text-align:center}
+.grid-demo{display:flex;width:100%;max-width:250px;height:64px}
+.gcol{flex:1;background:var(--pcb-soft);border:1px solid #C6DED4;border-radius:2px}
+.ggut{width:15px;background:repeating-linear-gradient(45deg,#F6E7D5,#F6E7D5 3px,#FBF3E8 3px,#FBF3E8 6px);position:relative}
+.ggut span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-90deg);font:500 7px var(--mono);color:var(--brass)}
+.scale-demo{display:flex;flex-direction:column;gap:4px}
+.scale-demo div{display:flex;align-items:center;gap:8px}
+.scale-demo i{height:11px;background:var(--pcb);display:block;border-radius:1px}
+.scale-demo b{font:500 10px var(--mono);color:var(--muted)}
+.colgrid{width:100%;max-width:250px}
+.cg-row{display:flex;gap:4px;margin-bottom:6px}
+.cg-row i{flex:1;height:30px;background:var(--pcb-soft);border:1px solid #C6DED4;border-radius:1px}
+.cg-blocks{display:flex;gap:4px}
+.cg-blocks b{height:26px;background:var(--pcb);color:#fff;font:500 9px/26px var(--mono);text-align:center;border-radius:2px}
+.baseline{position:relative;width:100%;max-width:235px;padding:5px 0}
+.bl-lines{position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 15px,#D9A8A0 15px 16px)}
+.bl-txt{position:relative}
+.bl-txt b{display:block;font-size:13px;line-height:16px;margin-bottom:16px}
+.bl-txt p{margin:0;font-size:11px;line-height:16px;color:var(--muted)}
+.cont-demo{width:100%;display:grid;place-items:center}
+.cd-vp{position:relative;width:100%;max-width:250px;border:1px dashed var(--line);border-radius:var(--r);padding:17px 9px 9px;background:var(--surface)}
+.cd-vp>.cap{position:absolute;top:4px;left:7px}
+.cd-inner{background:var(--pcb-soft);border:1px solid #C6DED4;margin:0 26px;text-align:center;font:500 10px var(--mono);color:var(--pcb);padding:11px 0;border-radius:2px}
+.cd-bleed{background:var(--brass-soft);border:1px solid #E5D9BD;margin:0 -9px 6px;text-align:center;font:500 10px var(--mono);color:var(--brass);padding:9px 0}
+.bp-demo{display:flex;flex-direction:column;gap:5px;width:100%;max-width:200px}
+.bp{display:flex;align-items:baseline;gap:9px;padding:5px 9px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.bp b{font:600 12px var(--mono)}
+.bp span{font-size:10px;color:var(--muted)}
+.bp.on{border-color:var(--pcb);background:var(--pcb-soft);color:var(--pcb)}
+.hff{display:flex;align-items:center;gap:8px;border:1px dashed var(--line);border-radius:var(--r);padding:6px;background:var(--surface)}
+.hff-t{font:500 8.5px var(--mono);color:var(--brass);width:38px;flex:0 0 auto}
+.hff b{background:var(--pcb);color:#fff;font:500 11px var(--sans);padding:6px 10px;border-radius:2px;text-align:center;display:block}
+.constr{display:flex;align-items:center;gap:7px;width:100%;max-width:255px}
+.cr-box{position:relative;height:48px;flex:0 0 78px;border:1px dashed var(--line);border-radius:var(--r);background:var(--surface)}
+.cr-box.wide{flex:1}
+.cr-box i{position:absolute;top:7px;width:15px;height:15px;background:var(--pcb);border-radius:2px}
+.cr-box i.tl{left:7px}
+.cr-box i.tr{right:7px}
+.cr-box .cap{position:absolute;bottom:4px;left:6px;font-size:7.5px}
+.cr-arrows{color:var(--brass);font-size:14px}
+.align-demo{display:flex;flex-direction:column;gap:11px;width:100%;max-width:220px}
+.ad{position:relative;padding-right:44px}
+.ad i{display:block;height:8px;background:var(--pcb);opacity:.75;border-radius:2px;margin-bottom:4px}
+.ad.ctr i{margin-left:auto;margin-right:auto}
+.ad .cap{position:absolute;right:0;top:8px}
+.dist{position:relative;display:flex;justify-content:space-between;background:var(--surface);border:1px dashed var(--line);border-radius:var(--r);padding:7px;padding-bottom:17px}
+.dist.ctr{justify-content:center;gap:5px}
+.dist.arnd{justify-content:space-around}
+.dist i{width:24px;height:16px;background:var(--pcb);border-radius:2px;display:block}
+.dist-l{position:absolute;bottom:3px;left:7px;font:500 8px var(--mono);color:var(--brass)}
+.ws-demo{display:flex;gap:12px}
+.ws-bad,.ws-good{position:relative;padding-top:15px}
+.ws-t{position:absolute;top:0;left:0;font:500 8px var(--mono);color:var(--muted)}
+.ws-bad i,.ws-good i{display:block;width:56px;height:8px;background:var(--pcb);opacity:.7;border-radius:2px;margin-bottom:4px}
+.ws-good div{margin-bottom:13px}
+.ws-good div:last-child{margin-bottom:0}
+.opt-demo{display:flex;gap:22px}
+.opt-demo>div{display:flex;flex-direction:column;align-items:center;gap:5px}
+.opt-c{width:38px;height:38px;border-radius:50%;background:var(--pcb);color:#fff;display:grid;place-items:center;font-size:14px}
+.opt-c.math{padding-right:0}
+.opt-c.opt{padding-left:4px}
+.ar{background:var(--pcb-soft);border:1px solid #C6DED4;border-radius:2px;display:grid;place-items:center}
+.ar span{font:500 9px var(--mono);color:var(--pcb)}
+.ovf{position:relative;width:104px;height:56px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:17px 7px 7px;font-size:10.5px;line-height:1.35;color:var(--muted)}
+.ovf span{position:absolute;top:3px;left:6px;font:500 8px var(--mono);color:var(--brass)}
+.ovf.hid{overflow:hidden}
+.ovf.scr2{overflow-y:auto}
+.zdemo{position:relative;width:150px;height:96px}
+.zdemo b{position:absolute;font:500 9px var(--mono);padding:7px 9px;border-radius:2px;border:1px solid}
+.zdemo .z1{left:0;top:0;background:var(--pcb-soft);border-color:#C6DED4;color:var(--pcb)}
+.zdemo .z2{left:22px;top:26px;background:var(--brass-soft);border-color:#E5D9BD;color:var(--brass)}
+.zdemo .z3{left:44px;top:52px;background:var(--ink);border-color:var(--ink);color:#fff}
+.resp,.adap{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+.resp i,.adap i{display:block;height:9px;background:var(--pcb);opacity:.75;border-radius:2px}
+.adap i:nth-child(1){width:100%}
+.adap i:nth-child(2){width:100%}
+.adap i:nth-child(3){width:62%}
+
+/* ================= L · TYPOGRAPHY DEMOS ================= */
+.tf-row{display:flex;gap:10px;align-items:baseline;padding:5px 0;border-bottom:1px solid var(--line-soft)}
+.tf-row .cap{width:38px;flex:0 0 auto}
+.tf-row b{font-size:15px}
+.tf-row i{display:block;font-style:normal;font-size:12px}
+.tscale{display:flex;flex-direction:column;gap:3px;line-height:1.15}
+.tscale div{font-weight:500}
+.lh-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px}
+.lh-box p{margin:2px 0 0;font-size:11.5px}
+.ls-row{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:6px 9px;font-size:12px}
+.kern{position:relative;padding-bottom:13px;font-size:23px;font-weight:600;letter-spacing:normal}
+.kern span{display:inline-block}
+.kern.bad span{margin-right:3px;letter-spacing:.04em}
+.kern i{position:absolute;bottom:0;left:0;font-style:normal}
+.ms-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px}
+.ms-box p{margin:2px 0 0;font-size:11.5px;line-height:1.5}
+.anatomy{position:relative;width:100%;max-width:215px;height:82px}
+.an-lines{position:absolute;inset:0}
+.an-lines i{position:absolute;left:0;right:0;border-top:1px dashed #C9A9A2;font:500 7.5px var(--mono);color:#A9736A;font-style:normal;padding-left:2px}
+.an-asc{top:6px}
+.an-cap{top:12px}
+.an-x{top:32px;border-top-color:var(--pcb)!important;color:var(--pcb)!important}
+.an-base{top:62px;border-top-style:solid!important;border-top-color:var(--ink)!important;color:var(--ink)!important}
+.an-desc{top:76px}
+.an-word{position:absolute;left:88px;top:0;font-size:74px;line-height:82px;font-weight:500;color:var(--ink);letter-spacing:-.02em}
+.baseline-al{display:flex;flex-direction:column;gap:9px;width:100%;max-width:245px}
+.ba-row{position:relative;display:flex;align-items:center;gap:7px;font-size:13px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:6px 9px;padding-right:44px}
+.ba-row .ic-sq{width:13px;height:13px;background:var(--pcb);border-radius:2px;flex:0 0 auto}
+.ba-row.bad .ic-sq{align-self:center;margin-bottom:0}
+.ba-row:not(.bad) .ic-sq{align-self:baseline;position:relative;top:1.5px}
+.ba-row .cap{position:absolute;right:8px;font-style:normal}
+.hier{width:100%;max-width:235px}
+.hier b{display:block;font-size:15px;font-weight:600;letter-spacing:-.01em}
+.hier i{display:block;font-style:normal;font:500 9.5px var(--mono);color:var(--muted);letter-spacing:.05em;margin:3px 0 7px}
+.hier p{margin:0 0 8px;font-size:11.5px;color:var(--muted);line-height:1.5}
+.hier u{display:block;text-decoration:none;font-size:16px;font-weight:600;color:var(--pcb)}
+.wid{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px}
+.wid p{margin:0 0 4px;font-size:11.5px;line-height:1.5}
+.wid.bad span{background:var(--danger-soft);outline:1px solid #E9BDB6}
+.wid i{font-style:normal}
+.ta-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:7px 9px}
+.ta-box p{margin:2px 0 0;font-size:11.5px;line-height:1.5;max-width:165px}
+.fig{display:flex;flex-direction:column;gap:2px}
+.fig i{font-style:normal;font-size:12.5px;text-align:right;display:block}
+.fig.prop i{font-variant-numeric:proportional-nums;font-family:var(--sans)}
+.fig.tab i{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:11.5px}
+.uc-row{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:6px 9px;font-size:12.5px}
+
+/* ================= LEARN APP ================= */
+.tabsnav{display:flex;gap:4px;margin-top:11px}
+.tabsnav button{
+  flex:1;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 4px;border:1px solid var(--line);background:var(--surface);color:var(--muted);
+  border-radius:var(--r);cursor:pointer;
+}
+.tabsnav button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.view{display:none}
+.view.on{display:block}
+
+.startcard{
+  background:var(--surface);border:1px solid var(--line);border-radius:5px;
+  padding:20px 18px;text-align:center;max-width:440px;margin:8px auto 0;
+}
+.startcard h2{font:600 19px var(--sans);margin:0 0 4px;letter-spacing:-.01em}
+.startcard .sub{font-size:13px;color:var(--muted);margin:0 0 16px}
+.qstat{display:flex;gap:8px;justify-content:center;margin-bottom:17px}
+.qstat div{flex:1;background:var(--well);border:1px solid var(--line-soft);border-radius:var(--r);padding:9px 4px}
+.qstat b{display:block;font:600 20px var(--sans);line-height:1.1}
+.qstat span{font:500 9px var(--mono);letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.bigbtn{
+  width:100%;background:var(--pcb);color:#fff;border:0;border-radius:var(--r);
+  padding:14px;font:600 15px var(--sans);cursor:pointer;
+}
+.bigbtn:hover{background:#0A4E39}
+.bigbtn[disabled]{background:var(--line);color:var(--muted);cursor:default}
+.bigbtn.alt{background:var(--surface);color:var(--ink);border:1px solid var(--line);font-size:13px;padding:10px;margin-top:8px}
+
+.sess{max-width:560px;margin:0 auto}
+.sessbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sessbar .tr{flex:1;height:5px;background:#D8DED9;border-radius:9px;overflow:hidden}
+.sessbar .fl{height:100%;background:var(--pcb);border-radius:9px;transition:width .25s}
+.sessbar .n{font:500 11px var(--mono);color:var(--muted)}
+.sessbar .x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;padding:2px 4px}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.qhead{
+  display:flex;justify-content:space-between;align-items:center;gap:9px;
+  padding:9px 14px;border-bottom:1px solid var(--line-soft);background:var(--well);
+}
+.qtype{font:500 9.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--pcb)}
+.qbox{font:500 9.5px var(--mono);color:var(--brass)}
+.qstage{
+  background:var(--well);
+  background-image:radial-gradient(var(--line) .9px,transparent .9px);
+  background-size:11px 11px;
+  padding:22px 14px;display:flex;align-items:center;justify-content:center;min-height:150px;
+}
+.qprompt{padding:15px 14px 5px;text-align:center}
+.qprompt .big{font-size:21px;font-weight:600;letter-spacing:-.01em}
+.qprompt .small{font-size:12.5px;color:var(--muted);margin-top:3px}
+.l-opts{padding:12px 14px 14px;display:grid;gap:7px}
+.l-opts.two{grid-template-columns:1fr 1fr}
+.l-opt{
+  text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:11px 13px;font:500 13.5px var(--sans);color:var(--ink);cursor:pointer;
+}
+.l-opt:hover{border-color:var(--ink)}
+.l-opt.ok{background:var(--pcb-soft);border-color:var(--pcb);color:#0A4433}
+.l-opt.no{background:var(--danger-soft);border-color:var(--danger);color:#842317}
+.l-opt[disabled]{cursor:default}
+.l-opt small{display:block;font:400 11px var(--mono);color:var(--muted);margin-top:2px}
+.l-optdemo{
+  background:var(--well);border:1px solid var(--line);border-radius:var(--r);
+  height:128px;overflow:hidden;position:relative;cursor:pointer;padding:6px;
+}
+.l-optdemo:hover{border-color:var(--ink)}
+.l-optdemo .inner{
+  transform:scale(.62);transform-origin:center center;
+  width:161%;height:161%;margin-left:-30.5%;margin-top:-30.5%;
+  display:flex;align-items:center;justify-content:center;pointer-events:none;
+}
+.l-optdemo.ok{border-color:var(--pcb);box-shadow:inset 0 0 0 2px var(--pcb)}
+.l-optdemo.no{border-color:var(--danger);box-shadow:inset 0 0 0 2px var(--danger)}
+.l-grades{padding:12px 14px 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.l-grade{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:11px 5px;cursor:pointer;font:500 12.5px var(--sans)}
+.l-grade small{display:block;font:400 9.5px var(--mono);color:var(--muted);margin-top:2px}
+.l-grade.g1:hover{border-color:var(--danger);color:var(--danger)}
+.l-grade.g2:hover{border-color:var(--brass);color:var(--brass)}
+.l-grade.g3:hover{border-color:var(--pcb);color:var(--pcb)}
+.l-reveal{padding:0 14px 13px}
+.l-revealbox{background:var(--well);border:1px solid var(--line-soft);border-radius:var(--r);padding:11px 13px}
+.l-revealbox .rn{font-size:16px;font-weight:600}
+.l-revealbox .rp{font-family:var(--mono);font-size:13px;color:var(--pcb);margin-top:3px}
+.l-revealbox .rd{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+.l-fbk{padding:0 14px 13px;font-size:12.5px;line-height:1.5;color:var(--muted)}
+.l-fbk b{color:var(--ink)}
+.l-fbk .pl-inline{font-family:var(--mono);color:var(--pcb)}
+.l-done{text-align:center;padding:32px 18px}
+.l-done .big{font:600 26px var(--sans);margin-bottom:5px}
+.l-done p{color:var(--muted);font-size:13.5px;margin:0 0 17px}
+
+/* progress view */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+.pcell{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:11px 8px;text-align:center}
+.pcell b{display:block;font:600 22px var(--sans);line-height:1.1}
+.pcell span{font:500 8.5px var(--mono);letter-spacing:.05em;color:var(--muted);text-transform:uppercase}
+.pcell.s0 b{color:var(--muted)}
+.pcell.s1 b{color:var(--brass)}
+.pcell.s2 b{color:#3E7F5E}
+.pcell.s3 b{color:var(--pcb)}
+.catrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line-soft)}
+.catrow .nm{font-size:12.5px;flex:0 0 130px}
+.catrow .tr{flex:1;height:7px;background:#DDE3DE;border-radius:9px;overflow:hidden;display:flex}
+.catrow .f3{background:var(--pcb);height:100%}
+.catrow .f2{background:#69A98D;height:100%}
+.catrow .f1{background:var(--brass);height:100%;opacity:.55}
+.catrow .pc{font:500 11px var(--mono);color:var(--muted);flex:0 0 38px;text-align:right}
+.weak{margin-top:20px}
+.weak h3,.pgsec{font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;margin:0 0 9px;padding-bottom:6px;border-bottom:1.5px solid var(--ink)}
+.weakitem{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line-soft);font-size:12.5px}
+.weakitem span{font-family:var(--mono);font-size:11px;color:var(--danger)}
+.tools{display:flex;gap:7px;flex-wrap:wrap;margin-top:22px}
+.tools button{font:500 11.5px var(--sans);padding:8px 12px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);cursor:pointer;color:var(--ink)}
+.tools button:hover{border-color:var(--ink)}
+.tools button.dg{color:var(--danger)}
+.hint2{font-size:11.5px;color:var(--muted);margin-top:9px;line-height:1.5}
+.badge-state{font:500 8.5px var(--mono);padding:2px 5px;border-radius:2px;letter-spacing:.04em}
+.bs0{background:var(--line-soft);color:var(--muted)}
+.bs1{background:var(--brass-soft);color:var(--brass)}
+.bs2{background:#DCEBE3;color:#3E7F5E}
+.bs3{background:var(--pcb);color:#fff}
+@media(max-width:520px){
+  .l-opts.two{grid-template-columns:1fr 1fr}
+  .l-optdemo{height:112px}
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .catrow .nm{flex:0 0 96px;font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <div class="brandline">
+      <h1 class="brand">Katalog <em>UI</em></h1>
+      <span class="brandsub">EN · PL · UA</span>
+    </div>
+    <nav class="tabsnav">
+      <button data-v="learn" class="on">Ćwicz</button>
+      <button data-v="cat">Katalog</button>
+      <button data-v="prog">Postęp</button>
+    </nav>
+    <div class="searchrow" id="searchrow" style="display:none">
+      <div class="searchbox">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Шукати: tooltip, podpowiedź, підказка…" autocomplete="off">
+      </div>
+      <span class="count" id="count"></span>
+    </div>
+    <nav class="cats" id="cats" style="display:none"></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="v-learn" class="view on"></section>
+  <section id="v-cat" class="view"><div id="out"></div></section>
+  <section id="v-prog" class="view"></section>
+</main>
+
+<div id="copied">skopiowano</div>
+
+<script>
+const DATA = [
+
+/* ============ A · ДІЇ ============ */
+{c:"A",n:"01",en:"Button",alt:"btn",pl:"przycisk",
+ ua:"Запускає дію: відправити форму, відкрити модалку, видалити. Ієрархія варіантів (primary / secondary / tertiary) керує увагою — на екрані має бути рівно один primary.",
+ d:`<div class="row">
+  <button class="b b-p">Dodaj do koszyka</button>
+  <button class="b b-s">Anuluj</button>
+  <button class="b b-t">Więcej</button>
+ </div>`},
+
+{c:"A",n:"02",en:"Icon button",alt:"ikonka klikalna",pl:"przycisk ikonowy",
+ ua:"Кнопка тільки з іконкою. Обов'язково потребує aria-label і tooltip — без підпису значення іконки читається неоднозначно.",
+ note:"Мінімальна зона дотику — <b>44×44 px</b> (iOS HIG) / 48×48 dp (Material), навіть якщо сама іконка 20 px.",
+ d:`<div class="row">
+  <button class="b b-s b-i" aria-label="Edytuj"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16.4 3.9a2.1 2.1 0 0 1 3 3L8.6 17.7l-4 1 1-4Z"/></svg></button>
+  <button class="b b-s b-i" aria-label="Kopiuj"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2"/><path d="M15.5 5.5v-.6a2 2 0 0 0-2-2H5.5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h.6"/></svg></button>
+  <button class="b b-s b-i" aria-label="Usuń"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16M9.5 6.5V4h5v2.5M6.8 6.5 8 20.5h8l1.2-14"/></svg></button>
+  <button class="b b-p b-i" aria-label="Dodaj">＋</button>
+ </div>`},
+
+{c:"A",n:"03",en:"Floating action button",alt:"FAB",pl:"pływający przycisk akcji",
+ ua:"Одна головна дія екрана, зафіксована поверх контенту. Патерн Material; на десктопних B2B-інтерфейсах майже не застосовується.",
+ d:`<div class="row"><button class="fab" aria-label="Nowe zamówienie">＋</button></div>`},
+
+{c:"A",n:"04",en:"Button group",alt:"segmented buttons",pl:"grupa przycisków",
+ ua:"Кілька рівнозначних дій, склеєних в один блок. Не плутати з segmented control — тут кнопки запускають дії, а не перемикають режим.",
+ d:`<div class="bgroup">
+  <button class="b">Kopiuj</button><button class="b">Duplikuj</button><button class="b">Eksport</button>
+ </div>`},
+
+{c:"A",n:"05",en:"Segmented control",alt:"toggle group",pl:"kontrolka segmentowa",
+ ua:"Перемикає режим перегляду — 2–5 взаємовиключних опцій. Візуальний еквівалент radio group, коли варіантів мало й вони короткі.",
+ note:"У польських командах кажуть просто <b>segmented control</b> або <b>przełącznik widoku</b>.",
+ d:`<div class="tbar">
+  <button class="on">Lista</button><button>Siatka</button><button>Tabela</button>
+ </div>`},
+
+{c:"A",n:"06",en:"Split button",alt:"dropdown button",pl:"przycisk dzielony",
+ ua:"Основна дія + стрілка з альтернативами. Економить місце, але приховує опції — використовуй, коли одна дія справді домінує.",
+ d:`<div class="split">
+  <button class="b b-p">Zapisz</button><button class="b b-p" aria-label="Więcej opcji">▾</button>
+ </div>`},
+
+{c:"A",n:"07",en:"Link",alt:"anchor, hyperlink",pl:"link",
+ ua:"Переміщує користувача (нова адреса). Кнопка — виконує дію. Плутанина між ними ламає очікування: посилання має відкриватись у новій вкладці через Ctrl+click.",
+ note:"Формально — <b>odnośnik</b> / <b>łącze</b>, але в мовленні завжди <b>link</b>.",
+ d:`<div class="d">Zobacz <a class="lnk">kartę katalogową</a> lub <a class="lnk">dane techniczne →</a></div>`},
+
+{c:"A",n:"08",en:"Call to action",alt:"CTA",pl:"wezwanie do działania",
+ ua:"Не компонент, а роль: головний заклик на екрані. CTA ≠ кнопка — це може бути банер, посилання чи блок.",
+ d:`<div class="col" style="text-align:center">
+  <div class="d" style="font-weight:600;font-size:14px">Potrzebujesz wyceny na 5 000 szt.?</div>
+  <button class="b b-p" style="justify-content:center">Zapytaj o ofertę</button>
+ </div>`},
+
+{c:"A",n:"09",en:"Disabled state",alt:"inactive button",pl:"przycisk nieaktywny",
+ ua:"Дія недоступна. Найчастіша помилка — вимкнути кнопку без пояснення чому. Краще залишити активною і показати помилку при кліку, або додати tooltip з причиною.",
+ d:`<div class="row">
+  <button class="b b-p" disabled>Złóż zamówienie</button>
+  <span class="cap">brak adresu dostawy</span>
+ </div>`},
+
+/* ============ B · ПОЛЯ ВВОДУ ============ */
+{c:"B",n:"01",en:"Text field",alt:"input, text input",pl:"pole tekstowe",
+ ua:"Однорядкове поле для короткого вводу. Ширина поля має натякати на очікувану довжину — поле для індексу не повинно бути на всю ширину форми.",
+ d:`<div class="col">
+  <label class="lab">Numer katalogowy</label>
+  <input class="in" value="LM358N-DIP8">
+ </div>`},
+
+{c:"B",n:"02",en:"Textarea",alt:"multiline input",pl:"pole wielowierszowe",
+ ua:"Багаторядковий ввід. Висота = очікуваний обсяг тексту. Автозростання краще за скрол усередині поля.",
+ d:`<div class="col">
+  <label class="lab">Uwagi do zamówienia</label>
+  <textarea class="ta">Proszę o dostawę na palecie EUR.</textarea>
+ </div>`},
+
+{c:"B",n:"03",en:"Label",alt:"field label",pl:"etykieta",
+ ua:"Постійний підпис поля. Ніколи не замінюється плейсхолдером: щойно користувач почав друкувати, плейсхолдер зникає — і контекст втрачається.",
+ note:"Зірочка позначає обов'язкове поле. Якщо обов'язкові майже всі — краще позначати навпаки: <b>(opcjonalne)</b>.",
+ d:`<div class="col">
+  <label class="lab">Adres e-mail <span class="req">*</span></label>
+  <input class="in" placeholder="jan.kowalski@firma.pl">
+ </div>`},
+
+{c:"B",n:"04",en:"Placeholder",alt:"hint text inside field",pl:"tekst zastępczy",
+ ua:"Приклад формату всередині порожнього поля. Низький контраст + зникає при вводі = не місце для інструкцій.",
+ d:`<div class="col">
+  <label class="lab">NIP</label>
+  <input class="in" placeholder="np. 725 000 12 34">
+ </div>`},
+
+{c:"B",n:"05",en:"Helper text",alt:"hint, description",pl:"tekst pomocniczy",
+ ua:"Постійна підказка під полем: формат, обмеження, навіщо це потрібно. На відміну від плейсхолдера — не зникає.",
+ d:`<div class="col">
+  <label class="lab">Hasło</label>
+  <input class="in" type="password" value="········">
+  <div class="hint">Min. 8 znaków, w tym cyfra i wielka litera.</div>
+ </div>`},
+
+{c:"B",n:"06",en:"Error message",alt:"validation message",pl:"komunikat o błędzie",
+ ua:"Що саме не так і як виправити. Не «Błąd», а «Podaj datę w formacie DD.MM.RRRR». Колір — не єдиний носій сенсу: іконка + текст обов'язкові.",
+ note:"Валідація <b>on blur</b>, а не на кожному символі. Виняток — індикатор сили пароля.",
+ d:`<div class="col">
+  <label class="lab">Kod pocztowy</label>
+  <input class="in bad" value="90200">
+  <div class="err">⚠︎ Wpisz kod w formacie 90-200.</div>
+ </div>`},
+
+{c:"B",n:"07",en:"Prefix / suffix",alt:"input affix, addon",pl:"przedrostek / przyrostek",
+ ua:"Статична частина поля: одиниця, валюта, домен. Знімає навантаження з користувача — не треба друкувати «zł» чи «https://».",
+ d:`<div class="col">
+  <label class="lab">Cena netto</label>
+  <div class="affix"><input class="in" value="12,40"><span>PLN</span></div>
+  <label class="lab" style="margin-top:9px">Rezystancja</label>
+  <div class="affix"><input class="in" value="4,7"><span>kΩ</span></div>
+ </div>`},
+
+{c:"B",n:"08",en:"Character counter",alt:"input counter",pl:"licznik znaków",
+ ua:"Показує ліміт. Має сенс лише коли ліміт справді жорсткий; рахунок вниз («залишилось 40») читається швидше за 60/100.",
+ d:`<div class="col">
+  <label class="lab">Nazwa projektu</label>
+  <input class="in" value="Sterownik LED — rewizja B">
+  <div class="counter"><span>Widoczne na liście</span><span>27/60</span></div>
+ </div>`},
+
+{c:"B",n:"09",en:"Search field",alt:"search bar, search input",pl:"pole wyszukiwania",
+ ua:"Вхідна точка пошуку. Обов'язкові дрібниці: іконка лупи, кнопка очистки, збереження запиту після переходу на результати.",
+ d:`<div class="col">
+  <div class="affix"><span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.4"/><path d="m20 20-4.4-4.4"/></svg></span><input class="in" value="rezystor 4.7k 0805"><span style="cursor:pointer">✕︎</span></div>
+ </div>`},
+
+{c:"B",n:"10",en:"Password field",alt:"masked input",pl:"pole hasła",
+ ua:"Замаскований ввід з перемикачем «показати». Приховування без можливості перевірити — головна причина помилок при вході.",
+ d:`<div class="col">
+  <label class="lab">Hasło</label>
+  <div class="affix"><input class="in" type="password" value="tajnehaslo"><span style="cursor:pointer"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 12S5.7 5.8 12 5.8 22.2 12 22.2 12 18.3 18.2 12 18.2 1.8 12 1.8 12Z"/><circle cx="12" cy="12" r="2.9"/></svg></span></div>
+ </div>`},
+
+{c:"B",n:"11",en:"OTP input",alt:"PIN input, verification code",pl:"pole kodu jednorazowego",
+ ua:"Розбитий на клітинки код з SMS/пошти. Має підтримувати вставку всього коду одразу — інакше користувач вставляє 6 цифр у першу клітинку.",
+ d:`<div class="col" style="align-items:center">
+  <div class="otp"><i>4</i><i>0</i><i>7</i><i class="act">|</i><i></i><i></i></div>
+  <div class="hint" style="text-align:center">Kod wysłany na +48 ••• ••• 421</div>
+ </div>`},
+
+{c:"B",n:"12",en:"File upload",alt:"dropzone, file picker",pl:"przesyłanie plików",
+ ua:"Кнопка + зона перетягування. Завжди вказуй дозволені формати й максимальний розмір ДО спроби завантаження.",
+ d:`<div class="drop">
+  <div style="font-size:19px;margin-bottom:5px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5v-12M7.2 12.8 12 8l4.8 4.8M4 3.5h16"/></svg></div>
+  <b>Przeciągnij plik BOM</b>
+  <small>.csv, .xlsx — do 10 MB</small>
+ </div>`},
+
+{c:"B",n:"13",en:"Form",alt:"data entry form",pl:"formularz",
+ ua:"Набір полів з однією метою. Одна колонка, логічні групи, дія-підтвердження внизу зліва або справа — консистентно в межах продукту.",
+ d:`<div class="col">
+  <div><label class="lab">Firma</label><input class="in" value="Elektro-Serwis Sp. z o.o."></div>
+  <div><label class="lab">NIP</label><input class="in" value="725 000 12 34"></div>
+  <button class="b b-p" style="justify-content:center;margin-top:2px">Zapisz dane</button>
+ </div>`},
+
+{c:"B",n:"14",en:"Fieldset",alt:"field group",pl:"grupa pól",
+ ua:"Смислова група полів зі спільним заголовком. Для screen reader — <fieldset> + <legend>, інакше зв'язок між групою та полями втрачається.",
+ d:`<div class="col">
+  <div class="cap" style="margin-bottom:2px">Adres dostawy</div>
+  <input class="in" value="ul. Ustronna 41" style="margin-bottom:7px">
+  <div style="display:flex;gap:7px"><input class="in" value="93-350" style="width:78px"><input class="in" value="Łódź"></div>
+ </div>`},
+
+/* ============ C · ВИБІР ============ */
+{c:"C",n:"01",en:"Checkbox",alt:"tick box",pl:"pole wyboru",
+ ua:"Множинний вибір або згода. Кожен чекбокс незалежний. Клік по підпису має перемикати стан — це найчастіший недогляд у верстці.",
+ note:"У розмові поляки кажуть <b>checkbox</b>; «pole wyboru» — мова документації й локалізації.",
+ d:`<div class="col">
+  <label class="chk"><input type="checkbox" checked> Produkty dostępne od ręki</label>
+  <label class="chk"><input type="checkbox"> Tylko RoHS</label>
+  <label class="chk"><input type="checkbox"> Pokaż zamienniki</label>
+ </div>`},
+
+{c:"C",n:"02",en:"Indeterminate checkbox",alt:"partial, mixed state",pl:"stan nieokreślony",
+ ua:"Третій стан для батьківського чекбокса, коли частина дочірніх вибрана. Візуально — риска, не галочка.",
+ d:`<div class="col">
+  <label class="chk"><input type="checkbox" id="ind"> <b>Wszystkie kategorie</b></label>
+  <label class="chk" style="margin-left:20px"><input type="checkbox" checked> Rezystory</label>
+  <label class="chk" style="margin-left:20px"><input type="checkbox"> Kondensatory</label>
+ </div>`},
+
+{c:"C",n:"03",en:"Radio group",alt:"radio button, option button",pl:"przyciski opcji",
+ ua:"Рівно один варіант із кількох. Показуй усі опції одразу (2–6). Не можна зняти вибір — тому має бути безпечне значення за замовчуванням.",
+ note:"Формально <b>przycisk opcji</b>, у мовленні — <b>radio button</b> / <b>radio</b>.",
+ d:`<div class="col">
+  <div class="cap" style="margin-bottom:3px">Sposób dostawy</div>
+  <label class="chk"><input type="radio" name="dv" checked> Kurier DPD — 18,00 zł</label>
+  <label class="chk"><input type="radio" name="dv"> Paczkomat — 12,99 zł</label>
+  <label class="chk"><input type="radio" name="dv"> Odbiór osobisty — 0 zł</label>
+ </div>`},
+
+{c:"C",n:"04",en:"Switch",alt:"toggle",pl:"przełącznik",
+ ua:"Вмикає/вимикає налаштування з негайним ефектом — без кнопки «зберегти». Якщо потрібне підтвердження, це чекбокс, а не switch.",
+ d:`<div class="col">
+  <label class="sw"><input type="checkbox" checked><i></i> Ceny netto</label>
+  <label class="sw"><input type="checkbox"><i></i> Pokaż tylko magazyn PL</label>
+ </div>`},
+
+{c:"C",n:"05",en:"Select",alt:"dropdown, select box",pl:"lista rozwijana",
+ ua:"Вибір одного зі списку, коли варіантів багато (7+). Приховує опції — для 2–4 варіантів radio або segmented читаються швидше.",
+ d:`<div class="col">
+  <label class="lab">Obudowa</label>
+  <select class="sel"><option>SMD 0805</option><option>SMD 0603</option><option>THT axial</option></select>
+ </div>`},
+
+{c:"C",n:"06",en:"Combobox",alt:"select with search",pl:"pole kombi",
+ ua:"Поле вводу + випадний список: можна друкувати або вибрати. Стандартне рішення для довгих довідників — країни, виробники, категорії.",
+ d:`<div class="col">
+  <label class="lab">Producent</label>
+  <input class="in" value="Tex" style="border-color:var(--pcb)">
+  <div class="menu" style="width:100%;margin-top:3px">
+    <a><span>Texas Instruments</span></a><a><span>Texim Europe</span></a><a><span>Textool</span></a>
+  </div>
+ </div>`},
+
+{c:"C",n:"07",en:"Multiselect",alt:"multi-select, tag select",pl:"lista wielokrotnego wyboru",
+ ua:"Кілька значень в одному полі, вибране показується чипами. Слідкуй за висотою поля — при 10 вибраних воно не має ламати форму.",
+ d:`<div class="col">
+  <label class="lab">Certyfikaty</label>
+  <div class="in" style="display:flex;gap:5px;flex-wrap:wrap;padding:6px">
+    <span class="chip on" style="font-size:11px;padding:2px 7px">RoHS <i class="x">✕︎</i></span>
+    <span class="chip on" style="font-size:11px;padding:2px 7px">REACH <i class="x">✕︎</i></span>
+    <span style="color:var(--muted);font-size:12px;padding:2px">dodaj…</span>
+  </div>
+ </div>`},
+
+{c:"C",n:"08",en:"Autocomplete",alt:"typeahead, suggestions",pl:"autouzupełnianie",
+ ua:"Підказки під час вводу. Виділяй збіг, показуй категорію результату і не змінюй перший результат при кожному натисканні клавіші.",
+ d:`<div class="col">
+  <div class="affix"><span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.4"/><path d="m20 20-4.4-4.4"/></svg></span><input class="in" value="rezys"></div>
+  <div class="menu" style="width:100%;margin-top:3px">
+    <a><span><b>rezys</b>tor SMD</span><kbd>1 240</kbd></a>
+    <a><span><b>rezys</b>tor drutowy</span><kbd>318</kbd></a>
+    <a><span><b>rezys</b>tor precyzyjny</span><kbd>96</kbd></a>
+  </div>
+ </div>`},
+
+{c:"C",n:"09",en:"Slider",alt:"range input",pl:"suwak",
+ ua:"Приблизне значення в діапазоні. Погано працює для точних чисел — завжди дублюй числовим полем.",
+ d:`<div class="col">
+  <div style="display:flex;justify-content:space-between"><span class="cap">Jasność</span><span class="cap">68%</span></div>
+  <input type="range" value="68">
+ </div>`},
+
+{c:"C",n:"10",en:"Range slider",alt:"multi-thumb slider",pl:"suwak zakresu",
+ ua:"Два маркери — «від» і «до». Класика фільтрів ціни. Обов'язково додай поля вводу: ручками важко влучити в точне значення.",
+ d:`<div class="col" style="align-items:center">
+  <div class="dual"><div class="trk"></div><div class="fil"></div><b style="left:26%"></b><b style="right:22%"></b></div>
+  <div style="display:flex;gap:7px;width:100%"><input class="in" value="2,50"><input class="in" value="18,00"></div>
+ </div>`},
+
+{c:"C",n:"11",en:"Stepper",alt:"number input, spinbutton",pl:"pole liczbowe z krokiem",
+ ua:"Число + кнопки «−/+». Для e-commerce критично: поле має лишатись редагованим з клавіатури — інакше 250 шт. набирати неможливо.",
+ note:"У специфікації ARIA це <b>spinbutton</b>. У Material — <b>stepper</b>. Не плутати з «stepper» як індикатором кроків (D·11).",
+ d:`<div class="row">
+  <div class="stp"><button>−</button><input value="250"><button>+</button></div>
+  <span class="cap">szt. / opak. 100</span>
+ </div>`},
+
+{c:"C",n:"12",en:"Date picker",alt:"calendar picker",pl:"selektor daty",
+ ua:"Календар для вибору дати. Завжди залишай ручний ввід: набрати «12.09.2026» швидше, ніж клікати 14 місяців назад.",
+ d:`<div class="cal">
+  <div class="cal-h"><span>‹</span> wrzesień 2026 <span>›</span></div>
+  <div class="cal-g">
+   <div class="dow">Pn</div><div class="dow">Wt</div><div class="dow">Śr</div><div class="dow">Cz</div><div class="dow">Pt</div><div class="dow">So</div><div class="dow">Nd</div>
+   <div class="mut">31</div><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>
+   <div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div class="sel">12</div><div>13</div>
+   <div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div>
+  </div>
+ </div>`},
+
+{c:"C",n:"13",en:"Date range picker",alt:"period selector",pl:"selektor zakresu dat",
+ ua:"Вибір періоду «від–до». Додавай пресети (ostatnie 7 dni, ten miesiąc) — 80% користувачів беруть саме їх.",
+ d:`<div class="cal">
+  <div class="cal-h"><span>‹</span> wrzesień 2026 <span>›</span></div>
+  <div class="cal-g">
+   <div class="dow">Pn</div><div class="dow">Wt</div><div class="dow">Śr</div><div class="dow">Cz</div><div class="dow">Pt</div><div class="dow">So</div><div class="dow">Nd</div>
+   <div>7</div><div class="sel">8</div><div class="rng">9</div><div class="rng">10</div><div class="rng">11</div><div class="sel">12</div><div>13</div>
+  </div>
+  <div class="hint" style="text-align:center">8–12 września · 5 dni</div>
+ </div>`},
+
+{c:"C",n:"14",en:"Color picker",alt:"color well",pl:"próbnik koloru",
+ ua:"Вибір кольору. У продуктових інтерфейсах майже завжди достатньо готової палітри, а не повного спектра.",
+ d:`<div class="swatch">
+  <b style="background:#0B5C43"></b><b style="background:#8A6516"></b><b style="background:#A32B1C"></b><b style="background:#14181A"></b>
+  <input class="in" value="#0B5C43" style="width:88px;font-family:var(--mono);font-size:11px">
+ </div>`},
+
+{c:"C",n:"15",en:"Rating",alt:"star rating",pl:"ocena",
+ ua:"Оцінка або відображення середньої. Для вводу — інтерактивна, для показу — статична з числом і кількістю відгуків поруч.",
+ d:`<div class="row">
+  <div class="stars">★︎★︎★︎★︎<span class="off">★︎</span></div>
+  <span class="cap">4,2 · 118 opinii</span>
+ </div>`},
+
+/* ============ D · НАВІГАЦІЯ ============ */
+{c:"D",n:"01",en:"Header",alt:"top bar, app bar, navbar",pl:"nagłówek",
+ ua:"Верхня смуга: логотип, пошук, акаунт, кошик. Найдорожча нерухомість екрана — сюди йде лише те, що потрібне на будь-якій сторінці.",
+ d:`<div class="scene"><div style="display:flex;align-items:center;gap:7px;padding:8px 9px;border-bottom:1px solid var(--line)">
+   <b style="font:600 11px var(--mono);color:var(--pcb)">LOGO</b>
+   <div style="flex:1;height:19px;border:1px solid var(--line);border-radius:2px;background:var(--well)"></div>
+   <span style="font-size:12px">☰</span><span style="font-size:12px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.7 12.3a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L21 7.2H6"/></svg></span>
+  </div>
+  <div class="pg"><div class="bar m"></div><div class="bar"></div><div class="bar s"></div></div>
+ </div>`},
+
+{c:"D",n:"02",en:"Footer",alt:"page footer",pl:"stopka",
+ ua:"Низ сторінки: правова інформація, контакти, карта сайту. Для B2B — місце для NIP, умов оплати й сертифікатів.",
+ d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar s"></div></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;background:var(--ink);color:#fff;padding:9px;font-size:9px;font-family:var(--mono);line-height:1.7">
+   O firmie · Kontakt · Regulamin<br>Polityka prywatności · NIP 727-012-46-05
+  </div>
+ </div>`},
+
+{c:"D",n:"03",en:"Sidebar",alt:"side navigation, drawer nav",pl:"panel boczny",
+ ua:"Вертикальна навігація зліва. Для глибоких каталогів краще за горизонтальне меню: витримує 3 рівні вкладеності без мега-меню.",
+ d:`<div class="scene"><div style="display:flex;height:100%">
+  <div style="width:40%;background:var(--well);border-right:1px solid var(--line);padding:8px;font-size:9.5px;line-height:2">
+   <div style="color:var(--pcb);font-weight:600">Rezystory</div>
+   <div style="color:var(--muted)">Kondensatory</div>
+   <div style="color:var(--muted)">Złącza</div>
+   <div style="color:var(--muted)">Narzędzia</div>
+  </div>
+  <div class="pg" style="flex:1"><div class="bar m"></div><div class="bar"></div><div class="bar s"></div></div>
+ </div></div>`},
+
+{c:"D",n:"04",en:"Navigation rail",alt:"icon rail",pl:"wąski pasek nawigacji",
+ ua:"Вузька смуга з іконками + підписами. Компроміс між сайдбаром і бургером на планшетах та широких десктопах.",
+ d:`<div class="rail">
+  <div class="on"><b>▤︎</b>Katalog</div><div><b><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2S3.9 15 3.9 9.4A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.1 2.8c0 5.6-8.1 10.8-8.1 10.8Z"/></svg></b>Schowek</div><div><b><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.7 12.3a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L21 7.2H6"/></svg></b>Koszyk</div><div><b>☰</b>Konto</div>
+ </div>`},
+
+{c:"D",n:"05",en:"Tabs",alt:"tab bar, tabbed panels",pl:"zakładki",
+ ua:"Перемикання між рівнозначними панелями в межах одного контексту. URL має змінюватись — інакше вкладку не поділишся посиланням.",
+ note:"Польською <b>zakładki</b>. Слово <b>karty</b> теж трапляється, але воно ж означає «cards» — уточнюй контекст.",
+ d:`<div class="tabs">
+  <input type="radio" name="tb" id="t1" checked><input type="radio" name="tb" id="t2"><input type="radio" name="tb" id="t3">
+  <div class="tl"><label for="t1">Opis</label><label for="t2">Parametry</label><label for="t3">Do pobrania</label></div>
+  <div class="tp p1">Rezystor grubowarstwowy SMD, tolerancja ±1%.</div>
+  <div class="tp p2">4,7 kΩ · 0805 · 125 mW · ±100 ppm/K</div>
+  <div class="tp p3">Karta katalogowa (PDF) · Model 3D STEP</div>
+ </div>`},
+
+{c:"D",n:"06",en:"Breadcrumb",alt:"breadcrumb trail",pl:"okruszki",
+ ua:"Шлях по ієрархії. Критично для каталогів з глибокою вкладеністю — показує, де ти, і дає вихід на рівень вище одним кліком.",
+ note:"Повна форма — <b>nawigacja okruszkowa</b>. У командах кажуть <b>okruszki</b> або просто <b>breadcrumbs</b>.",
+ d:`<div class="crumb"><a>Katalog</a> › <a>Rezystory</a> › <a>SMD</a> › <b>0805</b></div>`},
+
+{c:"D",n:"07",en:"Pagination",alt:"pager",pl:"paginacja",
+ ua:"Розбиття довгого списку на сторінки. Для B2B-каталогів краще за нескінченний скрол: можна повернутись на сторінку 7 і зберегти позицію.",
+ note:"Синонім — <b>stronicowanie</b>. Обидва вживані.",
+ d:`<div class="pag"><a>‹</a><a>1</a><a class="on">2</a><a>3</a><a>4</a><span>…</span><a>28</a><a>›</a></div>`},
+
+{c:"D",n:"08",en:"Dropdown menu",alt:"menu, action menu",pl:"menu rozwijane",
+ ua:"Список дій, що відкривається з кнопки. Групуй за смислом, розділяй сепаратором, деструктивну дію — вниз і червоним.",
+ d:`<div class="menu">
+  <a><span>Edytuj</span><kbd>⌘︎E</kbd></a>
+  <a><span>Duplikuj</span><kbd>⌘︎D</kbd></a>
+  <a><span>Eksportuj CSV</span></a>
+  <hr><a class="dg"><span>Usuń</span><kbd>⌫︎</kbd></a>
+ </div>`},
+
+{c:"D",n:"09",en:"Context menu",alt:"right-click menu",pl:"menu kontekstowe",
+ ua:"Меню по правому кліку, прив'язане до конкретного об'єкта. Ніколи не єдиний спосіб дістатись дії — на тач-пристроях його немає.",
+ d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div></div>
+  <div class="menu" style="position:absolute;left:38px;top:38px;width:120px">
+   <a style="font-size:11px"><span>Kopiuj symbol</span></a>
+   <a style="font-size:11px"><span>Dodaj do BOM</span></a>
+   <hr><a class="dg" style="font-size:11px"><span>Usuń</span></a>
+  </div>
+ </div>`},
+
+{c:"D",n:"10",en:"Mega menu",alt:"wide dropdown nav",pl:"mega menu",
+ ua:"Широка панель з усіма категоріями одразу. Виправдана в каталогах на сотні розділів; вимагає затримки перед відкриттям (~150 мс), щоб не спрацьовувати випадково.",
+ d:`<div class="scene"><div style="padding:7px 9px;border-bottom:1px solid var(--line);font-size:9.5px;font-family:var(--mono);color:var(--pcb)">Katalog ▾</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;padding:9px;font-size:8.5px;line-height:1.9;color:var(--muted)">
+   <div><b style="color:var(--ink)">Bierne</b><br>Rezystory<br>Kondensatory</div>
+   <div><b style="color:var(--ink)">Aktywne</b><br>Diody<br>Tranzystory</div>
+   <div><b style="color:var(--ink)">Mech.</b><br>Złącza<br>Obudowy</div>
+  </div>
+ </div>`},
+
+{c:"D",n:"11",en:"Stepper (progress steps)",alt:"wizard, progress indicator",pl:"wskaźnik kroków",
+ ua:"Показує, де користувач у багатокроковому процесі. Обов'язковий у чекауті: знімає тривогу «скільки ще залишилось».",
+ d:`<div class="steps">
+  <div class="s done"><b>✓︎</b><span>Koszyk</span></div><div class="ln done"></div>
+  <div class="s now"><b>2</b><span>Dostawa</span></div><div class="ln"></div>
+  <div class="s"><b>3</b><span>Płatność</span></div>
+ </div>`},
+
+{c:"D",n:"12",en:"Command palette",alt:"quick actions, ⌘︎K",pl:"paleta poleceń",
+ ua:"Пошук по всіх діях застосунку з клавіатури. Прискорювач для досвідчених — ніколи не єдиний шлях до функції.",
+ d:`<div class="cmdk">
+  <div class="q"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.4"/><path d="m20 20-4.4-4.4"/></svg> zam…</div>
+  <div class="g">ZAMÓWIENIA</div>
+  <div class="it on"><span>Nowe zamówienie</span><span style="font-family:var(--mono);font-size:10px;color:var(--muted)">⌘︎N</span></div>
+  <div class="it"><span>Historia zamówień</span></div>
+  <div class="g">USTAWIENIA</div>
+  <div class="it"><span>Zamknij konto</span></div>
+ </div>`},
+
+{c:"D",n:"13",en:"Toolbar",alt:"action bar",pl:"pasek narzędzi",
+ ua:"Групa інструментів над контентом. Порядок = частота використання, не алфавіт.",
+ d:`<div class="tbar">
+  <button class="on"><b>B</b></button><button><i>I</i></button><button><u>U</u></button>
+  <div class="sp"></div><button>≡</button><button>⌸︎</button><button><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.8a4 4 0 0 0 5.7 0l2.6-2.6a4 4 0 0 0-5.7-5.7l-1.3 1.3"/><path d="M14 10.2a4 4 0 0 0-5.7 0l-2.6 2.6a4 4 0 0 0 5.7 5.7l1.3-1.3"/></svg></button>
+ </div>`},
+
+{c:"D",n:"14",en:"Bottom navigation",alt:"tab bar (mobile)",pl:"dolna nawigacja",
+ ua:"3–5 головних розділів у зоні великого пальця. Не для дій — тільки для навігації верхнього рівня.",
+ d:`<div class="bnav">
+  <div class="on"><b>⌂︎</b>Start</div><div><b>▤︎</b>Katalog</div><div><b><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.7 12.3a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L21 7.2H6"/></svg></b>Koszyk</div><div><b>☰</b>Konto</div>
+ </div>`},
+
+{c:"D",n:"15",en:"Hamburger menu",alt:"nav toggle",pl:"menu hamburgerowe",
+ ua:"Іконка з трьох ліній, що ховає навігацію. На мобільному — норма, на десктопі — свідомо приховує розділи й падає їхнє використання.",
+ d:`<div class="row"><button class="b b-s b-i" aria-label="Menu">☰</button><span class="cap">≡ ukryta nawigacja</span></div>`},
+
+{c:"D",n:"16",en:"Skip link",alt:"skip to content",pl:"link pomijający",
+ ua:"Прихована ланка, що з'являється на першому Tab і веде одразу до контенту. Обов'язкова за WCAG 2.4.1 — часто забувають.",
+ d:`<div class="row"><span class="skip">Przejdź do treści</span></div>`},
+
+/* ============ E · КОНТЕЙНЕРИ ============ */
+{c:"E",n:"01",en:"Card",alt:"tile",pl:"karta",
+ ua:"Контейнер для пов'язаного набору даних, який працює як одна одиниця. Якщо картка не клікабельна цілком — це просто блок, не картка.",
+ d:`<div class="card"><div class="ph"></div><div class="bd">
+  <h4>Rezystor SMD 4,7 kΩ</h4><p>0805 · ±1% · 125 mW</p>
+  <button class="b b-s" style="font-size:11.5px;padding:6px 10px">Zobacz</button>
+ </div></div>`},
+
+{c:"E",n:"02",en:"Accordion",alt:"expandable sections",pl:"akordeon",
+ ua:"Стос секцій, які розгортаються. Добре для FAQ і специфікацій; погано для контенту, який треба порівнювати між собою.",
+ d:`<div style="width:100%;max-width:260px">
+  <details class="acc" open><summary>Parametry elektryczne</summary><p>Rezystancja 4,7 kΩ · Tolerancja ±1% · Moc 0,125 W</p></details>
+  <details class="acc"><summary>Wymiary</summary><p>2,0 × 1,25 × 0,45 mm</p></details>
+  <details class="acc"><summary>Dokumenty</summary><p>Karta katalogowa, deklaracja RoHS</p></details>
+ </div>`},
+
+{c:"E",n:"03",en:"Disclosure",alt:"collapsible, show more",pl:"rozwijana sekcja",
+ ua:"Одна секція «показати/сховати». На відміну від акордеона тут немає групи — це просто прогресивне розкриття деталей.",
+ note:"Патерн називається <b>progressive disclosure</b> — стопенєве ujawnianie informacji.",
+ d:`<details class="acc" style="max-width:250px"><summary>Pokaż 12 zamienników</summary><p>LM358P · LM358AN · TL072CP · NE5532P …</p></details>`},
+
+{c:"E",n:"04",en:"Divider",alt:"separator, rule",pl:"separator",
+ ua:"Лінія, що розділяє смислові групи. Часто зайва — відступ робить те саме тихіше. Використовуй, коли простору бракує.",
+ d:`<div class="divi">
+  <div class="d" style="font-size:12px">Dane firmy</div><hr>
+  <div class="d" style="font-size:12px">Adres dostawy</div>
+  <div class="lbl" style="margin:9px 0">lub</div>
+  <div class="d" style="font-size:12px">Odbiór osobisty</div>
+ </div>`},
+
+{c:"E",n:"05",en:"List",alt:"list item, row",pl:"lista",
+ ua:"Вертикальний перелік однотипних елементів. Рядок = один об'єкт + одна головна дія. Більше двох дій у рядку — вже меню.",
+ d:`<div class="lst">
+  <div>Zamówienie #48120 <small>12.09</small></div>
+  <div>Zamówienie #48095 <small>09.09</small></div>
+  <div>Zamówienie #47988 <small>02.09</small></div>
+ </div>`},
+
+{c:"E",n:"06",en:"Table",alt:"static table",pl:"tabela",
+ ua:"Дані в рядках і колонках для порівняння. Числа — вирівнювання по правому краю й моноширинний шрифт, інакше порядок величин не зчитується.",
+ d:`<table class="t">
+  <tr><th>Symbol</th><th>Obudowa</th><th>Cena</th></tr>
+  <tr><td>RS-4K7-0805</td><td>0805</td><td class="n">0,08 zł</td></tr>
+  <tr><td>RS-10K-0805</td><td>0805</td><td class="n">0,08 zł</td></tr>
+  <tr><td>RS-4K7-0603</td><td>0603</td><td class="n">0,11 zł</td></tr>
+ </table>`},
+
+{c:"E",n:"07",en:"Data table",alt:"data grid",pl:"tabela danych",
+ ua:"Інтерактивна таблиця: сортування, фільтри, вибір рядків, масові дії, закріплені колонки. Ядро будь-якого B2B-інтерфейсу.",
+ note:"У ARIA інтерактивна версія називається <b>grid</b>, статична — <b>table</b>. Різниця в клавіатурній навігації стрілками.",
+ d:`<table class="t">
+  <tr><th><input type="checkbox" style="accent-color:var(--pcb)"></th><th>Symbol ↓</th><th>Stan</th><th>Cena</th></tr>
+  <tr><td><input type="checkbox" checked style="accent-color:var(--pcb)"></td><td>LM358N</td><td class="n">2 400</td><td class="n">1,24 zł</td></tr>
+  <tr><td><input type="checkbox" style="accent-color:var(--pcb)"></td><td>NE555P</td><td class="n">860</td><td class="n">0,98 zł</td></tr>
+ </table>`},
+
+{c:"E",n:"08",en:"Tree view",alt:"tree, hierarchy",pl:"widok drzewa",
+ ua:"Ієрархія з розгортанням гілок. Природна форма для категорій каталогу й структури BOM.",
+ d:`<div class="tree">
+  <details open><summary>Elementy bierne</summary>
+    <details open><summary>Rezystory</summary><i>SMD</i><i>THT</i></details>
+    <details><summary>Kondensatory</summary></details>
+  </details>
+ </div>`},
+
+{c:"E",n:"09",en:"Scroll area",alt:"scroll container",pl:"obszar przewijania",
+ ua:"Обмежена зона з власним скролом. Внутрішній скрол усередині сторінкового — часта причина «загубленого» контенту.",
+ d:`<div class="scr">Regulamin sprzedaży<br><br>§1. Postanowienia ogólne. Sprzedawcą jest spółka wpisana do rejestru przedsiębiorców.<br><br>§2. Zamówienia przyjmowane są przez sklep internetowy.<br><br>§3. Ceny podane są w złotych polskich.<br><br>§4. Dostawa realizowana jest na terenie RP.</div>`},
+
+{c:"E",n:"10",en:"Split view",alt:"resizable panes",pl:"widok dzielony",
+ ua:"Дві панелі з рухомим роздільником. Патерн master–detail: список зліва, деталі справа. У ARIA роздільник — window splitter.",
+ d:`<div class="split2">
+  <div class="p1">Lista<br>pozycji</div><div class="hnd"></div><div class="p2">Szczegóły wybranej pozycji</div>
+ </div>`},
+
+{c:"E",n:"11",en:"Grid",alt:"layout grid, columns",pl:"siatka",
+ ua:"Модульна сітка з колонок і жолобів. Не компонент, а каркас усього макета — 12 колонок для десктопа, 4 для мобільного.",
+ note:"Не плутати з <b>data grid</b> (E·07). Тут — siatka layoutowa.",
+ d:`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;max-width:230px">
+  <div style="height:34px;background:var(--pcb-soft);border:1px solid #C6DED4;border-radius:2px"></div>
+  <div style="height:34px;background:var(--pcb-soft);border:1px solid #C6DED4;border-radius:2px"></div>
+  <div style="height:34px;background:var(--pcb-soft);border:1px solid #C6DED4;border-radius:2px"></div>
+  <div style="height:34px;background:var(--pcb-soft);border:1px solid #C6DED4;border-radius:2px"></div>
+  <div style="grid-column:span 2;height:34px;background:var(--brass-soft);border:1px solid #E5D9BD;border-radius:2px"></div>
+  <div style="grid-column:span 2;height:34px;background:var(--brass-soft);border:1px solid #E5D9BD;border-radius:2px"></div>
+ </div>`},
+
+{c:"E",n:"12",en:"Sticky element",alt:"pinned, affix",pl:"element przyklejony",
+ ua:"Залипає при скролі: шапка таблиці, панель фільтрів, кнопка «do koszyka» на мобільному. Кожен sticky відбирає висоту екрана — рахуй сумарно.",
+ d:`<div class="scene"><div style="position:absolute;top:0;left:0;right:0;background:var(--ink);color:#fff;font-size:9px;font-family:var(--mono);padding:6px 9px;z-index:2">SYMBOL · STAN · CENA</div>
+  <div class="pg" style="padding-top:26px"><div class="bar"></div><div class="bar m"></div><div class="bar s"></div><div class="bar"></div></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;background:var(--pcb);color:#fff;font-size:10px;text-align:center;padding:7px">Dodaj do koszyka · 310,00 zł</div>
+ </div>`},
+
+/* ============ F · ОВЕРЛЕЇ ============ */
+{c:"F",n:"01",en:"Modal",alt:"dialog, modal window",pl:"okno modalne",
+ ua:"Блокує інтерфейс до відповіді. Потребує фокус-трапа, закриття по Esc і повернення фокуса на кнопку-джерело. Використовуй рідко — це перебивання задачі.",
+ note:"Польською також <b>okno dialogowe</b>. Модальність = «modalność» — те, що блокує тло.",
+ d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div><div class="bar s"></div></div>
+  <div class="scrim"></div>
+  <div class="dlg"><h5>Zmień ilość</h5><p>Opakowanie zbiorcze to 100 szt. Ilość zostanie zaokrąglona.</p>
+   <div class="act"><button class="b b-s">Anuluj</button><button class="b b-p">OK</button></div></div>
+ </div>`},
+
+{c:"F",n:"02",en:"Alert dialog",alt:"confirmation dialog",pl:"okno potwierdzenia",
+ ua:"Підтвердження незворотної дії. Кнопка має називати саму дію («Usuń zamówienie»), а не «Tak» — тоді рішення читається без заголовка.",
+ d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div></div>
+  <div class="scrim"></div>
+  <div class="dlg"><h5>Usunąć listę BOM?</h5><p>Tej operacji nie można cofnąć.</p>
+   <div class="act"><button class="b b-s">Zachowaj</button><button class="b b-d">Usuń listę</button></div></div>
+ </div>`},
+
+{c:"F",n:"03",en:"Drawer",alt:"side sheet, off-canvas",pl:"panel wysuwany",
+ ua:"Виїжджає збоку, не розриваючи контекст сторінки. Ідеально для кошика, фільтрів і деталей рядка таблиці.",
+ note:"У Apple HIG — <b>sheet</b>, у Material — <b>side sheet</b>. Польською часто просто <b>szuflada</b> або <b>drawer</b>.",
+ d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div></div>
+  <div class="scrim"></div>
+  <div class="drw"><h5>Koszyk <span>✕︎</span></h5>
+   <div style="font-size:9.5px;color:var(--muted);line-height:1.9">LM358N × 100<br>NE555P × 50<br><br><b style="color:var(--ink)">Razem 173,00 zł</b></div>
+  </div>
+ </div>`},
+
+{c:"F",n:"04",en:"Bottom sheet",alt:"mobile sheet",pl:"dolny panel wysuwany",
+ ua:"Мобільний аналог drawer, знизу. Grabber (риска зверху) підказує, що панель тягнеться. Має мати кілька позицій висоти.",
+ d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div></div>
+  <div class="scrim"></div>
+  <div class="sheet"><div class="grab"></div>
+   <div style="font:600 11px var(--sans);margin-bottom:5px">Sortuj według</div>
+   <div style="font-size:10px;color:var(--muted);line-height:2">Cena rosnąco<br>Dostępność<br>Trafność</div>
+  </div>
+ </div>`},
+
+{c:"F",n:"05",en:"Popover",alt:"popup panel",pl:"wyskakujący panel",
+ ua:"Невеликий контейнер, прив'язаний до елемента, з інтерактивним вмістом усередині. На відміну від tooltip — можна клікати і фокусувати.",
+ d:`<div class="scene"><div class="pg"><div class="bar s"></div><div class="bar m"></div></div>
+  <div style="position:absolute;left:14px;top:30px;font-size:10px;border-bottom:1.5px dotted var(--muted)">Cena progowa ⓘ︎</div>
+  <div class="pop">od 500 szt. &nbsp;0,06 zł<br>od 5 000 szt. &nbsp;0,04 zł</div>
+ </div>`},
+
+{c:"F",n:"06",en:"Tooltip",alt:"hint bubble",pl:"podpowiedź",
+ ua:"Короткий пояснювальний текст при наведенні або фокусі. Тільки текст, без кнопок і посилань. Ніколи не носій критичної інформації — на тачі його немає.",
+ note:"Наведи курсор на приклад. Польською також <b>dymek</b>; у мовленні — <b>tooltip</b>.",
+ d:`<div class="row" style="padding:14px 0">
+  <span class="tipw"><span class="trg" tabindex="0">MOQ</span><span class="tip">Minimalna wielkość zamówienia</span></span>
+  <span class="cap">← najedź kursorem</span>
+ </div>`},
+
+{c:"F",n:"07",en:"Hover card",alt:"preview card",pl:"karta podglądu",
+ ua:"Багатший за tooltip прев'ю при наведенні: зображення, метадані, дії. Затримка перед появою обов'язкова (~300 мс).",
+ d:`<div class="hcard">
+  <div class="hd"><div class="av br">TI</div><div><div style="font-size:12px;font-weight:600">Texas Instruments</div><div class="cap">Producent · 1 240 poz.</div></div></div>
+  <p>Dostawa 24 h z magazynu w Rzgowie. Autoryzowany dystrybutor.</p>
+ </div>`},
+
+{c:"F",n:"08",en:"Backdrop",alt:"scrim, overlay",pl:"przyciemnienie tła",
+ ua:"Напівпрозорий шар під модалкою: фокусує увагу і робить тло неактивним. Клік по ньому має закривати немодальні панелі.",
+ note:"Material називає це <b>scrim</b>. Польською — <b>przyciemnienie</b> / <b>nakładka</b>.",
+ d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div><div class="bar s"></div></div>
+  <div class="scrim"></div>
+  <div style="position:absolute;bottom:9px;left:0;right:0;text-align:center;color:#fff;font:500 9px var(--mono);letter-spacing:.08em">rgba(20,24,26,.42)</div>
+ </div>`},
+
+{c:"F",n:"09",en:"Lightbox",alt:"image viewer",pl:"powiększenie zdjęcia",
+ ua:"Повноекранний перегляд зображення. Для каталогу — з зумом і перемиканням між фото товару.",
+ d:`<div class="scene"><div class="pg"><div class="bar s"></div></div>
+  <div class="lb"><div class="im"></div><span class="x">✕︎</span></div>
+ </div>`},
+
+{c:"F",n:"10",en:"Banner",alt:"system banner, notification bar",pl:"baner informacyjny",
+ ua:"Смуга на всю ширину з важливим повідомленням: технічні роботи, зміна умов доставки. Постійна, поки користувач не закриє.",
+ d:`<div class="bnr">⚑︎ Dostawy 15.08 nieczynne — święto.<span class="x">✕︎</span></div>`},
+
+/* ============ G · СТАТУС І ФІДБЕК ============ */
+{c:"G",n:"01",en:"Toast",alt:"snackbar",pl:"powiadomienie tymczasowe",
+ ua:"Коротке підтвердження дії, зникає само за 4–6 с. Не для помилок, які треба прочитати. Дія «Cofnij» усередині — найкорисніший патерн.",
+ note:"Material називає це <b>snackbar</b>. У польських командах — <b>toast</b>.",
+ d:`<div class="toast">✓︎ Dodano do koszyka<span class="un">COFNIJ</span></div>`},
+
+{c:"G",n:"02",en:"Alert",alt:"inline message, callout",pl:"komunikat",
+ ua:"Вбудоване повідомлення на місці проблеми або контексту. Залишається на екрані. Чотири тони: інфо, успіх, попередження, помилка.",
+ d:`<div class="col">
+  <div class="al al-i">ⓘ︎ <div><b>Cena progowa</b>Od 500 szt. cena spada do 0,06 zł.</div></div>
+  <div class="al al-w">⚑︎ <div><b>Niski stan</b>Zostało 42 szt. w magazynie.</div></div>
+  <div class="al al-e">⚠︎ <div><b>Płatność odrzucona</b>Sprawdź dane karty.</div></div>
+ </div>`},
+
+{c:"G",n:"03",en:"Badge",alt:"counter, notification dot",pl:"znacznik liczbowy",
+ ua:"Лічильник або крапка на іконці. Понад 99 — «99+». Крапка без числа, коли важливий сам факт новизни, а не кількість.",
+ d:`<div class="row" style="gap:18px">
+  <span class="bwrap"><button class="b b-s b-i"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.7 12.3a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L21 7.2H6"/></svg></button><span class="badge">7</span></span>
+  <span class="bwrap"><button class="b b-s b-i"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3.2 6.7 12 13l8.8-6.3"/></svg></button><span class="badge">99+</span></span>
+  <span class="bwrap"><button class="b b-s b-i"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.6a6 6 0 1 0-12 0c0 5.6-2 6.9-2 6.9h16s-2-1.3-2-6.9"/><path d="M10.2 19.4a2.2 2.2 0 0 0 3.6 0"/></svg></button><span class="badge dot"></span></span>
+ </div>`},
+
+{c:"G",n:"04",en:"Status indicator",alt:"status pill, state chip",pl:"wskaźnik statusu",
+ ua:"Показує стан об'єкта. Колір + текст + іконка — колір сам по собі не читається дальтоніками (8% чоловіків).",
+ d:`<div class="row">
+  <span class="pill ok"><i></i>Na magazynie</span>
+  <span class="pill wr"><i></i>Na zamówienie</span>
+  <span class="pill no"><i></i>Wycofany</span>
+ </div>`},
+
+{c:"G",n:"05",en:"Progress bar",alt:"determinate progress",pl:"pasek postępu",
+ ua:"Прогрес із відомим завершенням. Показуй відсоток або «3 z 5» — сама смуга без числа не знімає невизначеності.",
+ d:`<div class="prog"><div class="tr"><div class="fl"></div></div>
+  <div class="mt"><span>Import BOM</span><span>64% · 320/500</span></div>
+ </div>`},
+
+{c:"G",n:"06",en:"Indeterminate progress",alt:"loading bar",pl:"pasek nieokreślony",
+ ua:"Тривалість невідома. Використовуй, коли не можеш порахувати прогрес — але додай текст, що саме відбувається.",
+ d:`<div class="prog ind"><div class="tr"><div class="fl"></div></div>
+  <div class="mt"><span>Sprawdzanie dostępności…</span><span></span></div>
+ </div>`},
+
+{c:"G",n:"07",en:"Spinner",alt:"loader, activity indicator",pl:"wskaźnik ładowania",
+ ua:"Кругове очікування. До ~1 с краще нічого не показувати, після ~10 с — потрібен текст або скасування.",
+ d:`<div class="row" style="gap:20px">
+  <div class="spin"></div>
+  <div class="dots"><span></span><span></span><span></span></div>
+ </div>`},
+
+{c:"G",n:"08",en:"Skeleton",alt:"placeholder loader",pl:"szkielet ładowania",
+ ua:"Сірий каркас майбутнього контенту. Знижує відчуття очікування краще за спінер, бо показує структуру наперед.",
+ d:`<div class="skel"><div class="t"></div><div></div><div class="w8"></div><div class="w6"></div></div>`},
+
+{c:"G",n:"09",en:"Empty state",alt:"blank state, zero state",pl:"stan pusty",
+ ua:"Екран без даних. Три обов'язкові частини: що тут буде, чому зараз пусто, кнопка першої дії. Найчастіше проєктується в останню чергу — і дарма.",
+ d:`<div class="mty"><div class="ic">▤︎</div>
+  <b>Brak zapisanych list BOM</b>
+  <p>Wgraj plik CSV lub dodaj pozycje ręcznie z katalogu.</p>
+  <button class="b b-p" style="font-size:11.5px;padding:7px 11px">Wgraj BOM</button>
+ </div>`},
+
+{c:"G",n:"10",en:"Error state",alt:"404, error page",pl:"strona błędu",
+ ua:"Що зламалось + що робити далі. Ніколи не залишай тупик: посилання на пошук, каталог або підтримку.",
+ d:`<div class="err404"><b>404</b><p>Nie znaleźliśmy tej strony.<br>Spróbuj wyszukać symbol produktu.</p></div>`},
+
+{c:"G",n:"11",en:"Meter",alt:"gauge",pl:"miernik",
+ ua:"Значення в межах шкали з якісними зонами (добре / погано). На відміну від progress не рухається до завершення — це вимірювання.",
+ d:`<div class="gauge"><div class="tr"><div class="nd"></div></div><small>Wykorzystanie limitu kupieckiego · 56%</small></div>`},
+
+/* ============ H · КОНТЕНТ І ДАНІ ============ */
+{c:"H",n:"01",en:"Avatar",alt:"user picture",pl:"awatar",
+ ua:"Візуальне представлення людини або компанії. Fallback-ланцюжок: фото → ініціали → іконка. Ініціали мають бути детерміновані за кольором.",
+ d:`<div class="row"><div class="av">DK</div><div class="av br">MW</div><div class="av gr sq">TI</div></div>`},
+
+{c:"H",n:"02",en:"Avatar group",alt:"stacked avatars",pl:"grupa awatarów",
+ ua:"Кілька учасників у стосі з лічильником залишку. Показуй максимум 3–5, решту — «+N».",
+ d:`<div class="avg"><div class="av">DK</div><div class="av br">MW</div><div class="av gr">AN</div><div class="av more">+6</div></div>`},
+
+{c:"H",n:"03",en:"Chip",alt:"tag, pill, token",pl:"chip / etykieta",
+ ua:"Компактний елемент: активний фільтр, тег, вибране значення. Якщо є «✕︎» — його має бути видно, що він видаляє саме чип, а не весь блок.",
+ note:"Material розрізняє чотири типи: <b>assist, filter, input, suggestion</b>. Польською часто просто <b>tag</b> або <b>etykieta</b>.",
+ d:`<div class="row">
+  <span class="chip on">RoHS <i class="x">✕︎</i></span>
+  <span class="chip">SMD 0805</span>
+  <span class="chip">± 1%</span>
+  <span class="chip">4,7 kΩ <i class="x">✕︎</i></span>
+ </div>`},
+
+{c:"H",n:"04",en:"Icon",alt:"glyph, symbol",pl:"ikona",
+ ua:"Графічний символ. Однозначні (кошик, друк, пошук) працюють самі; решта потребує підпису. Одна сітка, одна товщина штриха на весь продукт.",
+ d:`<div class="row" style="font-size:18px;gap:14px;color:var(--pcb)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.4"/><path d="m20 20-4.4-4.4"/></svg> <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.7 12.3a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L21 7.2H6"/></svg> <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v12M7.2 11.2 12 16l4.8-4.8M4 20.5h16"/></svg> <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.1"/><path d="M12 2.4v3M12 18.6v3M2.4 12h3M18.6 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/></svg> <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2S3.9 15 3.9 9.4A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.1 2.8c0 5.6-8.1 10.8-8.1 10.8Z"/></svg> ⚑︎</div>`},
+
+{c:"H",n:"05",en:"Thumbnail",alt:"preview image",pl:"miniatura",
+ ua:"Зменшене зображення товару або файлу. Однакове співвідношення сторін для всієї сітки — інакше картки «стрибають».",
+ d:`<div class="row"><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div></div>`},
+
+{c:"H",n:"06",en:"Carousel",alt:"slider, image rotator",pl:"karuzela",
+ ua:"Горизонтальна стрічка контенту. Автопрокрутка шкодить: користувач не встигає прочитати, а перший слайд бачать ~90%, останній — 1%.",
+ d:`<div class="carou"><div class="fr"><div></div><div></div><div style="opacity:.5"></div></div>
+  <div class="dt"><i class="on"></i><i></i><i></i><i></i></div>
+ </div>`},
+
+{c:"H",n:"07",en:"Chart",alt:"graph, data visualization",pl:"wykres",
+ ua:"Візуалізація даних. Тип обирається за задачею: динаміка — лінія, порівняння — стовпці, частка — не пиріг, а стовпчик.",
+ d:`<div class="chart"><b style="height:32%"></b><b style="height:52%"></b><b style="height:44%"></b><b style="height:78%"></b><b style="height:64%"></b><b style="height:96%"></b></div>`},
+
+{c:"H",n:"08",en:"Stat",alt:"KPI card, metric",pl:"kafelek ze wskaźnikiem",
+ ua:"Одне число з підписом і зміною. Без порівняння (з минулим періодом чи планом) число нічого не означає.",
+ d:`<div class="stat"><div class="k">Zamówienia / 30 dni</div><div class="v">1 284</div><div class="d">▲ 12,4% wobec sierpnia</div></div>`},
+
+{c:"H",n:"09",en:"Timeline",alt:"activity feed, history",pl:"oś czasu",
+ ua:"Хронологія подій. Для замовлень — стандарт відображення статусу: що вже сталось, що зараз, що далі.",
+ d:`<div class="tml">
+  <div class="on"><b>Zamówienie przyjęte</b><small>12.09 · 09:42</small></div>
+  <div class="on"><b>Skompletowane</b><small>12.09 · 14:10</small></div>
+  <div><b>Wysłane</b><small>oczekuje</small></div>
+ </div>`},
+
+{c:"H",n:"10",en:"Kbd",alt:"keyboard key",pl:"klawisz skrótu",
+ ua:"Позначення клавіші в тексті. Показуй скорочення поруч із дією в меню — так вони вивчаються без окремої довідки.",
+ d:`<div class="row"><kbd class="k">⌘︎</kbd><span class="cap">+</span><kbd class="k">K</kbd><span class="cap" style="margin-left:8px">otwórz wyszukiwarkę</span></div>`},
+
+{c:"H",n:"11",en:"Code block",alt:"snippet, pre",pl:"blok kodu",
+ ua:"Моноширинний блок з підсвіткою і кнопкою копіювання. У документації дизайн-системи — головний носій прикладів.",
+ d:`<pre class="code2"><span class="c">// wariant przycisku</span>
+&lt;Button variant=<span class="s">"primary"</span>
+        size=<span class="s">"md"</span> /&gt;</pre>`},
+
+{c:"H",n:"12",en:"Truncation",alt:"ellipsis, line clamp",pl:"skracanie tekstu",
+ ua:"Обрізка довгого тексту з «…». Обрізаний текст має бути доступний повністю — через tooltip або розкриття. У таблицях обрізай з кінця, не з середини.",
+ d:`<div class="trunc">
+  <div class="one">Rezystor grubowarstwowy SMD 4,7 kΩ 0805 ±1% 125 mW</div>
+  <div class="two">Rezystor grubowarstwowy SMD 4,7 kΩ 0805 ±1% 125 mW, temperatura pracy −55…+155°C, zgodny z RoHS i REACH, opakowanie 5 000 szt.</div>
+ </div>`},
+
+/* ============ I · E-COMMERCE ============ */
+{c:"I",n:"01",en:"Product card",alt:"product tile",pl:"karta produktu",
+ ua:"Товар у списку. Для B2B пріоритет інший, ніж у B2C: символ, наявність, ціна за штуку й ціна за упаковку важливіші за велике фото.",
+ d:`<div class="pcard"><div class="im"></div>
+  <div class="sym">RS-4K7-0805</div>
+  <h4>Rezystor SMD 4,7 kΩ ±1%</h4>
+  <span class="pill ok" style="font-size:10px;padding:2px 7px"><i></i>2 400 szt.</span>
+  <div class="pr" style="margin-top:7px">0,08 zł <s>0,11 zł</s></div>
+ </div>`},
+
+{c:"I",n:"02",en:"Product listing",alt:"SERP, category page",pl:"listing produktów",
+ ua:"Сторінка результатів. Три речі вирішують усе: релевантність сортування за замовчуванням, щільність рядка й швидкість фільтрів.",
+ note:"У внутрішній мові — <b>listing</b> або <b>wyniki wyszukiwania</b> (SERP).",
+ d:`<div class="scene"><div style="padding:7px 9px;border-bottom:1px solid var(--line);font-size:9px;font-family:var(--mono);color:var(--muted)">1 240 wyników · trafność ▾</div>
+  <div style="display:flex;height:calc(100% - 26px)">
+   <div style="width:34%;background:var(--well);border-right:1px solid var(--line);padding:7px;font-size:8px;color:var(--muted);line-height:2">■ SMD<br>□ THT<br>■ RoHS</div>
+   <div style="flex:1;padding:7px;font-size:8px;line-height:1.9;color:var(--muted)">
+    <div style="border-bottom:1px solid var(--line-soft);padding-bottom:4px;margin-bottom:4px">RS-4K7 · 0,08 zł</div>
+    <div style="border-bottom:1px solid var(--line-soft);padding-bottom:4px;margin-bottom:4px">RS-10K · 0,08 zł</div>
+    <div>RS-1K0 · 0,09 zł</div>
+   </div>
+  </div>
+ </div>`},
+
+{c:"I",n:"03",en:"Facets",alt:"filters, parametric search",pl:"filtry parametryczne",
+ ua:"Фільтри за параметрами з лічильниками. У B2B-каталогах — головний інструмент пошуку. Ніколи не показуй опцію, що дає 0 результатів.",
+ d:`<div class="facet"><div class="ft">Tolerancja</div>
+  <label><input type="checkbox" checked> ±1% <span>842</span></label>
+  <label><input type="checkbox"> ±5% <span>318</span></label>
+  <label><input type="checkbox"> ±0,1% <span>64</span></label>
+  <div class="ft" style="margin-top:9px">Moc</div>
+  <label><input type="checkbox"> 0,125 W <span>410</span></label>
+ </div>`},
+
+{c:"I",n:"04",en:"Sort control",alt:"sort by",pl:"sortowanie",
+ ua:"Порядок результатів. Значення за замовчуванням має бути явно підписане — «trafność», а не порожнє поле.",
+ d:`<div class="row"><span class="cap">Sortuj</span>
+  <select class="sel" style="width:auto"><option>Trafność</option><option>Cena rosnąco</option><option>Dostępność</option></select>
+ </div>`},
+
+{c:"I",n:"05",en:"Quantity selector",alt:"qty stepper",pl:"wybór ilości",
+ ua:"Кількість товару. Для дистрибуції обов'язково: крок = кратність упаковки, мінімум = MOQ, і підказка, що саме буде додано.",
+ d:`<div class="col" style="align-items:center">
+  <div class="stp"><button>−</button><input value="500"><button>+</button></div>
+  <div class="hint" style="text-align:center">Wielokrotność 100 szt. · MOQ 100</div>
+ </div>`},
+
+{c:"I",n:"06",en:"Tiered pricing",alt:"price breaks, volume pricing",pl:"ceny progowe",
+ ua:"Таблиця цін за обсягом. Активний рівень має підсвічуватись відповідно до введеної кількості — це показує вигоду наступного порогу.",
+ d:`<table class="ptable">
+  <tr><td>1+</td><td>0,11 zł</td></tr>
+  <tr class="on"><td>500+</td><td>0,08 zł</td></tr>
+  <tr><td>5 000+</td><td>0,06 zł</td></tr>
+  <tr><td>25 000+</td><td>0,04 zł</td></tr>
+ </table>`},
+
+{c:"I",n:"07",en:"Stock indicator",alt:"availability",pl:"wskaźnik dostępności",
+ ua:"Наявність і термін. У B2B це часто вирішальний фактор — точна кількість переконує сильніше за «в наявності».",
+ d:`<div class="col" style="max-width:220px">
+  <span class="pill ok"><i></i>2 400 szt. — wysyłka dziś</span>
+  <span class="pill wr"><i></i>Na zamówienie — 14 dni</span>
+  <span class="pill no"><i></i>Wycofany — zobacz zamiennik</span>
+ </div>`},
+
+{c:"I",n:"08",en:"Mini cart",alt:"cart drawer, cart preview",pl:"mini koszyk",
+ ua:"Швидкий перегляд кошика без переходу. Має показувати суму й давати змінити кількість — інакше користувач все одно йде на сторінку кошика.",
+ d:`<div class="mini">
+  <div class="li"><div class="th"></div><div>LM358N<br><span class="cap">100 szt.</span></div><span class="pz">124,00</span></div>
+  <div class="li"><div class="th"></div><div>NE555P<br><span class="cap">50 szt.</span></div><span class="pz">49,00</span></div>
+  <div class="tot"><span>Razem netto</span><span>173,00 zł</span></div>
+ </div>`},
+
+{c:"I",n:"09",en:"Compare",alt:"comparison table",pl:"porównywarka",
+ ua:"Порівняння товарів по параметрах. Підсвічуй відмінності, а не всі рядки — інакше таблиця не допомагає обрати.",
+ d:`<table class="cmp">
+  <tr><th></th><th>4K7</th><th>10K</th></tr>
+  <tr><td>Obudowa</td><td>0805</td><td>0805</td></tr>
+  <tr><td>Tolerancja</td><td class="hl">±1%</td><td>±5%</td></tr>
+  <tr><td>Cena</td><td class="hl">0,08</td><td>0,11</td></tr>
+ </table>`},
+
+{c:"I",n:"10",en:"Wishlist",alt:"saved items, favourites",pl:"schowek",
+ ua:"Збережені позиції. У B2B це не «улюблене», а робочий список для наступного замовлення — тому потрібен експорт і переніс у кошик одним кліком.",
+ note:"Польською <b>schowek</b> або <b>lista życzeń</b>; у B2B частіше <b>schowek</b> / <b>zapisane listy</b>.",
+ d:`<div class="row"><button class="b b-s"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2S3.9 15 3.9 9.4A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.1 2.8c0 5.6-8.1 10.8-8.1 10.8Z"/></svg> Do schowka</button><button class="b b-s" style="color:var(--pcb);border-color:var(--pcb)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2S3.9 15 3.9 9.4A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.1 2.8c0 5.6-8.1 10.8-8.1 10.8Z" fill="currentColor" stroke="none"/></svg> W schowku</button></div>`},
+
+{c:"I",n:"11",en:"BOM upload",alt:"bulk order, quick order",pl:"zamówienie zbiorcze",
+ ua:"Завантаження списку позицій файлом. Ключове для інженерів. Обов'язковий крок — екран зіставлення: що розпізналось, що ні, чим замінити.",
+ d:`<div class="col">
+  <div class="drop" style="padding:11px"><b>Wgraj listę BOM</b><small>.csv · .xlsx</small></div>
+  <div class="al al-w" style="font-size:11px">⚑︎ <div><b>3 z 48 pozycji</b>nie rozpoznano symbolu</div></div>
+ </div>`},
+
+/* ============ J · СТАНИ Й АНАТОМІЯ ============ */
+{c:"J",n:"01",en:"Interaction states",alt:"component states",pl:"stany komponentu",
+ ua:"Мінімальний набір для будь-якого інтерактивного елемента: default, hover, focus, active, disabled. Для полів додаються filled, error, read-only.",
+ note:"Стани польською: <b>domyślny · najechanie · fokus · wciśnięty · nieaktywny</b>.",
+ d:`<div class="states">
+  <button class="b b-p">domyślny</button>
+  <button class="b b-p st-h">hover</button>
+  <button class="b b-p st-f">focus</button>
+  <button class="b b-p st-a">active</button>
+  <button class="b b-p" disabled>disabled</button>
+ </div>`},
+
+{c:"J",n:"02",en:"Focus ring",alt:"focus indicator, focus-visible",pl:"obramowanie fokusa",
+ ua:"Видима рамка при навігації з клавіатури. Прибирати outline без заміни — пряме порушення WCAG 2.4.7. Контраст рамки — мінімум 3:1.",
+ d:`<div class="row"><button class="b b-s st-f">Tab tutaj</button><span class="cap">outline 2px · offset 2px</span></div>`},
+
+{c:"J",n:"03",en:"Loading state",alt:"pending, busy state",pl:"stan ładowania",
+ ua:"Стан кнопки під час запиту. Блокуй повторний клік, зберігай ширину кнопки — інакше макет стрибає.",
+ d:`<div class="row">
+  <button class="b b-p" disabled style="opacity:1"><span class="spin" style="width:13px;height:13px;border-width:2px;border-top-color:#fff;border-color:rgba(255,255,255,.35);border-top-color:#fff"></span> Przetwarzanie…</button>
+ </div>`},
+
+{c:"J",n:"04",en:"Leading / trailing icon",alt:"start / end icon",pl:"ikona wiodąca / końcowa",
+ ua:"Іконка до або після тексту. Leading — категорія чи тип, trailing — напрямок дії (стрілка, шеврон, зовнішнє посилання).",
+ d:`<div class="row">
+  <button class="b b-s"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v12M7.2 11.2 12 16l4.8-4.8M4 20.5h16"/></svg> Pobierz PDF</button>
+  <button class="b b-s">Dalej →</button>
+ </div>`},
+
+{c:"J",n:"05",en:"Chevron",alt:"caret, arrow",pl:"strzałka chevron",
+ ua:"Кутова стрілка без «хвоста». Вниз — розкриття, вправо — перехід глибше. Обертання на 90° — стандартна анімація розгортання.",
+ d:`<div class="row" style="font-size:15px;color:var(--pcb);gap:16px"><span>▾</span><span>▸</span><span>▴</span><span>◂</span></div>`},
+
+{c:"J",n:"06",en:"Thumb / track",alt:"handle / rail",pl:"uchwyt / tor",
+ ua:"Анатомія слайдера: track (тор) — доріжка, thumb (uchwyt) — рухома ручка, fill — заповнена частина. Ті самі терміни в скролбарах.",
+ d:`<div class="col" style="align-items:center;max-width:230px">
+  <div class="dual"><div class="trk"></div><div class="fil" style="left:0;right:38%"></div><b style="right:38%"></b></div>
+  <div class="row" style="font-size:9px;font-family:var(--mono);color:var(--brass);gap:16px"><span>track</span><span>fill</span><span>thumb</span></div>
+ </div>`},
+
+{c:"J",n:"07",en:"Elevation",alt:"shadow, z-index layer",pl:"wyniesienie",
+ ua:"Рівень «висоти» над поверхнею через тінь. Має бути дискретною шкалою (0/1/2/3), а не довільними значеннями — інакше ієрархія шарів розсипається.",
+ d:`<div class="elev"><div>0</div><div class="e1">1</div><div class="e2">2</div><div class="e3">3</div></div>`},
+
+{c:"J",n:"08",en:"Density",alt:"compact mode, spacing scale",pl:"gęstość interfejsu",
+ ua:"Скільки даних вміщується на екрані. Для B2B-таблиць компактний режим — не опція, а базова потреба: користувач працює з сотнями рядків.",
+ d:`<div class="dens">
+  <div><div class="cap" style="margin-bottom:4px">domyślna</div><div class="lst"><div>LM358N</div><div>NE555P</div><div>TL072</div></div></div>
+  <div><div class="cap" style="margin-bottom:4px">kompakt</div><div class="lst cz"><div>LM358N</div><div>NE555P</div><div>TL072</div><div>LM317</div><div>UA741</div></div></div>
+ </div>`},
+
+{c:"J",n:"09",en:"Touch target",alt:"hit area, tap target",pl:"obszar dotyku",
+ ua:"Зона реакції на дотик. Мінімум 44×44 px (Apple) / 48×48 dp (Material). Може бути більшою за видиму іконку — і зазвичай має бути.",
+ d:`<div class="target"><div class="hit"></div><div class="ico"></div></div>
+  <div class="cap" style="margin-top:6px">ikona 20 px · hit area 44 px</div>`},
+
+{c:"J",n:"10",en:"Design token",alt:"semantic token, variable",pl:"token projektowy",
+ ua:"Названа змінна замість «сирого» значення. Семантичний рівень (surface, border, text-muted) переживає ребрендинг і темну тему; сирий hex — ні.",
+ note:"У Figma це <b>zmienne</b> (variables). Рівні: primitive → semantic → component.",
+ d:`<div class="tok">
+  <div><b style="background:#0B5C43"></b>color.action.primary<span>#0B5C43</span></div>
+  <div><b style="background:#A32B1C"></b>color.feedback.danger<span>#A32B1C</span></div>
+  <div><b style="background:#D2D7D1"></b>color.border.default<span>#D2D7D1</span></div>
+  <div><b style="background:#F5F7F3"></b>color.surface.subtle<span>#F5F7F3</span></div>
+ </div>`},
+
+{c:"J",n:"11",en:"Slot",alt:"content slot, children",pl:"slot",
+ ua:"Місце в компоненті, куди вставляється довільний контент. У специфікації описуй слоти явно: що можна вкласти, а що ні.",
+ d:`<div style="width:100%;max-width:240px;border:1.5px dashed var(--brass);border-radius:var(--r);padding:9px;background:var(--surface)">
+  <div class="cap" style="color:var(--brass);margin-bottom:6px">slot: header</div>
+  <div style="font:600 12.5px var(--sans);margin-bottom:7px">Parametry</div>
+  <div class="cap" style="color:var(--brass);margin-bottom:6px">slot: content</div>
+  <div style="font-size:11.5px;color:var(--muted)">4,7 kΩ · 0805 · ±1%</div>
+ </div>`},
+
+{c:"J",n:"12",en:"Variant",alt:"property, component prop",pl:"wariant",
+ ua:"Керована властивість компонента: size, tone, state. Правило: якщо різниця тільки візуальна — це варіант; якщо змінюється поведінка — окремий компонент.",
+ d:`<div class="col" style="max-width:250px">
+  <div class="row"><span class="cap" style="width:44px;text-align:right">size</span><button class="b b-p" style="font-size:11px;padding:5px 9px">sm</button><button class="b b-p" style="font-size:12.5px;padding:8px 12px">md</button><button class="b b-p" style="font-size:14px;padding:10px 15px">lg</button></div>
+  <div class="row"><span class="cap" style="width:44px;text-align:right">tone</span><button class="b b-p">primary</button><button class="b b-s">neutral</button><button class="b b-d">danger</button></div>
+ </div>`},
+
+{c:"J",n:"13",en:"Affordance",alt:"perceived affordance",pl:"afordancja",
+ ua:"Візуальна підказка, що з елементом можна зробити. Підкреслення = клікабельне, тінь = натискається, курсор-рука = інтерактивне. Плоский дизайн часто ламає це першим.",
+ d:`<div class="col" style="max-width:230px">
+  <button class="b b-p" style="justify-content:center;box-shadow:0 2px 0 #073C2C">wygląda na klikalny</button>
+  <div style="text-align:center;padding:9px;border-radius:var(--r);background:var(--well);color:var(--muted);font-size:12px">nie wygląda</div>
+ </div>`},
+
+{c:"J",n:"14",en:"Safe area",alt:"safe area insets",pl:"obszar bezpieczny",
+ ua:"Зона екрана, вільна від системних елементів — вирізу, індикатора Home, закруглень. Кнопки в цій зоні недосяжні або перекриті.",
+ d:`<div class="scene" style="max-width:130px;height:150px;border-radius:14px;border-width:2px">
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:44px;height:14px;background:var(--ink);border-radius:0 0 8px 8px"></div>
+  <div style="position:absolute;inset:20px 8px 22px;border:1.5px dashed var(--brass);border-radius:5px"></div>
+  <div style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:44px;height:3px;background:var(--ink);border-radius:9px"></div>
+ </div>`},
+
+/* ============ K · ВІДСТУПИ Й СІТКА ============ */
+{c:"K",n:"01",en:"Padding",alt:"inner spacing",pl:"wypełnienie wewnętrzne",
+ ua:"Відступ ВСЕРЕДИНІ елемента — між його межею і вмістом. Належить самому елементу: збільшив padding — кнопка стала більшою.",
+ note:"Формально <b>wypełnienie</b>, але 99% розмов у польських командах — просто <b>padding</b>.",
+ d:`<div class="box-demo">
+  <div class="pad-out"><span class="mk-lbl">padding 16</span><div class="pad-in">Treść</div></div>
+ </div>`},
+
+{c:"K",n:"02",en:"Margin",alt:"outer spacing",pl:"margines",
+ ua:"Відступ ЗЗОВНІ елемента — між ним і сусідами. Не належить елементу: це його особистий простір. Розмір самої кнопки не змінюється.",
+ note:"Головна пастка новачків: у Figma Auto Layout margin як такого немає — його роль виконують <b>gap</b> і <b>padding</b> контейнера.",
+ d:`<div class="box-demo">
+  <div class="mar-out"><span class="mk-lbl">margin 24</span><div class="mar-in">Element</div></div>
+ </div>`},
+
+{c:"K",n:"03",en:"Gap",alt:"gutter (flex/grid)",pl:"odstęp",
+ ua:"Проміжок МІЖ елементами в контейнері. Замінює margin у сучасній верстці: не треба прибирати відступ в останнього елемента — gap ставиться тільки між.",
+ d:`<div class="gap-demo">
+  <div class="gd"><i></i><span class="gap-m">gap 8</span><i></i><span class="gap-m">gap 8</span><i></i></div>
+  <div class="cap" style="margin-top:9px;text-transform:none">крайніх відступів немає</div>
+ </div>`},
+
+{c:"K",n:"04",en:"Gutter",alt:"column gutter",pl:"rynna",
+ ua:"Проміжок між колонками модульної сітки. На відміну від gap це параметр СІТКИ, а не окремого контейнера. У 12-колонковій сітці зазвичай 16–32 px.",
+ note:"У польській типографіці <b>rynna</b> має ще одне значення — «річки» з пробілів у виключеному тексті. Контекст вирішує.",
+ d:`<div class="grid-demo">
+  <div class="gcol"></div><div class="ggut"><span>rynna</span></div>
+  <div class="gcol"></div><div class="ggut"><span>rynna</span></div>
+  <div class="gcol"></div><div class="ggut"><span>rynna</span></div><div class="gcol"></div>
+ </div>`},
+
+{c:"K",n:"05",en:"Spacing scale",alt:"4pt / 8pt grid",pl:"skala odstępów",
+ ua:"Обмежений набір дозволених значень відступу: 4, 8, 12, 16, 24, 32, 48. Прибирає суперечку «17 чи 18 px» і робить макет передбачуваним для розробника.",
+ note:"Правило: якщо в макеті з'явився відступ 13 px — це помилка, а не рішення.",
+ d:`<div class="scale-demo">
+  <div><i style="width:4px"></i><b>4</b></div>
+  <div><i style="width:8px"></i><b>8</b></div>
+  <div><i style="width:12px"></i><b>12</b></div>
+  <div><i style="width:16px"></i><b>16</b></div>
+  <div><i style="width:24px"></i><b>24</b></div>
+  <div><i style="width:32px"></i><b>32</b></div>
+  <div><i style="width:48px"></i><b>48</b></div>
+ </div>`},
+
+{c:"K",n:"06",en:"Column grid",alt:"layout grid, 12-col",pl:"siatka kolumnowa",
+ ua:"Вертикальні колонки, до яких прив'язується контент. Стандарт вебу — 12 колонок (ділиться на 2, 3, 4, 6). Мобільний — 4 колонки.",
+ d:`<div class="colgrid">
+  <div class="cg-row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="cg-blocks"><b style="flex:8">8 kolumn</b><b style="flex:4">4</b></div>
+ </div>`},
+
+{c:"K",n:"07",en:"Baseline grid",alt:"vertical rhythm",pl:"siatka bazowa",
+ ua:"Горизонтальні лінії з кроком 4 або 8 px, на яких «сидить» текст. Дає вертикальний ритм: різні блоки вирівнюються між собою навіть у сусідніх колонках.",
+ d:`<div class="baseline">
+  <div class="bl-lines"></div>
+  <div class="bl-txt"><b>Nagłówek sekcji</b><p>Tekst siada na liniach bazowych co 8 px.</p></div>
+ </div>`},
+
+{c:"K",n:"08",en:"Container",alt:"max-width, wrapper",pl:"kontener",
+ ua:"Обмежувач ширини контенту з центруванням. Без нього на моніторі 27″ рядок тексту стає нечитабельним. Типово 1200–1440 px.",
+ d:`<div class="cont-demo">
+  <div class="cd-vp"><span class="cap">viewport</span>
+   <div class="cd-inner">max-width 1200</div>
+  </div>
+ </div>`},
+
+{c:"K",n:"09",en:"Breakpoint",alt:"media query",pl:"punkt załamania",
+ ua:"Ширина екрана, на якій макет перебудовується. Не вигадуй їх з голови — став там, де ламається контент. Типово: 640 / 768 / 1024 / 1280.",
+ d:`<div class="bp-demo">
+  <div class="bp"><b>360</b><span>mobile · 4 kol.</span></div>
+  <div class="bp"><b>768</b><span>tablet · 8 kol.</span></div>
+  <div class="bp on"><b>1280</b><span>desktop · 12 kol.</span></div>
+ </div>`},
+
+{c:"K",n:"10",en:"Hug / Fill / Fixed",alt:"auto layout sizing",pl:"dopasuj / wypełnij / stała",
+ ua:"Три режими розміру у Figma Auto Layout. Hug — обгортає вміст, Fill — розтягується на весь доступний простір, Fixed — жорстке значення. Найчастіша причина «поламаного» макета при зміні тексту.",
+ note:"У CSS відповідники: <b>fit-content</b> · <b>flex:1</b> · фіксований <b>width</b>.",
+ d:`<div class="col" style="max-width:250px;gap:9px">
+  <div class="hff"><span class="hff-t">HUG</span><b style="width:auto">Tekst</b></div>
+  <div class="hff"><span class="hff-t">FILL</span><b style="flex:1">Tekst</b></div>
+  <div class="hff"><span class="hff-t">FIXED</span><b style="width:80px">Tekst</b></div>
+ </div>`},
+
+{c:"K",n:"11",en:"Constraints",alt:"anchoring, pinning",pl:"ograniczenia",
+ ua:"Правило, як елемент поводиться при зміні розміру батька: приліпитись до лівого краю, до правого, розтягнутись, лишитись по центру. Основа адаптивних компонентів у Figma.",
+ d:`<div class="constr">
+  <div class="cr-box"><i class="tl"></i><i class="tr"></i><span class="cap">pin: top · right</span></div>
+  <div class="cr-arrows">→</div>
+  <div class="cr-box wide"><i class="tl"></i><i class="tr"></i></div>
+ </div>`},
+
+{c:"K",n:"12",en:"Alignment",alt:"align",pl:"wyrównanie",
+ ua:"Прив'язка елементів до спільної осі: ліворуч, по центру, праворуч, по верху, по базовій лінії. Найдешевший спосіб зробити макет охайним.",
+ d:`<div class="align-demo">
+  <div class="ad"><i style="width:70%"></i><i style="width:45%"></i><i style="width:88%"></i><span class="cap">left</span></div>
+  <div class="ad ctr"><i style="width:70%"></i><i style="width:45%"></i><i style="width:88%"></i><span class="cap">center</span></div>
+ </div>`},
+
+{c:"K",n:"13",en:"Distribution",alt:"space-between, justify",pl:"rozmieszczenie",
+ ua:"Як вільний простір розподіляється між елементами: рівні проміжки, притиснуто до країв, по центру. У CSS — justify-content.",
+ d:`<div class="col" style="max-width:240px;gap:10px">
+  <div class="dist"><i></i><i></i><i></i><span class="dist-l">space-between</span></div>
+  <div class="dist ctr"><i></i><i></i><i></i><span class="dist-l">center</span></div>
+  <div class="dist arnd"><i></i><i></i><i></i><span class="dist-l">space-around</span></div>
+ </div>`},
+
+{c:"K",n:"14",en:"Whitespace",alt:"negative space",pl:"biała przestrzeń",
+ ua:"Порожній простір як повноцінний елемент композиції. Не «незаповнене місце», а інструмент групування: те, що поруч — пов'язане, те, що далеко — ні.",
+ note:"Польською також <b>światło</b> — типографічний термін, який дизайнери переносять на макет загалом.",
+ d:`<div class="ws-demo">
+  <div class="ws-bad"><span class="ws-t">bez światła</span><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="ws-good"><span class="ws-t">z grupowaniem</span><div><i></i><i></i><i></i></div><div><i></i><i></i><i></i></div></div>
+ </div>`},
+
+{c:"K",n:"15",en:"Optical alignment",alt:"visual centering",pl:"wyrównanie optyczne",
+ ua:"Вирівнювання на око, а не за числами. Математично центрована іконка «Play» виглядає зміщеною ліворуч — її треба посунути вправо на 1–2 px. Око головніше за лінійку.",
+ d:`<div class="opt-demo">
+  <div><span class="opt-c math">▶</span><span class="cap">matematycznie</span></div>
+  <div><span class="opt-c opt">▶</span><span class="cap">optycznie</span></div>
+ </div>`},
+
+{c:"K",n:"16",en:"Aspect ratio",alt:"proportions",pl:"proporcje",
+ ua:"Співвідношення ширини до висоти: 16:9, 4:3, 1:1. Фіксуй його для зображень у сітці — інакше картки різної висоти й макет «стрибає» під час завантаження.",
+ d:`<div class="row" style="gap:9px;align-items:flex-end">
+  <div class="ar" style="width:76px;height:43px"><span>16:9</span></div>
+  <div class="ar" style="width:60px;height:45px"><span>4:3</span></div>
+  <div class="ar" style="width:48px;height:48px"><span>1:1</span></div>
+ </div>`},
+
+{c:"K",n:"17",en:"Overflow",alt:"clipping, scroll",pl:"przepełnienie",
+ ua:"Що робити, коли вміст не влазить: обрізати (hidden), показати скрол (scroll), випустити назовні (visible). Проєктуй це свідомо — інакше вирішить браузер.",
+ d:`<div class="row" style="gap:9px">
+  <div class="ovf hid"><span>hidden</span>Bardzo długi tekst produktu</div>
+  <div class="ovf scr2"><span>scroll</span>Bardzo długi tekst produktu ciąg dalszy</div>
+ </div>`},
+
+{c:"K",n:"18",en:"Z-index",alt:"stacking order",pl:"kolejność nakładania",
+ ua:"Порядок шарів по глибині. У дизайн-системі має бути шкала (dropdown 100, sticky 200, modal 300, toast 400) — інакше з'являються z-index: 99999.",
+ d:`<div class="zdemo">
+  <b class="z1">z 100 · dropdown</b><b class="z2">z 300 · modal</b><b class="z3">z 400 · toast</b>
+ </div>`},
+
+{c:"K",n:"19",en:"Full-bleed",alt:"edge to edge",pl:"na spad",
+ ua:"Блок, що виходить за межі контейнера на всю ширину екрана. Типово для банерів і секцій з фоном. Термін прийшов із поліграфії.",
+ d:`<div class="cont-demo">
+  <div class="cd-vp"><span class="cap">viewport</span>
+   <div class="cd-bleed">full-bleed</div>
+   <div class="cd-inner">kontener</div>
+  </div>
+ </div>`},
+
+{c:"K",n:"20",en:"Responsive vs adaptive",alt:"fluid vs breakpoint-based",pl:"responsywny vs adaptacyjny",
+ ua:"Responsive — макет тече плавно за будь-якої ширини. Adaptive — кілька фіксованих розкладок, що перемикаються на брейкпойнтах. Сучасний веб змішує обидва.",
+ d:`<div class="col" style="max-width:250px;gap:11px">
+  <div><span class="cap">responsive · płynnie</span><div class="resp"><i style="width:100%"></i><i style="width:78%"></i><i style="width:56%"></i></div></div>
+  <div><span class="cap">adaptive · skokowo</span><div class="adap"><i></i><i></i><i></i></div></div>
+ </div>`},
+
+/* ============ L · ТИПОГРАФІКА ============ */
+{c:"L",n:"01",en:"Typeface vs Font",alt:"family vs file",pl:"krój pisma vs font",
+ ua:"Krój pisma — це дизайн гарнітури (IBM Plex Sans). Font — конкретний файл із накресленням і кеглем (IBM Plex Sans Bold 16). Аналогія: пісня і mp3-файл.",
+ note:"Польське <b>czcionka</b> історично означає металеву літеру, а не файл. У побуті кажуть «czcionka», у фаховій розмові — <b>krój</b> або <b>font</b>.",
+ d:`<div class="col" style="max-width:250px">
+  <div class="tf-row"><span class="cap">krój</span><b>IBM Plex Sans</b></div>
+  <div class="tf-row"><span class="cap">fonty</span><div><i>Regular</i><i style="font-weight:500">Medium</i><i style="font-weight:600">SemiBold</i><i style="font-style:italic">Italic</i></div></div>
+ </div>`},
+
+{c:"L",n:"02",en:"Type scale",alt:"modular scale",pl:"skala typograficzna",
+ ua:"Набір дозволених розмірів тексту з єдиним коефіцієнтом (1.125, 1.25, 1.333). Замість «зроблю тут 19 px» — обираєш зі шкали. Основа типографічної ієрархії.",
+ d:`<div class="tscale">
+  <div style="font-size:26px">32 · H1</div>
+  <div style="font-size:20px">24 · H2</div>
+  <div style="font-size:16px">18 · H3</div>
+  <div style="font-size:13.5px">16 · Body</div>
+  <div style="font-size:11.5px">14 · Small</div>
+  <div style="font-size:10px">12 · Caption</div>
+ </div>`},
+
+{c:"L",n:"03",en:"Line height",alt:"leading",pl:"interlinia",
+ ua:"Відстань між базовими лініями рядків. Для основного тексту 1.4–1.6, для заголовків 1.1–1.25. Чим довший рядок — тим більша потрібна інтерлінія.",
+ note:"Термін <b>leading</b> (вимовляється «ледінг») — від свинцевих смужок, які вставляли між рядками металевого набору.",
+ d:`<div class="col" style="max-width:250px;gap:9px">
+  <div class="lh-box"><span class="cap">1.1 — ciasno</span><p style="line-height:1.1">Rezystor grubowarstwowy SMD o tolerancji jednego procenta.</p></div>
+  <div class="lh-box"><span class="cap">1.55 — dobrze</span><p style="line-height:1.55">Rezystor grubowarstwowy SMD o tolerancji jednego procenta.</p></div>
+ </div>`},
+
+{c:"L",n:"04",en:"Letter spacing",alt:"tracking",pl:"światło międzyliterowe",
+ ua:"Рівномірний проміжок між УСІМА літерами. Великий кегль — трохи від'ємний, дрібний і капслок — трохи додатний. Основний текст майже завжди чіпати не треба.",
+ note:"Англійською <b>tracking</b>. Не плутати з кернінгом — той працює з окремими парами.",
+ d:`<div class="col" style="max-width:240px;gap:7px">
+  <div class="ls-row" style="letter-spacing:-.04em">−0.04em ciasno</div>
+  <div class="ls-row">0 domyślnie</div>
+  <div class="ls-row" style="letter-spacing:.16em">+0.16em luźno</div>
+ </div>`},
+
+{c:"L",n:"05",en:"Kerning",alt:"pair spacing",pl:"kerning",
+ ua:"Підганяння відстані між КОНКРЕТНОЮ парою літер: AV, To, Wa. Без нього в заголовках з'являються дірки. Гарний шрифт має тисячі кернінг-пар усередині файлу.",
+ d:`<div class="col" style="align-items:center;gap:9px">
+  <div class="kern bad"><span>A</span><span>V</span><span>A</span><span>T</span><span>A</span><span>R</span><i class="cap">bez kerningu</i></div>
+  <div class="kern"><span>AVATAR</span><i class="cap">z kerningiem</i></div>
+ </div>`},
+
+{c:"L",n:"06",en:"Measure",alt:"line length",pl:"długość wiersza",
+ ua:"Кількість символів у рядку. Оптимум 45–75 знаків із пробілами. Коротше — око стрибає, довше — губиться початок наступного рядка.",
+ d:`<div class="col" style="max-width:255px;gap:9px">
+  <div class="ms-box"><span class="cap">≈ 40 znaków · za krótko</span><p style="max-width:150px">Rezystor grubowarstwowy SMD o tolerancji jednego procenta i mocy.</p></div>
+  <div class="ms-box"><span class="cap">≈ 65 znaków · optimum</span><p>Rezystor grubowarstwowy SMD o tolerancji jednego procenta i mocy.</p></div>
+ </div>`},
+
+{c:"L",n:"07",en:"Font weight",alt:"boldness",pl:"grubość kroju",
+ ua:"Товщина штриха: 100–900. У продукті достатньо 2–3 накреслення. Не імітуй жирність програмно (fake bold) — бери справжнє накреслення шрифту.",
+ d:`<div class="col" style="max-width:230px;gap:2px;font-size:15px">
+  <div style="font-weight:400">400 Regular · Zamówienie</div>
+  <div style="font-weight:500">500 Medium · Zamówienie</div>
+  <div style="font-weight:600">600 SemiBold · Zamówienie</div>
+  <div style="font-weight:700">700 Bold · Zamówienie</div>
+ </div>`},
+
+{c:"L",n:"08",en:"x-height",alt:"lowercase height",pl:"wysokość x",
+ ua:"Висота малої літери «x» без виносних елементів. Головний фактор читабельності: шрифт з великим x-height здається більшим за той самий кегль і краще читається дрібним.",
+ d:`<div class="anatomy">
+  <div class="an-lines"><i class="an-asc">ascender</i><i class="an-cap">cap height</i><i class="an-x">x-height</i><i class="an-base">baseline</i><i class="an-desc">descender</i></div>
+  <div class="an-word">Hxpb</div>
+ </div>`},
+
+{c:"L",n:"09",en:"Baseline",alt:"cap height, ascender, descender",pl:"linia bazowa",
+ ua:"Лінія, на якій «стоять» літери. Ascender — виносний угору (h, b), descender — униз (p, g). Вирівнювання іконки з текстом робиться по базовій лінії, а не по центру блоку.",
+ d:`<div class="baseline-al">
+  <div class="ba-row bad"><span class="ic-sq"></span>Wyrównanie do środka<i class="cap">źle</i></div>
+  <div class="ba-row"><span class="ic-sq"></span>Wyrównanie do linii bazowej<i class="cap">dobrze</i></div>
+ </div>`},
+
+{c:"L",n:"10",en:"Type hierarchy",alt:"visual hierarchy",pl:"hierarchia typograficzna",
+ ua:"Порядок читання, заданий розміром, вагою і кольором. Правило: розрізняй рівні мінімум двома параметрами одразу — лише розмір читається слабо.",
+ d:`<div class="hier">
+  <b>Rezystor SMD 4,7 kΩ</b>
+  <i>RS-4K7-0805 · Texas Instruments</i>
+  <p>Rezystor grubowarstwowy o tolerancji ±1% i mocy znamionowej 125 mW.</p>
+  <u>0,08 zł / szt.</u>
+ </div>`},
+
+{c:"L",n:"11",en:"Widow / Orphan",alt:"runt line",pl:"wdowa / bękart",
+ ua:"Обрубок тексту, що псує композицію: одне слово в останньому рядку абзацу або самотній рядок на початку колонки. У вебі лікується через text-wrap: pretty / balance.",
+ note:"Увага: польська термінологія тут <b>жаргонна й суперечлива</b> — «bękart», «szewc», «wdowa» різні джерела визначають по-різному. Не сперечайся про назву, показуй проблему.",
+ d:`<div class="col" style="max-width:250px;gap:9px">
+  <div class="wid bad"><p>Zamówienie zostanie zrealizowane w ciągu dwóch dni roboczych od momentu<br><span>potwierdzenia.</span></p><i class="cap">wdowa — jedno słowo</i></div>
+  <div class="wid"><p>Zamówienie zostanie zrealizowane w ciągu dwóch dni od chwili potwierdzenia zamówienia.</p><i class="cap">poprawnie</i></div>
+ </div>`},
+
+{c:"L",n:"12",en:"Hanging conjunction",alt:"orphan word (PL rule)",pl:"sierota / wiszący spójnik",
+ ua:"Специфічно польське правило: односимвольні слова (i, a, o, w, z, u) НЕ можна лишати в кінці рядка — переносяться разом з наступним словом через нерозривний пробіл.",
+ note:"Критично для tme.eu. Технічно — <b>&amp;nbsp;</b> після спілки. Польський користувач це помічає одразу, як українець помітив би «в кінці рядка».",
+ d:`<div class="col" style="max-width:245px;gap:9px">
+  <div class="wid bad"><p>Rezystory i<br>kondensatory dostępne od ręki</p><i class="cap">źle — „i" wisi</i></div>
+  <div class="wid"><p>Rezystory<br>i&nbsp;kondensatory dostępne od ręki</p><i class="cap">dobrze — i&amp;nbsp;kondensatory</i></div>
+ </div>`},
+
+{c:"L",n:"13",en:"Text alignment",alt:"ragged right, justified",pl:"wyrównanie tekstu",
+ ua:"Ліворуч (ragged right) — стандарт для екрана. Виключка (justowanie) в вебі створює «річки» з пробілів, бо браузер не вміє переносити так, як InDesign. По центру — тільки короткі блоки.",
+ d:`<div class="col" style="max-width:250px;gap:9px">
+  <div class="ta-box"><span class="cap">do lewej — standard</span><p>Rezystor grubowarstwowy SMD o tolerancji jednego procenta.</p></div>
+  <div class="ta-box"><span class="cap">justowanie — rzeki</span><p style="text-align:justify">Rezystor grubowarstwowy SMD o tolerancji jednego procenta.</p></div>
+ </div>`},
+
+{c:"L",n:"14",en:"Tabular figures",alt:"lining vs proportional",pl:"cyfry tabelaryczne",
+ ua:"Цифри однакової ширини — вирівнюються в колонку. Обов'язкові для таблиць, цін і будь-яких числових даних. Пропорційні красивіші в тексті, але в таблиці «пливуть».",
+ note:"CSS: <b>font-variant-numeric: tabular-nums</b>. Одне з найдешевших покращень B2B-таблиці.",
+ d:`<div class="row" style="gap:14px;align-items:flex-start">
+  <div class="fig prop"><span class="cap">proporcjonalne</span><i>1 240,00</i><i>987,50</i><i>11 118,00</i></div>
+  <div class="fig tab"><span class="cap">tabelaryczne</span><i>1 240,00</i><i>987,50</i><i>11 118,00</i></div>
+ </div>`},
+
+{c:"L",n:"15",en:"Uppercase / Small caps",alt:"all caps, versals",pl:"wersaliki / kapitaliki",
+ ua:"Капслок читається на 10–20% повільніше — тільки для коротких міток. Капітеліки (малі великі літери) — елегантніша альтернатива для підзаголовків і абревіатур.",
+ d:`<div class="col" style="max-width:240px;gap:7px">
+  <div class="uc-row">Zwykły tekst</div>
+  <div class="uc-row" style="text-transform:uppercase;letter-spacing:.09em">wersaliki + światło</div>
+  <div class="uc-row" style="font-variant:small-caps;letter-spacing:.04em">Kapitaliki NIP i REGON</div>
+ </div>`},
+
+{c:"L",n:"16",en:"Optical size",alt:"opsz, size-specific design",pl:"rozmiar optyczny",
+ ua:"Варіативні шрифти вміють міняти малюнок літери залежно від кегля: у дрібному — товщі штрихи й більше світла, у великому — тонші й щільніше. Раніше це були окремі накреслення Display і Text.",
+ d:`<div class="col" style="align-items:center;gap:4px">
+  <div style="font-size:30px;letter-spacing:-.03em;font-weight:600">Display 32</div>
+  <div style="font-size:13px;letter-spacing:.01em">Text 16 — ten sam krój, inny rysunek</div>
+  <div style="font-size:10px;letter-spacing:.03em">Caption 12 — więcej światła</div>
+ </div>`},
+];
+
+const CATS = {
+  A:["Дії","Akcje"], B:["Поля вводу","Pola i formularze"], C:["Вибір і перемикання","Wybór"],
+  D:["Навігація","Nawigacja"], E:["Контейнери","Kontenery"], F:["Оверлеї","Warstwy nakładane"],
+  G:["Статус і фідбек","Komunikaty"], H:["Контент і дані","Treść i dane"],
+  I:["E-commerce","Handel elektroniczny"], J:["Стани й анатомія","Stany i anatomia"],
+  K:["Відступи й сітка","Odstępy i układ"], L:["Типографіка","Typografia"]
+};
+const ORDER = Object.keys(CATS);
+
+/* пари, які найчастіше плутають — для карток рівня 5 */
+const PAIRS = [
+  ["F-06","F-05","F-07"], ["F-01","F-03","F-04"], ["F-01","F-02"],
+  ["C-04","C-01"], ["C-01","C-03"], ["C-05","C-06","C-08"],
+  ["A-05","A-04","D-05"], ["A-01","A-07"], ["A-02","A-03"],
+  ["H-03","G-03","G-04"], ["G-01","G-02","F-10"], ["G-08","G-07","G-05"],
+  ["G-05","G-11"], ["G-09","G-10"], ["E-06","E-07"], ["E-02","E-03"],
+  ["C-11","D-11"], ["B-04","B-05","B-03"], ["D-03","D-04"], ["D-06","D-11"],
+  ["K-01","K-02","K-03"], ["K-03","K-04"], ["K-06","K-07"],
+  ["L-03","L-04","L-05"], ["L-01","L-02"], ["L-11","L-12"], ["J-07","K-18"]
+];
+
+/* ---------- helpers ---------- */
+const strip = s => (s||"").replace(/<[^>]*>/g,"");
+DATA.forEach(e => { e.id = e.c+"-"+e.n; e.hay = [e.en,e.alt,e.pl,strip(e.ua),strip(e.note),e.id].join(" ").toLowerCase(); });
+const BY_ID = {}; DATA.forEach(e => BY_ID[e.id] = e);
+const DAY = 864e5;
+const INTERVAL = [0, 0, 2*DAY, 7*DAY, 21*DAY, 60*DAY]; // за боксом
+const KEY = "katalog-ui-v1";
+const shuffle = a => { for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+/* ---------- persistence ---------- */
+let ST = {};
+function load(){
+  try{ ST = JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ ST = {}; }
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(ST)); }
+  catch(e){ document.getElementById("storewarn") && (document.getElementById("storewarn").style.display="block"); }
+}
+function st(id){ return ST[id] || (ST[id] = {b:0, due:0, l:0, s:0}); }
+const stateOf = b => b===0?0 : b<=2?1 : b<=4?2 : 3;
+const STATE_NAMES = ["Нове","Вчу","Знаю","Засвоєно"];
+
+/* ---------- session ---------- */
+let S = null;
+
+function dueList(){
+  const now = Date.now();
+  return DATA.filter(e => { const s = ST[e.id]; return s && s.b>0 && s.due<=now; })
+             .sort((a,b) => ST[a.id].due - ST[b.id].due);
+}
+function newList(){ return DATA.filter(e => !ST[e.id] || ST[e.id].b===0); }
+
+function buildSession(){
+  const LEN = 12, MAXNEW = 5;
+  const due = dueList().slice(0, LEN);
+  const room = LEN - due.length;
+  // якщо повторювати нема чого — наповнюємо сесію новими до повного розміру
+  const fresh = newList().slice(0, due.length ? Math.min(MAXNEW, room) : room);
+  let items = due.concat(fresh);
+  if(!items.length) items = shuffle(DATA.slice()).slice(0, LEN); // все вивчено → вільне повторення
+  shuffle(items);
+  // інтерлівінг: не даємо двом сусіднім карткам бути з однієї категорії
+  for(let i=1;i<items.length;i++){
+    if(items[i].c === items[i-1].c){
+      const j = items.findIndex((x,k) => k>i && x.c!==items[i-1].c);
+      if(j>-1){ const t=items[i]; items[i]=items[j]; items[j]=t; }
+    }
+  }
+  S = {items, i:0, right:0, wrong:0, total:items.length};
+}
+
+function cardType(box){
+  if(box===0) return "intro";
+  if(box===1) return "mc-name";
+  if(box===2) return "mc-demo";
+  if(box===3) return "recall";
+  if(box===4) return "pl";
+  return pairFor(S.items[S.i].id) ? "pair" : "recall";
+}
+function pairFor(id){
+  const ps = PAIRS.filter(p => p.includes(id) && p.every(x => BY_ID[x]));
+  return ps.length ? ps[Math.random()*ps.length|0] : null;
+}
+function distractors(e, n){
+  const same = shuffle(DATA.filter(x => x.c===e.c && x.id!==e.id));
+  const any  = shuffle(DATA.filter(x => x.c!==e.c));
+  return same.slice(0,2).concat(any).slice(0,n);
+}
+
+/* ---------- grading ---------- */
+function grade(e, ok, partial){
+  const s = st(e.id); s.s++;
+  if(partial){ s.due = Date.now() + DAY; }
+  else if(ok){ s.b = Math.min(5, s.b+1); s.due = Date.now() + INTERVAL[s.b]; }
+  else { s.b = 1; s.l++; s.due = Date.now(); }
+  save();
+  ok ? S.right++ : (partial ? 0 : S.wrong++);
+}
+
+/* ---------- render: learn ---------- */
+const vLearn = document.getElementById("v-learn");
+
+function renderStart(){
+  const d = dueList().length, n = newList().length, learned = DATA.filter(e => (ST[e.id]||{}).b>=3).length;
+  vLearn.innerHTML = `
+   <div class="startcard">
+     <h2>Sesja na 10 minut</h2>
+     <p class="sub">12 карток. Система сама обере, що показати і в якій формі.</p>
+     <div class="qstat">
+       <div><b>${d}</b><span>do powtórki</span></div>
+       <div><b>${n}</b><span>nowych</span></div>
+       <div><b>${learned}</b><span>znasz</span></div>
+     </div>
+     <button class="bigbtn" id="go">Ćwicz →</button>
+     <button class="bigbtn alt" id="goweak">Powtórz słabe punkty</button>
+     <div id="storewarn" style="display:none" class="hint2">⚠︎ Прогрес не зберігається — відкрий файл через http (GitHub Pages), а не як локальний файл.</div>
+   </div>`;
+  document.getElementById("go").onclick = () => { buildSession(); renderCard(); };
+  document.getElementById("goweak").onclick = () => {
+    const weak = DATA.filter(e => (ST[e.id]||{}).l >= 2);
+    if(!weak.length){ alert("Слабких місць поки немає — спочатку потренуйся."); return; }
+    S = {items:shuffle(weak).slice(0,12), i:0, right:0, wrong:0, total:Math.min(12,weak.length)};
+    renderCard();
+  };
+}
+
+function shell(inner, typeLabel, box){
+  const pct = Math.round(S.i / S.total * 100);
+  return `<div class="sess">
+    <div class="sessbar">
+      <button class="x" id="quit" aria-label="Zakończ">✕</button>
+      <div class="tr"><div class="fl" style="width:${pct}%"></div></div>
+      <span class="n">${S.i+1}/${S.total}</span>
+    </div>
+    <div class="qcard">
+      <div class="qhead"><span class="qtype">${typeLabel}</span><span class="qbox">poziom ${box}/5</span></div>
+      ${inner}
+    </div></div>`;
+}
+
+function renderCard(){
+  if(S.i >= S.items.length) return renderDone();
+  const e = S.items[S.i], box = st(e.id).b, t = cardType(box);
+  if(t==="intro")   return cIntro(e, box);
+  if(t==="mc-name") return cMcName(e, box);
+  if(t==="mc-demo") return cMcDemo(e, box);
+  if(t==="recall")  return cRecall(e, box);
+  if(t==="pl")      return cPl(e, box);
+  return cPair(e, box);
+}
+function bindQuit(){ const q=document.getElementById("quit"); if(q) q.onclick = () => { S=null; renderStart(); }; }
+function next(){ S.i++; renderCard(); }
+
+/* новий елемент — просто знайомство */
+function cIntro(e, box){
+  vLearn.innerHTML = shell(`
+    <div class="qstage">${e.d}</div>
+    <div class="l-reveal" style="padding-top:13px"><div class="l-revealbox">
+      <div class="rn">${esc(e.en)}</div>
+      <div class="rp">PL · ${esc(e.pl)}</div>
+      <div class="rd">${e.ua}</div>
+    </div></div>
+    <div class="l-opts"><button class="l-opt" id="nx" style="text-align:center">Zrozumiałem →</button></div>`,
+    "Nowe pojęcie", box);
+  bindQuit();
+  document.getElementById("nx").onclick = () => { const s=st(e.id); s.b=1; s.s++; s.due=Date.now(); save(); next(); };
+}
+
+/* демо → яка це назва */
+function cMcName(e, box){
+  const opts = shuffle([e].concat(distractors(e,3)));
+  vLearn.innerHTML = shell(`
+    <div class="qstage">${e.d}</div>
+    <div class="qprompt"><div class="small">Jak nazywa się ten element?</div></div>
+    <div class="l-opts">${opts.map(o=>`<button class="l-opt" data-id="${o.id}">${esc(o.en)}</button>`).join("")}</div>
+    <div class="l-fbk" id="fbk"></div>`, "Rozpoznaj nazwę", box);
+  bindQuit(); wireMc(e, opts);
+}
+
+/* назва → яке це демо */
+function cMcDemo(e, box){
+  const opts = shuffle([e].concat(distractors(e,3)));
+  vLearn.innerHTML = shell(`
+    <div class="qprompt"><div class="big">${esc(e.en)}</div><div class="small">${esc(e.pl)}</div></div>
+    <div class="l-opts two">${opts.map(o=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner">${o.d}</div></div>`).join("")}</div>
+    <div class="l-fbk" id="fbk"></div>`, "Wskaż element", box);
+  bindQuit(); wireMc(e, opts, ".l-optdemo");
+}
+
+function wireMc(e, opts, sel){
+  sel = sel || ".l-opt";
+  const nodes = [].slice.call(vLearn.querySelectorAll(sel));
+  nodes.forEach(n => n.onclick = () => {
+    const ok = n.dataset.id === e.id;
+    nodes.forEach(x => { x.disabled = true; x.onclick = null;
+      if(x.dataset.id === e.id) x.classList.add("ok");
+      else if(x === n) x.classList.add("no"); });
+    grade(e, ok);
+    document.getElementById("fbk").innerHTML =
+      `${ok ? "✓ Dobrze." : "✗ To jest <b>"+esc(e.en)+"</b>."} <span class="pl-inline">PL · ${esc(e.pl)}</span><br>${e.ua}
+       <div style="margin-top:11px"><button class="l-opt" id="nx" style="text-align:center;width:100%">Dalej →</button></div>`;
+    document.getElementById("nx").onclick = next;
+  });
+}
+
+/* вільне пригадування із самооцінкою */
+function cRecall(e, box){
+  vLearn.innerHTML = shell(`
+    <div class="qstage">${e.d}</div>
+    <div class="qprompt"><div class="small">Przypomnij sobie nazwę — po angielsku i po polsku.</div></div>
+    <div class="l-opts"><button class="l-opt" id="rev" style="text-align:center">Pokaż odpowiedź</button></div>`,
+    "Przypomnij sobie", box);
+  bindQuit();
+  document.getElementById("rev").onclick = () => {
+    vLearn.querySelector(".l-opts").outerHTML = `
+      <div class="l-reveal"><div class="l-revealbox">
+        <div class="rn">${esc(e.en)}</div><div class="rp">PL · ${esc(e.pl)}</div>
+        <div class="rd">${e.ua}</div></div></div>
+      <div class="l-grades">
+        <button class="l-grade g1" data-g="0">Nie<small>od nowa</small></button>
+        <button class="l-grade g2" data-g="1">Prawie<small>jutro</small></button>
+        <button class="l-grade g3" data-g="2">Wiedziałem<small>dalej</small></button>
+      </div>`;
+    wireGrades(e);
+  };
+}
+
+/* англійська → польська */
+function cPl(e, box){
+  vLearn.innerHTML = shell(`
+    <div class="qprompt" style="padding:26px 14px 6px"><div class="big">${esc(e.en)}</div>
+      <div class="small">Jak to powiesz po polsku?</div></div>
+    <div class="l-opts"><button class="l-opt" id="rev" style="text-align:center">Pokaż odpowiedź</button></div>`,
+    "Termin polski", box);
+  bindQuit();
+  document.getElementById("rev").onclick = () => {
+    vLearn.querySelector(".l-opts").outerHTML = `
+      <div class="l-reveal"><div class="l-revealbox">
+        <div class="rp" style="font-size:17px">${esc(e.pl)}</div>
+        ${e.note ? '<div class="rd">'+e.note+'</div>' : ''}</div></div>
+      <div class="l-grades">
+        <button class="l-grade g1" data-g="0">Nie<small>od nowa</small></button>
+        <button class="l-grade g2" data-g="1">Prawie<small>jutro</small></button>
+        <button class="l-grade g3" data-g="2">Wiedziałem<small>dalej</small></button>
+      </div>`;
+    wireGrades(e);
+  };
+}
+
+function wireGrades(e){
+  [].slice.call(vLearn.querySelectorAll(".l-grade")).forEach(b => b.onclick = () => {
+    const g = +b.dataset.g;
+    grade(e, g===2, g===1);
+    next();
+  });
+}
+
+/* розрізнення схожих */
+function cPair(e, box){
+  const pair = pairFor(e.id).map(id => BY_ID[id]);
+  const opts = shuffle(pair.slice());
+  vLearn.innerHTML = shell(`
+    <div class="qprompt"><div class="big">${esc(e.en)}</div>
+      <div class="small">Który to? Uważaj — te elementy łatwo pomylić.</div></div>
+    <div class="l-opts two">${opts.map(o=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner">${o.d}</div></div>`).join("")}</div>
+    <div class="l-fbk" id="fbk"></div>`, "Odróżnij", box);
+  bindQuit();
+  const nodes = [].slice.call(vLearn.querySelectorAll(".l-optdemo"));
+  nodes.forEach(n => n.onclick = () => {
+    const ok = n.dataset.id === e.id;
+    nodes.forEach(x => { x.onclick = null;
+      if(x.dataset.id === e.id) x.classList.add("ok"); else if(x===n) x.classList.add("no"); });
+    grade(e, ok);
+    document.getElementById("fbk").innerHTML =
+      (ok ? "✓ Tak." : "✗ Nie.") + " " + opts.map(o=>`<b>${esc(o.en)}</b> — ${strip(o.ua).split(".")[0]}.`).join("<br>") +
+      `<div style="margin-top:11px"><button class="l-opt" id="nx" style="text-align:center;width:100%">Dalej →</button></div>`;
+    document.getElementById("nx").onclick = next;
+  });
+}
+
+function renderDone(){
+  const acc = S.right + S.wrong ? Math.round(S.right/(S.right+S.wrong)*100) : 100;
+  vLearn.innerHTML = `<div class="startcard"><div class="l-done">
+     <div class="big">Sesja zakończona</div>
+     <p>${S.total} kart · ${acc}% trafnych</p>
+     <button class="bigbtn" id="again">Jeszcze jedna sesja</button>
+     <button class="bigbtn alt" id="back">Wróć</button>
+   </div></div>`;
+  document.getElementById("again").onclick = () => { buildSession(); renderCard(); };
+  document.getElementById("back").onclick = renderStart;
+}
+
+/* ---------- render: progress ---------- */
+function renderProg(){
+  const counts=[0,0,0,0];
+  DATA.forEach(e => counts[stateOf((ST[e.id]||{}).b||0)]++);
+  const cats = ORDER.map(k => {
+    const items = DATA.filter(e => e.c===k), n = items.length;
+    const c=[0,0,0,0]; items.forEach(e => c[stateOf((ST[e.id]||{}).b||0)]++);
+    const known = c[2]+c[3];
+    return {k, n, c, pct: Math.round(known/n*100)};
+  });
+  const weak = DATA.filter(e => (ST[e.id]||{}).l >= 2)
+                   .sort((a,b)=>ST[b.id].l-ST[a.id].l).slice(0,12);
+  document.getElementById("v-prog").innerHTML = `
+    <div class="pgrid">
+      ${counts.map((v,i)=>`<div class="pcell s${i}"><b>${v}</b><span>${STATE_NAMES[i]}</span></div>`).join("")}
+    </div>
+    <h3 class="pgsec">Za kategorią</h3>
+    ${cats.map(c=>`<div class="catrow">
+        <span class="nm">${CATS[c.k][0]}</span>
+        <span class="tr">
+          <span class="f3" style="width:${c.c[3]/c.n*100}%"></span>
+          <span class="f2" style="width:${c.c[2]/c.n*100}%"></span>
+          <span class="f1" style="width:${c.c[1]/c.n*100}%"></span>
+        </span>
+        <span class="pc">${c.pct}%</span>
+      </div>`).join("")}
+    <div class="weak"><h3>Słabe punkty</h3>
+      ${weak.length ? weak.map(e=>`<div class="weakitem"><span style="color:var(--ink);font-family:var(--sans)">${esc(e.en)} · ${esc(e.pl)}</span><span>${ST[e.id].l}× błąd</span></div>`).join("")
+        : '<div class="hint2">Поки порожньо. Тут з’являться елементи, які ти завалив 2+ рази.</div>'}
+    </div>
+    <div class="tools">
+      <button id="exp">Eksportuj postęp (JSON)</button>
+      <button id="imp">Importuj</button>
+      <button id="rst" class="dg">Zresetuj</button>
+      <input type="file" id="impf" accept="application/json" style="display:none">
+    </div>
+    <div class="hint2">Прогрес зберігається у цьому браузері. Експортуй файл перед зміною пристрою або чисткою кешу.</div>`;
+  document.getElementById("exp").onclick = () => {
+    const blob = new Blob([JSON.stringify(ST)], {type:"application/json"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "katalog-ui-postep-" + new Date().toISOString().slice(0,10) + ".json";
+    a.click();
+  };
+  document.getElementById("imp").onclick = () => document.getElementById("impf").click();
+  document.getElementById("impf").onchange = ev => {
+    const f = ev.target.files[0]; if(!f) return;
+    const r = new FileReader();
+    r.onload = () => { try{ ST = JSON.parse(r.result); save(); renderProg(); }catch(e){ alert("Nie udało się wczytać pliku."); } };
+    r.readAsText(f);
+  };
+  document.getElementById("rst").onclick = () => {
+    if(confirm("Скинути весь прогрес? Дію не можна скасувати.")){ ST={}; save(); renderProg(); }
+  };
+}
+
+/* ---------- render: catalog ---------- */
+const out = document.getElementById("out");
+document.getElementById("cats").innerHTML =
+  ORDER.map((k,i)=>`<a class="cat" href="#s-${k}">${String(i+1).padStart(2,"0")} · ${CATS[k][0]}</a>`).join("");
+
+function entryHTML(e){
+  const b = (ST[e.id]||{}).b||0, s = stateOf(b);
+  return `<article class="entry" data-id="${e.id}">
+    <div class="entry-txt">
+      <span class="code">${e.c}·${e.n} <span class="badge-state bs${s}">${STATE_NAMES[s]}</span></span>
+      <h3 class="en">${esc(e.en)}</h3>
+      ${e.alt?`<p class="alt">${esc(e.alt)}</p>`:""}
+      <button class="pl" data-copy="${esc(e.pl).replace(/"/g,"&quot;")}"><span class="tagpl">PL</span><b>${esc(e.pl)}</b></button>
+      <p class="ua">${e.ua}</p>
+      ${e.note?`<p class="note">${e.note}</p>`:""}
+    </div>
+    <div class="sample">${e.d}</div>
+  </article>`;
+}
+function renderCat(list){
+  let html = "";
+  ORDER.forEach((k,i)=>{
+    const items = list.filter(e=>e.c===k); if(!items.length) return;
+    html += `<section class="sec" id="s-${k}"><div class="sechead">
+      <span class="secnum">${String(i+1).padStart(2,"0")}</span>
+      <h2 class="sectitle">${CATS[k][0]}</h2><span class="secpl">${CATS[k][1]}</span></div>
+      ${items.map(entryHTML).join("")}</section>`;
+  });
+  out.innerHTML = html || `<div class="empty">Nic nie znaleziono.</div>`;
+  document.getElementById("count").textContent = list.length + " / " + DATA.length;
+  const ind = document.getElementById("ind"); if(ind) ind.indeterminate = true;
+}
+document.getElementById("q").addEventListener("input", ev => {
+  const v = ev.target.value.trim().toLowerCase();
+  renderCat(v ? DATA.filter(e=>e.hay.includes(v)) : DATA);
+});
+
+/* copy PL term */
+const flash = document.getElementById("copied"); let ft;
+document.addEventListener("click", ev => {
+  const btn = ev.target.closest && ev.target.closest(".pl"); if(!btn) return;
+  const txt = btn.dataset.copy;
+  const done = () => { flash.textContent="skopiowano: "+txt; flash.classList.add("on");
+    clearTimeout(ft); ft=setTimeout(()=>flash.classList.remove("on"),1400); };
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,done);
+  else { const a=document.createElement("textarea"); a.value=txt; document.body.appendChild(a); a.select();
+    try{document.execCommand("copy")}catch(e){} document.body.removeChild(a); done(); }
+});
+
+/* ---------- tabs ---------- */
+const VIEWS = {learn:"v-learn", cat:"v-cat", prog:"v-prog"};
+[].slice.call(document.querySelectorAll(".tabsnav button")).forEach(b => b.onclick = () => {
+  document.querySelectorAll(".tabsnav button").forEach(x=>x.classList.toggle("on", x===b));
+  Object.values(VIEWS).forEach(id => document.getElementById(id).classList.remove("on"));
+  document.getElementById(VIEWS[b.dataset.v]).classList.add("on");
+  const isCat = b.dataset.v==="cat";
+  document.getElementById("searchrow").style.display = isCat?"flex":"none";
+  document.getElementById("cats").style.display = isCat?"flex":"none";
+  if(isCat) renderCat(DATA);
+  if(b.dataset.v==="prog") renderProg();
+  if(b.dataset.v==="learn" && !S) renderStart();
+  window.scrollTo(0,0);
+});
+
+load();
+renderStart();
+renderCat(DATA);
+</script>
+</body>
+</html>
