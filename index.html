@@ -163,7 +163,7 @@ a{color:var(--pcb)}
 .l-ex p{margin:0;font-size:13.5px;font-style:italic}
 .l-ex b{font-style:normal;font-weight:600;color:var(--pcb)}
 
-#out.l-swap .l-txt{animation:l-fade .22s ease}
+body.l-swap .l-txt{animation:l-fade .22s ease}
 @keyframes l-fade{from{opacity:.3}to{opacity:1}}
 
 /* позначка «цією мовою ще нема, показано UA» */
@@ -1011,6 +1011,9 @@ pre.code2 .s{color:#D9B980}
 .l-act .lft:hover,.l-act .lft.arm{background:var(--pcb);color:#fff}
 .l-act .rgt:hover,.l-act .rgt.arm{background:var(--danger);color:#fff}
 
+.l-revhead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.l-revhead .pl{margin:0}
+.l-revhead .l-lang{margin-top:2px}
 .l-hint3{padding:0 14px 14px;font:400 12px var(--sans);color:var(--muted);text-align:center}
 .l-done{text-align:center;padding:32px 18px}
 .l-done .big{font:600 26px var(--sans);margin-bottom:5px}
@@ -3387,8 +3390,11 @@ function flyOut(card, dir, cb){
 
 /* те саме, що в каталозі: PL термін, опис, note, приклад фрази */
 function revealHTML(e){
-  return `<div class="l-reveal"><div class="l-revealbox">
-    <button class="pl" data-copy="${esc(e.pl).replace(/"/g,"&quot;")}"><span class="tagpl">PL</span><b>${esc(e.pl)}</b></button>
+  return `<div class="l-reveal"><div class="l-revealbox" data-lang-id="${e.id}">
+    <div class="l-revhead">
+      <button class="pl" data-copy="${esc(e.pl).replace(/"/g,"&quot;")}"><span class="tagpl">PL</span><b>${esc(e.pl)}</b></button>
+      ${langHTML()}
+    </div>
     <div class="l-txt">${txtHTML(e)}</div>
   </div></div>`;
 }
@@ -3639,19 +3645,22 @@ function langHTML(){
     LANGS.map(([k,lab])=>`<button type="button" data-l="${k}" class="${k===LANG?"on":""}" aria-pressed="${k===LANG}">${lab}</button>`).join("")
   }</span>`;
 }
+/* Оновлює КОЖЕН текстовий блок на сторінці — і картки каталогу, і розкриття
+   в навчальному режимі. Ознака блока — атрибут data-lang-id з id запису. */
 function setLang(l, keep){
   if(l === LANG || !EXLAB[l]) return;
   LANG = l;
   try { localStorage.setItem(LKEY, l); } catch(err){}
   const before = keep ? keep.getBoundingClientRect().top : 0;
-  out.classList.remove("l-swap"); void out.offsetWidth; out.classList.add("l-swap");
-  out.querySelectorAll(".entry").forEach(art => {
-    const e = BY_ID[art.dataset.id]; if(!e) return;
-    art.querySelector(".l-txt").innerHTML = txtHTML(e);
-    art.querySelectorAll(".l-lang button").forEach(x => {
-      const on = x.dataset.l === LANG;
-      x.classList.toggle("on", on); x.setAttribute("aria-pressed", on);
-    });
+  document.body.classList.remove("l-swap"); void document.body.offsetWidth;
+  document.body.classList.add("l-swap");
+  document.querySelectorAll("[data-lang-id]").forEach(host => {
+    const e = BY_ID[host.dataset.langId], box = host.querySelector(".l-txt");
+    if(e && box) box.innerHTML = txtHTML(e);
+  });
+  document.querySelectorAll(".l-lang button").forEach(x => {
+    const on = x.dataset.l === LANG;
+    x.classList.toggle("on", on); x.setAttribute("aria-pressed", on);
   });
   /* тексти різної довжини зсувають сторінку — тримаємо картку на місці */
   if(keep) window.scrollBy(0, keep.getBoundingClientRect().top - before);
@@ -3663,7 +3672,7 @@ document.addEventListener("click", ev => {
 
 function entryHTML(e){
   const b = (ST[e.id]||{}).b||0, s = stateOf(b);
-  return `<article class="entry" data-id="${e.id}">
+  return `<article class="entry" data-id="${e.id}" data-lang-id="${e.id}">
     <div class="entry-txt">
       <div class="l-head">
         <span class="code">${e.c}·${e.n} <span class="badge-state bs${s}">${STATE_NAMES[s]}</span></span>
