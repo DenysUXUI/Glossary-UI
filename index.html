@@ -947,6 +947,71 @@ pre.code2 .s{color:#D9B980}
 .l-fbk{padding:0 14px 13px;font-size:12.5px;line-height:1.5;color:var(--muted)}
 .l-fbk b{color:var(--ink)}
 .l-fbk .pl-inline{font-family:var(--mono);color:var(--pcb)}
+/* ===== навчальний режим v2 ===== */
+.l-modes{display:grid;gap:8px;margin-top:14px}
+.l-mode{
+  display:flex;align-items:center;gap:12px;text-align:left;width:100%;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:13px 14px;cursor:pointer;transition:border-color .16s ease;
+}
+.l-mode:hover:not([disabled]){border-color:var(--pcb)}
+.l-mode[disabled]{opacity:.45;cursor:default}
+.l-mode .mt{flex:1;min-width:0}
+.l-mode b{display:block;font:600 14.5px var(--sans)}
+.l-mode small{display:block;font:400 11.5px var(--sans);color:var(--muted);margin-top:2px}
+.l-mode .mn{font:600 17px var(--mono);color:var(--pcb);flex:0 0 auto}
+.l-mode[disabled] .mn{color:var(--muted)}
+
+.l-swipe{will-change:transform}
+.l-prompt{padding:17px 14px 4px;text-align:center}
+.l-prompt .big{font-size:23px;font-weight:600;letter-spacing:-.015em;line-height:1.15}
+.l-prompt .alt{font:400 12px var(--mono);color:var(--muted);margin-top:4px}
+
+/* два способи відповіді */
+.l-ways{padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.l-way{
+  background:var(--well);border:1px solid var(--line);border-radius:var(--r);
+  padding:15px 6px 11px;cursor:pointer;display:grid;justify-items:center;gap:5px;
+  transition:border-color .16s ease,background-color .16s ease;
+}
+.l-way:hover{border-color:var(--pcb);background:var(--pcb-soft)}
+.l-way svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+.l-way span{font:500 10.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+
+/* клавіатурний ввід */
+.l-type{padding:14px 14px 0;display:flex;gap:8px}
+.l-type input{
+  flex:1;min-width:0;font:500 15px var(--mono);padding:10px 12px;
+  border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--ink);
+}
+.l-type input:focus{outline:2px solid var(--pcb);outline-offset:1px;border-color:var(--pcb)}
+.l-type input.ok{background:var(--pcb-soft);border-color:var(--pcb);color:#0A4433}
+.l-type input.no{background:var(--danger-soft);border-color:var(--danger);color:#842317}
+.l-check{
+  flex:0 0 auto;width:44px;border:1px solid var(--pcb);background:var(--pcb);color:#fff;
+  border-radius:var(--r);cursor:pointer;font-size:16px;line-height:1;
+}
+.l-typemeta{
+  padding:8px 14px 0;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  font:400 11.5px var(--mono);color:var(--muted);
+}
+.l-hintbtn{background:none;border:0;padding:0;cursor:pointer;font:500 11.5px var(--mono);color:var(--pcb);text-decoration:underline}
+.l-hintbtn[disabled]{color:var(--muted);text-decoration:none;cursor:default}
+
+/* дві дії внизу картки — вони ж індикатор свайпу */
+.l-act{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;
+  border-top:1px solid var(--line-soft);margin-top:14px}
+.l-act .sep{width:1px;background:var(--line-soft)}
+.l-act button{
+  background:none;border:0;padding:13px 10px;cursor:pointer;
+  font:500 12.5px var(--sans);color:var(--muted);line-height:1.3;
+  transition:background-color .14s ease,color .14s ease;
+}
+.l-act .lft:hover,.l-act .lft.arm{background:var(--pcb);color:#fff}
+.l-act .rgt:hover,.l-act .rgt.arm{background:var(--danger);color:#fff}
+
+.l-hint3{padding:0 14px 14px;font:400 12px var(--sans);color:var(--muted);text-align:center}
 .l-done{text-align:center;padding:32px 18px}
 .l-done .big{font:600 26px var(--sans);margin-bottom:5px}
 .l-done p{color:var(--muted);font-size:13.5px;margin:0 0 17px}
@@ -3159,8 +3224,13 @@ function st(id){ return ST[id] || (ST[id] = {b:0, due:0, l:0, s:0}); }
 const stateOf = b => b===0?0 : b<=2?1 : b<=4?2 : 3;
 const STATE_NAMES = ["Нове","Вчу","Знаю","Засвоєно"];
 
-/* ---------- session ---------- */
+/* ---------- сесія v2 ----------
+   Три режими: нові поняття (відбір → вивчення), повторення, розрізнення.
+   Повна специфікація — docs/learn-mode-v2.md
+   Тип картки більше НЕ залежить від рівня: спосіб відповіді обирає користувач.
+   Поле st().l лишається в структурі мертвим — заради сумісності експорту. */
 let S = null;
+const NEW_LEN = 5, REV_LEN = 10, PAIR_LEN = 8, TRIES = 3;
 
 function dueList(){
   const now = Date.now();
@@ -3169,245 +3239,317 @@ function dueList(){
 }
 function newList(){ return DATA.filter(e => !ST[e.id] || ST[e.id].b===0); }
 
-function buildSession(){
-  const LEN = 12, MAXNEW = 5;
-  const due = dueList().slice(0, LEN);
-  const room = LEN - due.length;
-  // якщо повторювати нема чого — наповнюємо сесію новими до повного розміру
-  const fresh = newList().slice(0, due.length ? Math.min(MAXNEW, room) : room);
-  let items = due.concat(fresh);
-  if(!items.length) items = shuffle(DATA.slice()).slice(0, LEN); // все вивчено → вільне повторення
-  shuffle(items);
-  // інтерлівінг: не даємо двом сусіднім карткам бути з однієї категорії
+/* сусідні картки не з однієї категорії */
+function interleave(items){
   for(let i=1;i<items.length;i++){
     if(items[i].c === items[i-1].c){
       const j = items.findIndex((x,k) => k>i && x.c!==items[i-1].c);
       if(j>-1){ const t=items[i]; items[i]=items[j]; items[j]=t; }
     }
   }
-  S = {items, i:0, right:0, wrong:0, total:items.length};
+  return items;
 }
 
-function cardType(box){
-  if(box===0) return "intro";
-  if(box===1) return "mc-name";
-  if(box===2) return "mc-demo";
-  if(box===3) return "recall";
-  if(box===4) return "pl";
-  return pairFor(S.items[S.i].id) ? "pair" : "recall";
+/* ---------- клавіатурна перевірка ----------
+   62 зі 160 термінів мають польську діакритику, 10 — це перелік через / або vs.
+   Тому звіряємо нормалізовано, а перелік зараховуємо за будь-яким фрагментом. */
+const DIA = {"ą":"a","ć":"c","ę":"e","ł":"l","ń":"n","ó":"o","ś":"s","ź":"z","ż":"z"};
+const norm = s => String(s||"").toLowerCase()
+  .replace(/[ąćęłńóśźż]/g, c => DIA[c])
+  .replace(/[.,;:!?]+$/g, "")
+  .replace(/\s+/g, " ").trim();
+function accepted(e){
+  return e.pl.split(/\s*\/\s*|\s+vs\s+/i).map(norm).filter(Boolean).concat(norm(e.pl));
 }
-function pairFor(id){
-  const ps = PAIRS.filter(p => p.includes(id) && p.every(x => BY_ID[x]));
-  return ps.length ? ps[Math.random()*ps.length|0] : null;
-}
-function distractors(e, n){
-  const same = shuffle(DATA.filter(x => x.c===e.c && x.id!==e.id));
-  const any  = shuffle(DATA.filter(x => x.c!==e.c));
-  return same.slice(0,2).concat(any).slice(0,n);
-}
+const checkTyped = (e, v) => { const t = norm(v); return !!t && accepted(e).indexOf(t) > -1; };
 
-/* ---------- grading ---------- */
-function grade(e, ok, partial){
+/* ---------- зміна стану ---------- */
+function bump(e, ok){                    // ok = «запам'ятав / пам'ятаю»
   const s = st(e.id); s.s++;
-  if(partial){ s.due = Date.now() + DAY; }
-  else if(ok){ s.b = Math.min(5, s.b+1); s.due = Date.now() + INTERVAL[s.b]; }
-  else { s.b = 1; s.l++; s.due = Date.now(); }
+  if(ok){ s.b = Math.min(5, s.b+1); s.due = Date.now() + INTERVAL[s.b]; }
+  else  { s.b = 1; s.due = Date.now(); }
   save();
-  ok ? S.right++ : (partial ? 0 : S.wrong++);
+  ok ? S.right++ : S.wrong++;
+}
+function pickKnown(e){                   // «już to znam» на відборі → одразу в пул повторення
+  const s = st(e.id); s.b = 4; s.s++; s.due = Date.now() + INTERVAL[4]; save();
+}
+function pickLearn(e){                   // «chcę się nauczyć» → у фазу вивчення
+  const s = st(e.id); s.b = 1; s.due = Date.now(); save();
 }
 
 /* ---------- render: learn ---------- */
 const vLearn = document.getElementById("v-learn");
 
 function renderStart(){
-  const d = dueList().length, n = newList().length, learned = DATA.filter(e => (ST[e.id]||{}).b>=3).length;
+  const d = dueList().length, n = newList().length;
+  const learned = DATA.filter(e => (ST[e.id]||{}).b>=3).length;
+  const pairs = PAIRS.filter(p => p.every(x => BY_ID[x])).length;
   vLearn.innerHTML = `
    <div class="startcard">
-     <h2>Sesja na 10 minut</h2>
-     <p class="sub">12 карток. Система сама обере, що показати і в якій формі.</p>
-     <div class="qstat">
-       <div><b>${d}</b><span>do powtórki</span></div>
-       <div><b>${n}</b><span>nowych</span></div>
-       <div><b>${learned}</b><span>znasz</span></div>
+     <h2>Co dziś ćwiczymy?</h2>
+     <p class="sub">${DATA.length} pojęć · ${learned} już znasz</p>
+     <div class="l-modes">
+       <button class="l-mode" id="m-new" ${n?"":"disabled"}>
+         <span class="mt"><b>Nowe pojęcia</b><small>Najpierw wybierasz, czego chcesz się uczyć</small></span>
+         <span class="mn">${Math.min(NEW_LEN,n)}</span></button>
+       <button class="l-mode" id="m-rev" ${d?"":"disabled"}>
+         <span class="mt"><b>Powtórka</b><small>${d?"Termin minął — czas sprawdzić":"Nic nie czeka na powtórkę"}</small></span>
+         <span class="mn">${Math.min(REV_LEN,d)}</span></button>
+       <button class="l-mode" id="m-pair">
+         <span class="mt"><b>Co jest co?</b><small>Pojęcia, które najłatwiej pomylić · bez wpływu na postęp</small></span>
+         <span class="mn">${Math.min(PAIR_LEN,pairs)}</span></button>
      </div>
-     <button class="bigbtn" id="go">Ćwicz →</button>
-     <button class="bigbtn alt" id="goweak">Powtórz słabe punkty</button>
      <div id="storewarn" style="display:none" class="hint2">⚠︎ Прогрес не зберігається — відкрий файл через http (GitHub Pages), а не як локальний файл.</div>
    </div>`;
-  document.getElementById("go").onclick = () => { buildSession(); renderCard(); };
-  document.getElementById("goweak").onclick = () => {
-    const weak = DATA.filter(e => (ST[e.id]||{}).l >= 2);
-    if(!weak.length){ alert("Слабких місць поки немає — спочатку потренуйся."); return; }
-    S = {items:shuffle(weak).slice(0,12), i:0, right:0, wrong:0, total:Math.min(12,weak.length)};
-    renderCard();
-  };
+  const on = (id, fn) => { const b = document.getElementById(id); if(b && !b.disabled) b.onclick = fn; };
+  on("m-new", startNew); on("m-rev", startRev); on("m-pair", startPair);
 }
 
-function shell(inner, typeLabel, box){
-  const pct = Math.round(S.i / S.total * 100);
+function startNew(){
+  const pool = shuffle(newList().slice());
+  S = {mode:"new", phase:"pick", pool, p:0, items:[], i:0,
+       done:0, right:0, wrong:0, target:Math.min(NEW_LEN, pool.length)};
+  renderCard();
+}
+function startRev(){
+  const items = interleave(shuffle(dueList().slice(0, REV_LEN)));
+  S = {mode:"rev", phase:"learn", items, i:0, done:0, right:0, wrong:0, target:items.length};
+  renderCard();
+}
+function startPair(){
+  const sets = shuffle(PAIRS.filter(p => p.every(x => BY_ID[x])).slice()).slice(0, PAIR_LEN);
+  S = {mode:"pair", sets, i:0, right:0, wrong:0, target:sets.length};
+  renderCard();
+}
+
+/* ---------- каркас картки ---------- */
+function shell(inner, label, meta, doneN){
+  const pct = Math.round(doneN / Math.max(1, S.target) * 100);
   return `<div class="sess">
     <div class="sessbar">
       <button class="x" id="quit" aria-label="Zakończ">✕</button>
       <div class="tr"><div class="fl" style="width:${pct}%"></div></div>
-      <span class="n">${S.i+1}/${S.total}</span>
+      <span class="n">${doneN}/${S.target}</span>
     </div>
-    <div class="qcard">
-      <div class="qhead"><span class="qtype">${typeLabel}</span><span class="qbox">poziom ${box}/5</span></div>
+    <div class="qcard l-swipe" id="card">
+      <div class="qhead"><span class="qtype">${label}</span><span class="qbox">${meta}</span></div>
       ${inner}
     </div></div>`;
 }
+function actHTML(left, right){
+  return `<div class="l-act">
+    <button class="lft" id="actL">${left}</button><span class="sep"></span><button class="rgt" id="actR">${right}</button>
+  </div>`;
+}
+function bindQuit(){ const q = document.getElementById("quit"); if(q) q.onclick = () => { S = null; renderStart(); }; }
+
+/* свайп картки; кнопки внизу — індикатор напрямку, не дубль */
+function armSwipe(onLeft, onRight){
+  const card = document.getElementById("card");
+  const aL = document.getElementById("actL"), aR = document.getElementById("actR");
+  if(!card || !aL || !aR) return;
+  aL.onclick = () => flyOut(card, -1, onLeft);
+  aR.onclick = () => flyOut(card,  1, onRight);
+  let x0 = 0, dx = 0, live = false;
+  const TH = 78;
+  card.style.touchAction = "pan-y";
+  card.addEventListener("pointerdown", ev => {
+    if(ev.target.closest("input, button, a")) return;
+    x0 = ev.clientX; dx = 0; live = true;
+    card.style.transition = "none";
+    try { card.setPointerCapture(ev.pointerId); } catch(err){}
+  });
+  card.addEventListener("pointermove", ev => {
+    if(!live) return;
+    dx = ev.clientX - x0;
+    card.style.transform = "translateX("+dx+"px) rotate("+(dx/45)+"deg)";
+    aL.classList.toggle("arm", dx < -18);
+    aR.classList.toggle("arm", dx >  18);
+  });
+  const end = () => {
+    if(!live) return; live = false;
+    card.style.transition = "transform .2s ease";
+    if(dx <= -TH) flyOut(card, -1, onLeft);
+    else if(dx >= TH) flyOut(card, 1, onRight);
+    else { card.style.transform = ""; aL.classList.remove("arm"); aR.classList.remove("arm"); }
+  };
+  card.addEventListener("pointerup", end);
+  card.addEventListener("pointercancel", end);
+}
+function flyOut(card, dir, cb){
+  if(noMotion.matches){ cb(); return; }
+  card.style.transition = "transform .19s ease, opacity .19s ease";
+  card.style.transform = "translateX("+(dir*420)+"px) rotate("+(dir*11)+"deg)";
+  card.style.opacity = "0";
+  setTimeout(cb, 165);
+}
+
+/* те саме, що в каталозі: PL термін, опис, note, приклад фрази */
+function revealHTML(e){
+  return `<div class="l-reveal"><div class="l-revealbox">
+    <button class="pl" data-copy="${esc(e.pl).replace(/"/g,"&quot;")}"><span class="tagpl">PL</span><b>${esc(e.pl)}</b></button>
+    <div class="l-txt">${txtHTML(e)}</div>
+  </div></div>`;
+}
 
 function renderCard(){
+  if(S.mode === "pair") return cPair();
+  if(S.mode === "new" && S.phase === "pick") return cPick();
   if(S.i >= S.items.length) return renderDone();
-  const e = S.items[S.i], box = st(e.id).b, t = cardType(box);
-  if(t==="intro")   return cIntro(e, box);
-  if(t==="mc-name") return cMcName(e, box);
-  if(t==="mc-demo") return cMcDemo(e, box);
-  if(t==="recall")  return cRecall(e, box);
-  if(t==="pl")      return cPl(e, box);
-  return cPair(e, box);
+  return cLearn(S.items[S.i]);
 }
-function bindQuit(){ const q=document.getElementById("quit"); if(q) q.onclick = () => { S=null; renderStart(); }; }
-function next(){ S.i++; renderCard(); }
+function nextCard(){ S.i++; renderCard(); }
 
-/* новий елемент — просто знайомство */
-function cIntro(e, box){
+/* ---------- фаза 1: відбір ---------- */
+function cPick(){
+  if(S.items.length >= S.target || S.p >= S.pool.length){
+    if(!S.items.length) return renderDone();
+    S.phase = "learn"; S.i = 0; interleave(S.items); return renderCard();
+  }
+  const e = S.pool[S.p];
   vLearn.innerHTML = shell(`
     <div class="qstage">${e.d}</div>
-    <div class="l-reveal" style="padding-top:13px"><div class="l-revealbox">
-      <div class="rn">${esc(e.en)}</div>
-      <div class="rp">PL · ${esc(e.pl)}</div>
-      <div class="rd">${e.ua}</div>
-    </div></div>
-    <div class="l-opts"><button class="l-opt" id="nx" style="text-align:center">Zrozumiałem →</button></div>`,
-    "Nowe pojęcie", box);
+    <div class="l-prompt"><div class="big">${esc(e.en)}</div>${e.alt?`<div class="alt">${esc(e.alt)}</div>`:""}</div>
+    <div class="l-hint3">Znasz już to pojęcie?</div>
+    ${actHTML("Już to znam", "Chcę się tego nauczyć")}`,
+    "Wybór pojęć", "wybrano " + S.items.length + "/" + S.target, S.items.length);
   bindQuit();
-  document.getElementById("nx").onclick = () => { const s=st(e.id); s.b=1; s.s++; s.due=Date.now(); save(); next(); };
+  armSwipe(
+    () => { pickKnown(e); S.p++; renderCard(); },
+    () => { pickLearn(e); S.items.push(e); S.p++; renderCard(); }
+  );
 }
 
-/* демо → яка це назва */
-function cMcName(e, box){
-  const opts = shuffle([e].concat(distractors(e,3)));
+/* ---------- фаза 2 та повторення ---------- */
+function cLearn(e){
+  const box = st(e.id).b;
+  const isRev = S.mode === "rev";
+  const label = isRev ? "Powtórka" : "Nowe pojęcie";
+  const meta  = isRev ? (box + ". powtórka") : ("poziom " + box + "/5");
   vLearn.innerHTML = shell(`
     <div class="qstage">${e.d}</div>
-    <div class="qprompt"><div class="small">Jak nazywa się ten element?</div></div>
-    <div class="l-opts">${opts.map(o=>`<button class="l-opt" data-id="${o.id}">${esc(o.en)}</button>`).join("")}</div>
-    <div class="l-fbk" id="fbk"></div>`, "Rozpoznaj nazwę", box);
-  bindQuit(); wireMc(e, opts);
-}
-
-/* назва → яке це демо */
-function cMcDemo(e, box){
-  const opts = shuffle([e].concat(distractors(e,3)));
-  vLearn.innerHTML = shell(`
-    <div class="qprompt"><div class="big">${esc(e.en)}</div><div class="small">${esc(e.pl)}</div></div>
-    <div class="l-opts two">${opts.map(o=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner">${o.d}</div></div>`).join("")}</div>
-    <div class="l-fbk" id="fbk"></div>`, "Wskaż element", box);
-  bindQuit(); wireMc(e, opts, ".l-optdemo");
-}
-
-function wireMc(e, opts, sel){
-  sel = sel || ".l-opt";
-  const nodes = [].slice.call(vLearn.querySelectorAll(sel));
-  nodes.forEach(n => n.onclick = () => {
-    const ok = n.dataset.id === e.id;
-    nodes.forEach(x => { x.disabled = true; x.onclick = null;
-      if(x.dataset.id === e.id) x.classList.add("ok");
-      else if(x === n) x.classList.add("no"); });
-    grade(e, ok);
-    document.getElementById("fbk").innerHTML =
-      `${ok ? "✓ Dobrze." : "✗ To jest <b>"+esc(e.en)+"</b>."} <span class="pl-inline">PL · ${esc(e.pl)}</span><br>${e.ua}
-       <div style="margin-top:11px"><button class="l-opt" id="nx" style="text-align:center;width:100%">Dalej →</button></div>`;
-    document.getElementById("nx").onclick = next;
-  });
-}
-
-/* вільне пригадування із самооцінкою */
-function cRecall(e, box){
-  vLearn.innerHTML = shell(`
-    <div class="qstage">${e.d}</div>
-    <div class="qprompt"><div class="small">Przypomnij sobie nazwę — po angielsku i po polsku.</div></div>
-    <div class="l-opts"><button class="l-opt" id="rev" style="text-align:center">Pokaż odpowiedź</button></div>`,
-    "Przypomnij sobie", box);
+    <div class="l-prompt"><div class="big">${esc(e.en)}</div>${e.alt?`<div class="alt">${esc(e.alt)}</div>`:""}</div>
+    <div class="l-hint3">Powiedz po polsku — potem sprawdź się.</div>
+    <div class="l-ways" id="ways">
+      <button class="l-way" id="w-eye">
+        <svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.4 10-6.4S22 12 22 12s-3.6 6.4-10 6.4S2 12 2 12Z"/><circle cx="12" cy="12" r="2.8"/></svg>
+        <span>Pokaż</span></button>
+      <button class="l-way" id="w-kbd">
+        <svg viewBox="0 0 24 24"><rect x="2.2" y="6" width="19.6" height="12" rx="2"/><path d="M6 9.6h.01M9.4 9.6h.01M12.8 9.6h.01M16.2 9.6h.01M18.6 9.6h.01M6 12.8h.01M9.4 12.8h.01M12.8 12.8h.01M16.2 12.8h.01M18.6 12.8h.01M8.4 15.6h7.2"/></svg>
+        <span>Napisz</span></button>
+    </div>`, label, meta, S.done);
   bindQuit();
-  document.getElementById("rev").onclick = () => {
-    vLearn.querySelector(".l-opts").outerHTML = `
-      <div class="l-reveal"><div class="l-revealbox">
-        <div class="rn">${esc(e.en)}</div><div class="rp">PL · ${esc(e.pl)}</div>
-        <div class="rd">${e.ua}</div></div></div>
-      <div class="l-grades">
-        <button class="l-grade g1" data-g="0">Nie<small>od nowa</small></button>
-        <button class="l-grade g2" data-g="1">Prawie<small>jutro</small></button>
-        <button class="l-grade g3" data-g="2">Wiedziałem<small>dalej</small></button>
-      </div>`;
-    wireGrades(e);
+  document.getElementById("w-eye").onclick = () => reveal(e, null);
+  document.getElementById("w-kbd").onclick = () => typeMode(e);
+}
+
+/* самоперевірка: розкрити й оцінити себе */
+function reveal(e, forced){
+  const isRev = S.mode === "rev";
+  const ways = document.getElementById("ways");
+  const html = revealHTML(e) + (forced === null
+    ? actHTML(isRev ? "Pamiętam" : "Zapamiętałem, odłóż", isRev ? "Nie pamiętam" : "Pokazuj dalej")
+    : `<div class="l-opts"><button class="l-opt" id="nx" style="text-align:center">Dalej →</button></div>`);
+  if(ways) ways.outerHTML = html; else document.getElementById("card").insertAdjacentHTML("beforeend", html);
+  if(forced === null){
+    armSwipe(() => finish(e, true), () => finish(e, false));
+  } else {
+    document.getElementById("nx").onclick = () => finish(e, forced);
+  }
+}
+
+/* написати відповідь; три спроби, підказка по літері */
+function typeMode(e){
+  let left = TRIES, hinted = 0;
+  const ways = document.getElementById("ways");
+  ways.outerHTML = `
+    <div class="l-type">
+      <input id="ans" type="text" inputmode="text" autocomplete="off" autocapitalize="off"
+             autocorrect="off" spellcheck="false" placeholder="Wpisz polski termin…" aria-label="Polski termin">
+      <button class="l-check" id="chk" aria-label="Sprawdź">✓</button>
+    </div>
+    <div class="l-typemeta">
+      <button class="l-hintbtn" id="hint">Podpowiedz literę</button>
+      <span id="tries">Pozostało prób: ${left}</span>
+    </div>
+    <div class="l-hint3" style="padding-top:12px">Ogonki nieobowiązkowe — <b>swiatlo</b> zaliczy się tak samo.</div>`;
+  const inp = document.getElementById("ans");
+  inp.focus();
+  const done = ok => { inp.classList.add(ok?"ok":"no"); inp.disabled = true;
+    document.getElementById("chk").disabled = true;
+    document.getElementById("hint").disabled = true;
+    if(!ok) inp.value = e.pl;
+    reveal(e, ok); };
+  const tryIt = () => {
+    if(inp.disabled) return;
+    if(checkTyped(e, inp.value)) return done(true);
+    left--;
+    document.getElementById("tries").textContent = "Pozostało prób: " + left;
+    inp.classList.add("no");
+    setTimeout(() => inp.classList.remove("no"), 450);
+    if(left <= 0) done(false);
+  };
+  document.getElementById("chk").onclick = tryIt;
+  inp.addEventListener("keydown", ev => { if(ev.key === "Enter"){ ev.preventDefault(); tryIt(); } });
+  document.getElementById("hint").onclick = () => {
+    hinted++;
+    inp.value = e.pl.slice(0, hinted);
+    inp.focus();
+    if(hinted >= e.pl.length) document.getElementById("hint").disabled = true;
   };
 }
 
-/* англійська → польська */
-function cPl(e, box){
-  vLearn.innerHTML = shell(`
-    <div class="qprompt" style="padding:26px 14px 6px"><div class="big">${esc(e.en)}</div>
-      <div class="small">Jak to powiesz po polsku?</div></div>
-    <div class="l-opts"><button class="l-opt" id="rev" style="text-align:center">Pokaż odpowiedź</button></div>`,
-    "Termin polski", box);
-  bindQuit();
-  document.getElementById("rev").onclick = () => {
-    vLearn.querySelector(".l-opts").outerHTML = `
-      <div class="l-reveal"><div class="l-revealbox">
-        <div class="rp" style="font-size:17px">${esc(e.pl)}</div>
-        ${e.note ? '<div class="rd">'+e.note+'</div>' : ''}</div></div>
-      <div class="l-grades">
-        <button class="l-grade g1" data-g="0">Nie<small>od nowa</small></button>
-        <button class="l-grade g2" data-g="1">Prawie<small>jutro</small></button>
-        <button class="l-grade g3" data-g="2">Wiedziałem<small>dalej</small></button>
-      </div>`;
-    wireGrades(e);
-  };
+function finish(e, ok){
+  bump(e, ok);
+  if(ok){ S.done++; nextCard(); }
+  else {
+    if(S.mode === "new"){ S.items.push(e); }   // «pokazuj dalej» — повертається в кінець сесії
+    nextCard();
+  }
 }
 
-function wireGrades(e){
-  [].slice.call(vLearn.querySelectorAll(".l-grade")).forEach(b => b.onclick = () => {
-    const g = +b.dataset.g;
-    grade(e, g===2, g===1);
-    next();
-  });
-}
-
-/* розрізнення схожих */
-function cPair(e, box){
-  const pair = pairFor(e.id).map(id => BY_ID[id]);
-  const opts = shuffle(pair.slice());
+/* ---------- розрізнення схожих ---------- */
+function cPair(){
+  if(S.i >= S.sets.length) return renderDone();
+  const set = S.sets[S.i].map(id => BY_ID[id]);
+  const e = set[Math.random()*set.length|0];
+  const opts = shuffle(set.slice());
   vLearn.innerHTML = shell(`
-    <div class="qprompt"><div class="big">${esc(e.en)}</div>
-      <div class="small">Który to? Uważaj — te elementy łatwo pomylić.</div></div>
+    <div class="l-prompt"><div class="big">${esc(e.en)}</div>
+      <div class="alt">${esc(e.pl)}</div></div>
+    <div class="l-hint3">Który to? Te pojęcia najłatwiej pomylić.</div>
     <div class="l-opts two">${opts.map(o=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner">${o.d}</div></div>`).join("")}</div>
-    <div class="l-fbk" id="fbk"></div>`, "Odróżnij", box);
+    <div class="l-fbk" id="fbk"></div>`, "Co jest co?", "bez wpływu na postęp", S.i);
   bindQuit();
   const nodes = [].slice.call(vLearn.querySelectorAll(".l-optdemo"));
   nodes.forEach(n => n.onclick = () => {
     const ok = n.dataset.id === e.id;
     nodes.forEach(x => { x.onclick = null;
-      if(x.dataset.id === e.id) x.classList.add("ok"); else if(x===n) x.classList.add("no"); });
-    grade(e, ok);
+      if(x.dataset.id === e.id) x.classList.add("ok"); else if(x === n) x.classList.add("no"); });
+    ok ? S.right++ : S.wrong++;
     document.getElementById("fbk").innerHTML =
-      (ok ? "✓ Tak." : "✗ Nie.") + " " + opts.map(o=>`<b>${esc(o.en)}</b> — ${strip(o.ua).split(".")[0]}.`).join("<br>") +
+      (ok ? "✓ Tak." : "✗ Nie.") + " " +
+      opts.map(o => `<b>${esc(o.en)}</b> · <span class="pl-inline">${esc(o.pl)}</span> — ${strip(o.ua).split(".")[0]}.`).join("<br>") +
       `<div style="margin-top:11px"><button class="l-opt" id="nx" style="text-align:center;width:100%">Dalej →</button></div>`;
-    document.getElementById("nx").onclick = next;
+    document.getElementById("nx").onclick = () => { S.i++; renderCard(); };
   });
 }
 
 function renderDone(){
-  const acc = S.right + S.wrong ? Math.round(S.right/(S.right+S.wrong)*100) : 100;
+  const seen = S.right + S.wrong;
+  const acc = seen ? Math.round(S.right/seen*100) : 100;
+  const again = {new:"Jeszcze pięć pojęć", rev:"Jeszcze jedna powtórka", pair:"Jeszcze raz"}[S.mode];
   vLearn.innerHTML = `<div class="startcard"><div class="l-done">
-     <div class="big">Sesja zakończona</div>
-     <p>${S.total} kart · ${acc}% trafnych</p>
-     <button class="bigbtn" id="again">Jeszcze jedna sesja</button>
+     <div class="big">Gotowe</div>
+     <p>${seen ? seen + " kart · " + acc + "% trafnych" : "Nic do zrobienia"}</p>
+     <button class="bigbtn" id="again">${again}</button>
      <button class="bigbtn alt" id="back">Wróć</button>
    </div></div>`;
-  document.getElementById("again").onclick = () => { buildSession(); renderCard(); };
+  document.getElementById("again").onclick = {new:startNew, rev:startRev, pair:startPair}[S.mode];
   document.getElementById("back").onclick = renderStart;
 }
+
 
 /* ---------- render: progress ---------- */
 function renderProg(){
