@@ -74,7 +74,6 @@ a{color:var(--pcb)}
   padding:5px 9px;border:1px solid var(--line);border-radius:99px;
   background:var(--surface);color:var(--muted);text-decoration:none;white-space:nowrap;
 }
-.cat:hover{border-color:var(--pcb);color:var(--pcb)}
 .cat{transition:background-color .18s ease,border-color .18s ease,color .18s ease}
 .cat.on{background:var(--pcb);border-color:var(--pcb);color:#fff}
 .cat.l-off{opacity:.32;pointer-events:none}
@@ -121,7 +120,6 @@ a{color:var(--pcb)}
   padding:3px 8px;border-radius:var(--r);cursor:pointer;
   text-align:left;
 }
-.pl:hover{background:#D7E9E0}
 .pl b{font-weight:600}
 .pl .tagpl{
   font-size:9px;letter-spacing:.1em;color:#fff;background:var(--pcb);
@@ -148,8 +146,7 @@ a{color:var(--pcb)}
   transition:background-color .16s ease,color .16s ease;
 }
 .l-lang button + button{border-left:1px solid var(--line)}
-.l-lang button:hover{color:var(--pcb)}
-.l-lang button.on,.l-lang button.on:hover{background:var(--pcb);color:#fff}
+.l-lang button.on{background:var(--pcb);color:#fff}
 
 /* приклад фрази з робочої розмови */
 .l-ex{
@@ -718,6 +715,32 @@ pre.code2 .s{color:#D9B980}
   .sample{background:#F5F7F3}
   .tip{opacity:1!important}
 }
+/* ===== hover тільки там, де є справжня мишка =====
+   На iOS перший тап по елементу з :hover віддає hover замість кліку —
+   кнопка залишається підсвіченою і треба тапати вдруге. Тому всі
+   hover-стани кнопок застосунку живуть тут, а для дотику нижче :active. */
+@media (hover:hover) and (pointer:fine){
+  .cat:hover{border-color:var(--pcb);color:var(--pcb)}
+  .pl:hover{background:#D7E9E0}
+  .l-lang button:hover{color:var(--pcb)}
+  .l-lang button.on:hover{background:var(--pcb);color:#fff}
+  .bigbtn:hover{background:#0A4E39}
+  .l-opt:hover{border-color:var(--ink)}
+  .l-optdemo:hover{border-color:var(--ink)}
+  .l-mode:hover:not([disabled]){border-color:var(--pcb)}
+  .l-catrow:hover{border-color:var(--pcb)}
+  .l-catitem:hover{background:var(--well)}
+  .l-way:hover{border-color:var(--pcb);background:var(--pcb-soft)}
+  .l-act .lft:hover{background:var(--pcb);color:#fff}
+  .l-act .rgt:hover{background:var(--danger);color:#fff}
+}
+/* відгук на дотик — замість hover */
+.l-way:active,.l-mode:not([disabled]):active,.l-catrow:active,
+.l-catitem:active,.l-opt:active,.l-optdemo:active{background:var(--pcb-soft)}
+.l-act .lft:active{background:var(--pcb);color:#fff}
+.l-act .rgt:active{background:var(--danger);color:#fff}
+.cat:active{border-color:var(--pcb);color:var(--pcb)}
+
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
@@ -884,7 +907,6 @@ pre.code2 .s{color:#D9B980}
   width:100%;background:var(--pcb);color:#fff;border:0;border-radius:var(--r);
   padding:14px;font:600 15px var(--sans);cursor:pointer;
 }
-.bigbtn:hover{background:#0A4E39}
 .bigbtn[disabled]{background:var(--line);color:var(--muted);cursor:default}
 .bigbtn.alt{background:var(--surface);color:var(--ink);border:1px solid var(--line);font-size:13px;padding:10px;margin-top:8px}
 
@@ -916,7 +938,6 @@ pre.code2 .s{color:#D9B980}
   text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   padding:11px 13px;font:500 13.5px var(--sans);color:var(--ink);cursor:pointer;
 }
-.l-opt:hover{border-color:var(--ink)}
 .l-opt.ok{background:var(--pcb-soft);border-color:var(--pcb);color:#0A4433}
 .l-opt.no{background:var(--danger-soft);border-color:var(--danger);color:#842317}
 .l-opt[disabled]{cursor:default}
@@ -925,7 +946,6 @@ pre.code2 .s{color:#D9B980}
   background:var(--well);border:1px solid var(--line);border-radius:var(--r);
   height:128px;overflow:hidden;position:relative;cursor:pointer;padding:6px;
 }
-.l-optdemo:hover{border-color:var(--ink)}
 .l-optdemo .inner{
   transform:scale(.62);transform-origin:center center;
   width:161%;height:161%;margin-left:-30.5%;margin-top:-30.5%;
@@ -954,7 +974,6 @@ pre.code2 .s{color:#D9B980}
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   padding:13px 14px;cursor:pointer;transition:border-color .16s ease;
 }
-.l-mode:hover:not([disabled]){border-color:var(--pcb)}
 .l-mode[disabled]{opacity:.45;cursor:default}
 .l-mode .mt{flex:1;min-width:0}
 .l-mode b{display:block;font:600 14.5px var(--sans)}
@@ -968,7 +987,6 @@ pre.code2 .s{color:#D9B980}
   background:var(--well);border:1px solid var(--line);border-radius:var(--r);
   padding:11px 13px;cursor:pointer;transition:border-color .16s ease;
 }
-.l-catrow:hover{border-color:var(--pcb)}
 .l-catrow svg{width:16px;height:16px;flex:0 0 auto;stroke:var(--brass);fill:none;
   stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .l-catrow .mt{flex:1;min-width:0}
@@ -992,7 +1010,6 @@ pre.code2 .s{color:#D9B980}
   padding:11px 13px;cursor:pointer;font:inherit;
 }
 .l-catitem:last-child{border-bottom:0}
-.l-catitem:hover{background:var(--well)}
 .l-catitem .cnum{font:500 10.5px var(--mono);color:var(--brass);flex:0 0 22px}
 .l-catitem .mt{flex:1;min-width:0}
 .l-catitem b{display:block;font:500 14px var(--sans)}
@@ -1019,7 +1036,6 @@ pre.code2 .s{color:#D9B980}
   padding:15px 6px 11px;cursor:pointer;display:grid;justify-items:center;gap:5px;
   transition:border-color .16s ease,background-color .16s ease;
 }
-.l-way:hover{border-color:var(--pcb);background:var(--pcb-soft)}
 .l-way svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.7;
   stroke-linecap:round;stroke-linejoin:round}
 .l-way span{font:500 10.5px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
@@ -1053,8 +1069,8 @@ pre.code2 .s{color:#D9B980}
   font:500 12.5px var(--sans);color:var(--muted);line-height:1.3;
   transition:background-color .14s ease,color .14s ease;
 }
-.l-act .lft:hover,.l-act .lft.arm{background:var(--pcb);color:#fff}
-.l-act .rgt:hover,.l-act .rgt.arm{background:var(--danger);color:#fff}
+.l-act .lft.arm{background:var(--pcb);color:#fff}
+.l-act .rgt.arm{background:var(--danger);color:#fff}
 
 .l-revhead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .l-revhead .pl{margin:0}
