@@ -75,13 +75,24 @@ a{color:var(--pcb)}
   background:var(--surface);color:var(--muted);text-decoration:none;white-space:nowrap;
 }
 .cat:hover{border-color:var(--pcb);color:var(--pcb)}
+.cat{transition:background-color .18s ease,border-color .18s ease,color .18s ease}
+.cat.on{background:var(--pcb);border-color:var(--pcb);color:#fff}
+.cat.l-off{opacity:.32;pointer-events:none}
 
 /* ---------- layout ---------- */
 .wrap{max-width:1180px;margin:0 auto;padding:22px 18px 80px}
-.sec{margin:0 0 34px;scroll-margin-top:150px}
+/* --mh = реальна висота липкої шапки, рахується в JS */
+.sec{margin:0 0 34px;scroll-margin-top:calc(var(--mh,150px) + 12px)}
 .sechead{
   display:flex;align-items:baseline;gap:10px;
   padding-bottom:7px;border-bottom:1.5px solid var(--ink);margin-bottom:14px;
+  border-radius:2px 2px 0 0;
+}
+/* коротка підсвітка заголовка після переходу — щоб око знайшло ціль */
+.sec.l-jump .sechead{animation:l-jump-hi .85s ease-out}
+@keyframes l-jump-hi{
+  0%{background:var(--pcb-soft);box-shadow:0 0 0 6px var(--pcb-soft)}
+  100%{background:transparent;box-shadow:0 0 0 6px transparent}
 }
 .secnum{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.08em}
 .sectitle{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin:0}
@@ -2542,7 +2553,7 @@ function renderProg(){
 /* ---------- render: catalog ---------- */
 const out = document.getElementById("out");
 document.getElementById("cats").innerHTML =
-  ORDER.map((k,i)=>`<a class="cat" href="#s-${k}">${String(i+1).padStart(2,"0")} · ${CATS[k][0]}</a>`).join("");
+  ORDER.map((k,i)=>`<a class="cat" href="#s-${k}" data-k="${k}" data-sec="s-${k}">${String(i+1).padStart(2,"0")} · ${CATS[k][0]}</a>`).join("");
 
 function entryHTML(e){
   const b = (ST[e.id]||{}).b||0, s = stateOf(b);
@@ -2570,7 +2581,78 @@ function renderCat(list){
   out.innerHTML = html || `<div class="empty">Nic nie znaleziono.</div>`;
   document.getElementById("count").textContent = list.length + " / " + DATA.length;
   const ind = document.getElementById("ind"); if(ind) ind.indeterminate = true;
+  syncCats();
 }
+
+/* ---------- навігація по категоріях ----------
+   Проблема, яку це лікує: пігулки живуть у липкій шапці, а якір #s-X
+   стрибав миттєво зі статичним відступом 150px. Реальна шапка в режимі
+   «Каталог» вища за 150px, тому заголовок секції ховався ПІД пігулками,
+   а миттєвий стрибок давав мерехтіння перемальовки на iOS Safari. */
+const catsNav = document.getElementById("cats");
+const masthead = document.querySelector(".masthead");
+const noMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function measureHead(){
+  document.documentElement.style.setProperty("--mh", masthead.offsetHeight + "px");
+}
+measureHead();
+window.addEventListener("resize", measureHead);
+if(window.ResizeObserver) new ResizeObserver(measureHead).observe(masthead);
+
+function headOffset(){ return masthead.offsetHeight + 12; }
+
+/* пігулки без секції (після пошуку) гасимо, щоб клік не вів у нікуди */
+function syncCats(){
+  catsNav.querySelectorAll(".cat").forEach(a => {
+    a.classList.toggle("l-off", !document.getElementById(a.dataset.sec));
+  });
+}
+
+function goToCat(key){
+  const sec = document.getElementById("s-" + key); if(!sec) return;
+  const top = sec.getBoundingClientRect().top + window.pageYOffset - headOffset();
+  const behavior = noMotion.matches ? "auto" : "smooth";
+  try { window.scrollTo({top: Math.max(0, top), behavior}); }
+  catch(err){ window.scrollTo(0, Math.max(0, top)); }
+  sec.classList.remove("l-jump");
+  void sec.offsetWidth;              // рестарт анімації підсвітки
+  sec.classList.add("l-jump");
+  history.replaceState(null, "", "#s-" + key);
+  markCat(key);
+}
+
+function markCat(key){
+  const pill = catsNav.querySelector('.cat[data-sec="s-' + key + '"]');
+  catsNav.querySelectorAll(".cat").forEach(a => a.classList.toggle("on", a === pill));
+  if(!pill) return;
+  const left = pill.offsetLeft - (catsNav.clientWidth - pill.offsetWidth) / 2;
+  try { catsNav.scrollTo({left: Math.max(0, left), behavior: noMotion.matches ? "auto" : "smooth"}); }
+  catch(err){ catsNav.scrollLeft = Math.max(0, left); }
+}
+
+catsNav.addEventListener("click", ev => {
+  const a = ev.target.closest(".cat"); if(!a) return;
+  ev.preventDefault();
+  goToCat(a.dataset.k);
+});
+
+/* підсвічуємо пігулку тієї секції, яку зараз видно */
+let spyTick = 0;
+window.addEventListener("scroll", () => {
+  if(spyTick) return;
+  spyTick = requestAnimationFrame(() => {
+    spyTick = 0;
+    if(!document.getElementById("v-cat").classList.contains("on")) return;
+    const line = headOffset() + 20;
+    let cur = null;
+    out.querySelectorAll(".sec").forEach(s => {
+      if(s.getBoundingClientRect().top <= line) cur = s.id.slice(2);
+    });
+    if(cur) markCat(cur);
+  });
+}, {passive: true});
+
 document.getElementById("q").addEventListener("input", ev => {
   const v = ev.target.value.trim().toLowerCase();
   renderCat(v ? DATA.filter(e=>e.hay.includes(v)) : DATA);
@@ -2601,6 +2683,7 @@ const VIEWS = {learn:"v-learn", cat:"v-cat", prog:"v-prog"};
   if(b.dataset.v==="prog") renderProg();
   if(b.dataset.v==="learn" && !S) renderStart();
   window.scrollTo(0,0);
+  measureHead();   // висота шапки міняється: пошук і пігулки є лише в «Каталозі»
 });
 
 load();
