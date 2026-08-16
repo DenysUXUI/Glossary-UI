@@ -962,6 +962,51 @@ pre.code2 .s{color:#D9B980}
 .l-mode .mn{font:600 17px var(--mono);color:var(--pcb);flex:0 0 auto}
 .l-mode[disabled] .mn{color:var(--muted)}
 
+/* вибір категорій */
+.l-catrow{
+  display:flex;align-items:center;gap:11px;width:100%;text-align:left;margin-top:14px;
+  background:var(--well);border:1px solid var(--line);border-radius:var(--r);
+  padding:11px 13px;cursor:pointer;transition:border-color .16s ease;
+}
+.l-catrow:hover{border-color:var(--pcb)}
+.l-catrow svg{width:16px;height:16px;flex:0 0 auto;stroke:var(--brass);fill:none;
+  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.l-catrow .mt{flex:1;min-width:0}
+.l-catrow b{display:block;font:600 13.5px var(--sans)}
+.l-catrow small{display:block;font:400 11.5px var(--sans);color:var(--muted);margin-top:1px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.l-catrow .chev{color:var(--muted);font-size:17px;line-height:1;flex:0 0 auto}
+
+.l-picker{max-width:560px;margin:0 auto}
+.l-pickhead{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:2px 2px 12px;
+}
+.l-pickhead b{font:600 16px var(--sans)}
+.l-pickhead button{background:none;border:0;cursor:pointer;padding:4px 2px;
+  font:600 13.5px var(--sans);color:var(--pcb)}
+.l-catlist{background:var(--surface);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.l-catitem{
+  display:flex;align-items:center;gap:11px;width:100%;text-align:left;
+  background:none;border:0;border-bottom:1px solid var(--line-soft);
+  padding:11px 13px;cursor:pointer;font:inherit;
+}
+.l-catitem:last-child{border-bottom:0}
+.l-catitem:hover{background:var(--well)}
+.l-catitem .cnum{font:500 10.5px var(--mono);color:var(--brass);flex:0 0 22px}
+.l-catitem .mt{flex:1;min-width:0}
+.l-catitem b{display:block;font:500 14px var(--sans)}
+.l-catitem small{display:block;font:400 11.5px var(--mono);color:var(--muted);margin-top:1px}
+.l-catitem .pctv{font:500 11px var(--mono);color:var(--muted);flex:0 0 auto}
+.l-catbox{
+  flex:0 0 auto;width:21px;height:21px;border:1.5px solid var(--line);border-radius:4px;
+  display:grid;place-items:center;color:transparent;font-size:12px;line-height:1;
+  transition:background-color .14s ease,border-color .14s ease;
+}
+.l-catitem.on .l-catbox{background:var(--pcb);border-color:var(--pcb);color:#fff}
+.l-catitem.all{background:var(--well);border-bottom:1px solid var(--line)}
+.l-pickhint{font:400 12px var(--sans);color:var(--muted);margin:11px 2px 0;line-height:1.5}
+
 .l-swipe{will-change:transform}
 .l-prompt{padding:17px 14px 4px;text-align:center}
 .l-prompt .big{font-size:23px;font-weight:600;letter-spacing:-.015em;line-height:1.15}
@@ -3235,12 +3280,37 @@ const STATE_NAMES = ["Нове","Вчу","Знаю","Засвоєно"];
 let S = null;
 const NEW_LEN = 5, REV_LEN = 10, PAIR_LEN = 8, TRIES = 3;
 
+/* ---------- вибір категорій ----------
+   SEL = null означає «усі». Якщо вибрано всі 12 — теж зводимо до null,
+   щоб підпис і збережений стан не розходились. Ключ окремий від прогресу. */
+const CKEY = "katalog-ui-cats";
+let SEL = null;
+try {
+  const v = JSON.parse(localStorage.getItem(CKEY));
+  if(Array.isArray(v)){
+    const k = v.filter(x => CATS[x]);
+    if(k.length && k.length < ORDER.length) SEL = new Set(k);
+  }
+} catch(err){}
+function saveSel(){
+  try {
+    if(SEL) localStorage.setItem(CKEY, JSON.stringify(ORDER.filter(k => SEL.has(k))));
+    else localStorage.removeItem(CKEY);
+  } catch(err){}
+}
+const inSel = e => !SEL || SEL.has(e.c);
+const selKeys = () => SEL ? ORDER.filter(k => SEL.has(k)) : ORDER.slice();
+
 function dueList(){
   const now = Date.now();
-  return DATA.filter(e => { const s = ST[e.id]; return s && s.b>0 && s.due<=now; })
+  return DATA.filter(e => { const s = ST[e.id]; return inSel(e) && s && s.b>0 && s.due<=now; })
              .sort((a,b) => ST[a.id].due - ST[b.id].due);
 }
-function newList(){ return DATA.filter(e => !ST[e.id] || ST[e.id].b===0); }
+function newList(){ return DATA.filter(e => inSel(e) && (!ST[e.id] || ST[e.id].b===0)); }
+/* набір для розрізнення беремо, лише коли ВСІ його терміни у вибраних категоріях —
+   інакше картка питала б про те, що користувач свідомо виключив.
+   22 з 27 наборів лежать усередині однієї категорії, 5 — на межі двох. */
+function pairSets(){ return PAIRS.filter(p => p.every(x => BY_ID[x] && inSel(BY_ID[x]))); }
 
 /* сусідні картки не з однієї категорії */
 function interleave(items){
@@ -3287,11 +3357,19 @@ const vLearn = document.getElementById("v-learn");
 function renderStart(){
   const d = dueList().length, n = newList().length;
   const learned = DATA.filter(e => (ST[e.id]||{}).b>=3).length;
-  const pairs = PAIRS.filter(p => p.every(x => BY_ID[x])).length;
+  const pairs = pairSets().length;
+  const pool = DATA.filter(inSel).length;
+  const names = selKeys().map(k => CATS[k][1]);
   vLearn.innerHTML = `
    <div class="startcard">
      <h2>Co dziś ćwiczymy?</h2>
-     <p class="sub">${DATA.length} pojęć · ${learned} już znasz</p>
+     <p class="sub">${pool} pojęć · ${learned} już znasz</p>
+     <button class="l-catrow" id="pick">
+       <svg viewBox="0 0 24 24"><path d="M16.4 3.9a2.1 2.1 0 0 1 3 3L8.6 17.7l-4 1 1-4Z"/></svg>
+       <span class="mt"><b>${SEL ? "Wybrane kategorie: " + SEL.size : "Wszystkie kategorie"}</b>
+         <small>${SEL ? names.join(" · ") : "Wszystkie " + DATA.length + " pojęć z katalogu"}</small></span>
+       <span class="chev">›</span>
+     </button>
      <div class="l-modes">
        <button class="l-mode" id="m-new" ${n?"":"disabled"}>
          <span class="mt"><b>Nowe pojęcia</b><small>Najpierw wybierasz, czego chcesz się uczyć</small></span>
@@ -3299,14 +3377,59 @@ function renderStart(){
        <button class="l-mode" id="m-rev" ${d?"":"disabled"}>
          <span class="mt"><b>Powtórka</b><small>${d?"Termin minął — czas sprawdzić":"Nic nie czeka na powtórkę"}</small></span>
          <span class="mn">${Math.min(REV_LEN,d)}</span></button>
-       <button class="l-mode" id="m-pair">
-         <span class="mt"><b>Co jest co?</b><small>Pojęcia, które najłatwiej pomylić · bez wpływu na postęp</small></span>
+       <button class="l-mode" id="m-pair" ${pairs?"":"disabled"}>
+         <span class="mt"><b>Co jest co?</b><small>${pairs
+           ? "Pojęcia, które najłatwiej pomylić · bez wpływu na postęp"
+           : "Wybrane kategorie nie mają takich zestawów"}</small></span>
          <span class="mn">${Math.min(PAIR_LEN,pairs)}</span></button>
      </div>
      <div id="storewarn" style="display:none" class="hint2">⚠︎ Прогрес не зберігається — відкрий файл через http (GitHub Pages), а не як локальний файл.</div>
    </div>`;
   const on = (id, fn) => { const b = document.getElementById(id); if(b && !b.disabled) b.onclick = fn; };
   on("m-new", startNew); on("m-rev", startRev); on("m-pair", startPair);
+  on("pick", renderPicker);
+}
+
+/* екран вибору категорій — зміни застосовуються одразу, «Gotowe» просто вертає */
+function renderPicker(){
+  const row = k => {
+    const items = DATA.filter(e => e.c === k);
+    const know = items.filter(e => (ST[e.id]||{}).b >= 3).length;
+    const pct = Math.round(know / items.length * 100);
+    const i = ORDER.indexOf(k);
+    return `<button class="l-catitem ${!SEL||SEL.has(k)?"on":""}" data-k="${k}">
+      <span class="cnum">${String(i+1).padStart(2,"0")}</span>
+      <span class="mt"><b>${CATS[k][1]}</b><small>${CATS[k][0]} · ${items.length}</small></span>
+      <span class="pctv">${pct}%</span>
+      <span class="l-catbox">✓</span></button>`;
+  };
+  vLearn.innerHTML = `
+    <div class="l-picker">
+      <div class="l-pickhead"><b>Wybór kategorii</b><button id="pk-done">Gotowe</button></div>
+      <div class="l-catlist">
+        <button class="l-catitem all ${SEL?"":"on"}" data-k="*">
+          <span class="cnum">∗</span>
+          <span class="mt"><b>Wszystkie</b><small>${DATA.length} pojęć</small></span>
+          <span class="l-catbox">✓</span></button>
+        ${ORDER.map(row).join("")}
+      </div>
+      <p class="l-pickhint">Wybór dotyczy wszystkich trzech trybów. Katalog pokazuje wszystko niezależnie od tego ustawienia.</p>
+    </div>`;
+  document.getElementById("pk-done").onclick = renderStart;
+  vLearn.querySelectorAll(".l-catitem").forEach(b => b.onclick = () => {
+    const k = b.dataset.k;
+    if(k === "*") SEL = null;
+    else {
+      const cur = new Set(SEL || ORDER);
+      if(cur.has(k)){
+        if(cur.size === 1) return;      // остання категорія — не даємо зняти
+        cur.delete(k);
+      } else cur.add(k);
+      SEL = cur.size === ORDER.length ? null : cur;
+    }
+    saveSel();
+    renderPicker();
+  });
 }
 
 function startNew(){
@@ -3321,7 +3444,7 @@ function startRev(){
   renderCard();
 }
 function startPair(){
-  const sets = shuffle(PAIRS.filter(p => p.every(x => BY_ID[x])).slice()).slice(0, PAIR_LEN);
+  const sets = shuffle(pairSets()).slice(0, PAIR_LEN);
   S = {mode:"pair", sets, i:0, right:0, wrong:0, target:sets.length};
   renderCard();
 }
