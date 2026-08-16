@@ -134,6 +134,45 @@ a{color:var(--pcb)}
 }
 .note b{color:var(--ink);font-weight:600}
 
+/* мова текстового блоку — сегмент-контрол у шапці картки.
+   Стан глобальний: клік на будь-якій картці перемикає весь каталог. */
+.l-head{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.l-head .code{margin-bottom:0;flex:1 1 auto;min-width:0}
+.l-lang{
+  display:inline-flex;flex:0 0 auto;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+}
+.l-lang button{
+  font:500 9.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 7px;border:0;background:transparent;color:var(--muted);cursor:pointer;
+  transition:background-color .16s ease,color .16s ease;
+}
+.l-lang button + button{border-left:1px solid var(--line)}
+.l-lang button:hover{color:var(--pcb)}
+.l-lang button.on,.l-lang button.on:hover{background:var(--pcb);color:#fff}
+
+/* приклад фрази з робочої розмови */
+.l-ex{
+  margin:10px 0 0;padding:8px 10px;
+  background:var(--well);border:1px dashed var(--line);border-radius:var(--r);
+}
+.l-exlab{
+  display:block;font:500 9px var(--mono);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:3px;
+}
+.l-ex p{margin:0;font-size:13.5px;font-style:italic}
+.l-ex b{font-style:normal;font-weight:600;color:var(--pcb)}
+
+#out.l-swap .l-txt{animation:l-fade .22s ease}
+@keyframes l-fade{from{opacity:.3}to{opacity:1}}
+
+/* позначка «цією мовою ще нема, показано UA» */
+.l-soon{
+  display:inline-block;margin-left:6px;padding:0 4px;vertical-align:1px;
+  font:400 9.5px var(--mono);letter-spacing:.08em;color:var(--muted);
+  border:1px solid var(--line);border-radius:2px;
+}
+
 /* ---------- sample well ---------- */
 .sample{
   border-top:1px solid var(--line-soft);
@@ -988,6 +1027,11 @@ const DATA = [
 /* ============ A · ДІЇ ============ */
 {c:"A",n:"01",en:"Button",alt:"btn",pl:"przycisk",
  ua:"Запускає дію: відправити форму, відкрити модалку, видалити. Ієрархія варіантів (primary / secondary / tertiary) керує увагою — на екрані має бути рівно один primary.",
+ o:{pl:"Uruchamia akcję: wysyła formularz, otwiera modal, usuwa. Hierarchia wariantów (primary / secondary / tertiary) steruje uwagą — na ekranie powinien być dokładnie jeden primary.",
+    en:"Triggers an action: submit a form, open a modal, delete. The variant hierarchy (primary / secondary / tertiary) directs attention — exactly one primary per screen."},
+ ex:{ua:"Зробімо цю кнопку secondary — primary лишається на «Dodaj do koszyka».",
+     pl:"Zróbmy ten przycisk jako secondary — primary zostaje na «Dodaj do koszyka».",
+     en:"Let's make this button secondary — primary stays on \'Add to cart\'."},
  d:`<div class="row">
   <button class="b b-p">Dodaj do koszyka</button>
   <button class="b b-s">Anuluj</button>
@@ -996,7 +1040,14 @@ const DATA = [
 
 {c:"A",n:"02",en:"Icon button",alt:"ikonka klikalna",pl:"przycisk ikonowy",
  ua:"Кнопка тільки з іконкою. Обов'язково потребує aria-label і tooltip — без підпису значення іконки читається неоднозначно.",
+ o:{pl:"Przycisk z samą ikoną. Wymaga aria-label i tooltipa — bez podpisu znaczenie ikony jest niejednoznaczne.",
+    en:"A button with an icon only. It needs an aria-label and a tooltip — without a label the icon's meaning is ambiguous."},
+ ex:{ua:"Цій іконковій кнопці потрібен tooltip — сама іконка нечитабельна.",
+     pl:"Ten przycisk ikonowy musi mieć tooltip, bo sama ikona jest nieczytelna.",
+     en:"This icon button needs a tooltip — the icon alone isn't clear."},
  note:"Мінімальна зона дотику — <b>44×44 px</b> (iOS HIG) / 48×48 dp (Material), навіть якщо сама іконка 20 px.",
+ nt:{pl:"Minimalne pole dotyku — <b>44×44 px</b> (iOS HIG) / 48×48 dp (Material), nawet jeśli sama ikona ma 20 px.",
+     en:"Minimum touch target — <b>44×44 px</b> (iOS HIG) / 48×48 dp (Material), even if the icon itself is 20 px."},
  d:`<div class="row">
   <button class="b b-s b-i" aria-label="Edytuj"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16.4 3.9a2.1 2.1 0 0 1 3 3L8.6 17.7l-4 1 1-4Z"/></svg></button>
   <button class="b b-s b-i" aria-label="Kopiuj"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2"/><path d="M15.5 5.5v-.6a2 2 0 0 0-2-2H5.5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h.6"/></svg></button>
@@ -1006,34 +1057,68 @@ const DATA = [
 
 {c:"A",n:"03",en:"Floating action button",alt:"FAB",pl:"pływający przycisk akcji",
  ua:"Одна головна дія екрана, зафіксована поверх контенту. Патерн Material; на десктопних B2B-інтерфейсах майже не застосовується.",
+ o:{pl:"Jedna główna akcja ekranu, przypięta nad treścią. Wzorzec z Material Design; w desktopowych interfejsach B2B praktycznie się go nie stosuje.",
+    en:"The screen's single main action, pinned above the content. A Material Design pattern; rarely used in desktop B2B interfaces."},
+ ex:{ua:"FAB тут не пасує — це десктопний вигляд, дамо звичайну primary-кнопку в шапці.",
+     pl:"FAB tu nie pasuje — to widok desktopowy, dajmy zwykły przycisk primary w nagłówku.",
+     en:"A FAB doesn't fit here — this is the desktop view, let's put a regular primary button in the header."},
  d:`<div class="row"><button class="fab" aria-label="Nowe zamówienie">＋</button></div>`},
 
 {c:"A",n:"04",en:"Button group",alt:"segmented buttons",pl:"grupa przycisków",
  ua:"Кілька рівнозначних дій, склеєних в один блок. Не плутати з segmented control — тут кнопки запускають дії, а не перемикають режим.",
+ o:{pl:"Kilka równorzędnych akcji sklejonych w jeden blok. Nie mylić z kontrolką segmentową — tutaj przyciski uruchamiają akcje, a nie przełączają widok.",
+    en:"Several equally ranked actions glued into one block. Not to be confused with a segmented control — here the buttons run actions instead of switching a mode."},
+ ex:{ua:"Це grupa przycisków, а не segmented control — вони нічого не перемикають, а виконують дії.",
+     pl:"To jest grupa przycisków, nie segmented control — one nic nie przełączają, tylko wykonują akcje.",
+     en:"That's a button group, not a segmented control — they don't switch anything, they run actions."},
  d:`<div class="bgroup">
   <button class="b">Kopiuj</button><button class="b">Duplikuj</button><button class="b">Eksport</button>
  </div>`},
 
 {c:"A",n:"05",en:"Segmented control",alt:"toggle group",pl:"kontrolka segmentowa",
  ua:"Перемикає режим перегляду — 2–5 взаємовиключних опцій. Візуальний еквівалент radio group, коли варіантів мало й вони короткі.",
+ o:{pl:"Przełącza tryb widoku — od 2 do 5 wzajemnie wykluczających się opcji. Wizualny odpowiednik radio group, gdy opcji jest mało i mają krótkie etykiety.",
+    en:"Switches the view mode — 2 to 5 mutually exclusive options. The visual equivalent of a radio group when there are few options with short labels."},
+ ex:{ua:"Постав тут segmented control, тут лише три вигляди — dropdown це перебір.",
+     pl:"Daj tu segmented control, są tylko trzy widoki — dropdown to przerost formy.",
+     en:"Use a segmented control here, there are only three views — a dropdown is overkill."},
  note:"У польських командах кажуть просто <b>segmented control</b> або <b>przełącznik widoku</b>.",
+ nt:{pl:"W polskich zespołach mówi się po prostu <b>segmented control</b> albo <b>przełącznik widoku</b>.",
+     en:"Polish teams usually just say <b>segmented control</b> or <b>przełącznik widoku</b>."},
  d:`<div class="tbar">
   <button class="on">Lista</button><button>Siatka</button><button>Tabela</button>
  </div>`},
 
 {c:"A",n:"06",en:"Split button",alt:"dropdown button",pl:"przycisk dzielony",
  ua:"Основна дія + стрілка з альтернативами. Економить місце, але приховує опції — використовуй, коли одна дія справді домінує.",
+ o:{pl:"Główna akcja plus strzałka z alternatywami. Oszczędza miejsce, ale ukrywa opcje — stosuj, gdy jedna akcja naprawdę dominuje.",
+    en:"A main action plus an arrow with alternatives. It saves space but hides the options — use it when one action clearly dominates."},
+ ex:{ua:"Зроби з цього split button: «Zapisz» лишається зверху, решта під стрілкою.",
+     pl:"Zróbmy z tego przycisk dzielony: «Zapisz» zostaje na wierzchu, reszta pod strzałką.",
+     en:"Let's make it a split button: \'Save\' stays on top, the rest goes under the arrow."},
  d:`<div class="split">
   <button class="b b-p">Zapisz</button><button class="b b-p" aria-label="Więcej opcji">▾</button>
  </div>`},
 
 {c:"A",n:"07",en:"Link",alt:"anchor, hyperlink",pl:"link",
  ua:"Переміщує користувача (нова адреса). Кнопка — виконує дію. Плутанина між ними ламає очікування: посилання має відкриватись у новій вкладці через Ctrl+click.",
+ o:{pl:"Przenosi użytkownika pod inny adres. Przycisk — wykonuje akcję. Mylenie ich łamie oczekiwania: link musi dać się otworzyć w nowej karcie przez Ctrl+klik.",
+    en:"Takes the user to a different address. A button performs an action. Mixing the two breaks expectations: a link must open in a new tab on Ctrl+click."},
+ ex:{ua:"Це має бути link, а не кнопка — користувач переходить на іншу сторінку, а не виконує дію.",
+     pl:"To powinien być link, nie przycisk — użytkownik idzie na inną stronę, a nie wykonuje akcję.",
+     en:"This should be a link, not a button — the user goes to another page instead of performing an action."},
  note:"Формально — <b>odnośnik</b> / <b>łącze</b>, але в мовленні завжди <b>link</b>.",
+ nt:{pl:"Formalnie — <b>odnośnik</b> / <b>łącze</b>, ale w mowie zawsze <b>link</b>.",
+     en:"Formally <b>odnośnik</b> / <b>łącze</b> in Polish, but in speech it is always <b>link</b>."},
  d:`<div class="d">Zobacz <a class="lnk">kartę katalogową</a> lub <a class="lnk">dane techniczne →</a></div>`},
 
 {c:"A",n:"08",en:"Call to action",alt:"CTA",pl:"wezwanie do działania",
  ua:"Не компонент, а роль: головний заклик на екрані. CTA ≠ кнопка — це може бути банер, посилання чи блок.",
+ o:{pl:"Nie komponent, tylko rola: główne wezwanie na ekranie. CTA ≠ przycisk — może nim być baner, link albo cały blok.",
+    en:"Not a component but a role: the main call on the screen. A CTA isn't necessarily a button — it can be a banner, a link or a whole block."},
+ ex:{ua:"На цьому екрані два CTA і вони конкурують — лишімо одне.",
+     pl:"Na tym ekranie mamy dwa CTA i konkurują ze sobą — zostawmy jedno.",
+     en:"This screen has two CTAs competing with each other — let's keep one."},
  d:`<div class="col" style="text-align:center">
   <div class="d" style="font-weight:600;font-size:14px">Potrzebujesz wyceny na 5 000 szt.?</div>
   <button class="b b-p" style="justify-content:center">Zapytaj o ofertę</button>
@@ -1041,6 +1126,11 @@ const DATA = [
 
 {c:"A",n:"09",en:"Disabled state",alt:"inactive button",pl:"przycisk nieaktywny",
  ua:"Дія недоступна. Найчастіша помилка — вимкнути кнопку без пояснення чому. Краще залишити активною і показати помилку при кліку, або додати tooltip з причиною.",
+ o:{pl:"Akcja niedostępna. Najczęstszy błąd to wyłączyć przycisk bez wyjaśnienia dlaczego. Lepiej zostawić go aktywnym i pokazać błąd po kliknięciu albo dodać tooltip z powodem.",
+    en:"The action is unavailable. The most common mistake is disabling a button without saying why. Better to keep it active and show an error on click, or add a tooltip with the reason."},
+ ex:{ua:"Не вимикай цю кнопку — додай tooltip, чому не можна оформити замовлення.",
+     pl:"Nie wyłączaj tego przycisku — dodaj tooltip, dlaczego nie da się złożyć zamówienia.",
+     en:"Don't disable that button — add a tooltip explaining why the order can't be placed."},
  d:`<div class="row">
   <button class="b b-p" disabled>Złóż zamówienie</button>
   <span class="cap">brak adresu dostawy</span>
@@ -2223,7 +2313,11 @@ const PAIRS = [
 
 /* ---------- helpers ---------- */
 const strip = s => (s||"").replace(/<[^>]*>/g,"");
-DATA.forEach(e => { e.id = e.c+"-"+e.n; e.hay = [e.en,e.alt,e.pl,strip(e.ua),strip(e.note),e.id].join(" ").toLowerCase(); });
+DATA.forEach(e => {
+  e.id = e.c+"-"+e.n;
+  const more = [].concat(Object.values(e.o||{}), Object.values(e.nt||{}), Object.values(e.ex||{}));
+  e.hay = [e.en,e.alt,e.pl,strip(e.ua),strip(e.note)].concat(more.map(strip)).concat(e.id).join(" ").toLowerCase();
+});
 const BY_ID = {}; DATA.forEach(e => BY_ID[e.id] = e);
 const DAY = 864e5;
 const INTERVAL = [0, 0, 2*DAY, 7*DAY, 21*DAY, 60*DAY]; // за боксом
@@ -2555,16 +2649,67 @@ const out = document.getElementById("out");
 document.getElementById("cats").innerHTML =
   ORDER.map((k,i)=>`<a class="cat" href="#s-${k}" data-k="${k}" data-sec="s-${k}">${String(i+1).padStart(2,"0")} · ${CATS[k][0]}</a>`).join("");
 
+/* ---------- мова текстового блоку ----------
+   Перемикається лише пояснення, note і приклад фрази.
+   EN назва, PL термін і демо — це не переклади одне одного, а різні ролі,
+   тому вони лишаються на місці завжди. Стан глобальний і зберігається. */
+const LKEY = "katalog-ui-lang";
+const LANGS = [["en","EN"],["pl","PL"],["ua","UA"]];
+const EXLAB = {ua:"Як це звучить у команді", pl:"Jak to brzmi w zespole", en:"How it sounds on the team"};
+const SOON  = {pl:"PL wkrótce", en:"EN soon", ua:""};
+let LANG = "ua";
+try { const v = localStorage.getItem(LKEY); if(v && EXLAB[v]) LANG = v; } catch(err){}
+
+function txtOf(e){
+  if(LANG === "ua") return {t:e.ua, note:e.note||"", ex:(e.ex&&e.ex.ua)||"", soon:false};
+  const t = e.o && e.o[LANG], nt = e.nt && e.nt[LANG];
+  return {t: t || e.ua, note: nt || e.note || "", ex:(e.ex&&e.ex[LANG])||"", soon: !t};
+}
+function txtHTML(e){
+  const x = txtOf(e);
+  return `<p class="ua">${x.t}${x.soon?`<span class="l-soon">${SOON[LANG]}</span>`:""}</p>
+    ${x.note?`<p class="note">${x.note}</p>`:""}
+    ${x.ex?`<div class="l-ex"><span class="l-exlab">${EXLAB[LANG]}</span><p>${x.ex}</p></div>`:""}`;
+}
+function langHTML(){
+  return `<span class="l-lang" role="group" aria-label="Język opisu">${
+    LANGS.map(([k,lab])=>`<button type="button" data-l="${k}" class="${k===LANG?"on":""}" aria-pressed="${k===LANG}">${lab}</button>`).join("")
+  }</span>`;
+}
+function setLang(l, keep){
+  if(l === LANG || !EXLAB[l]) return;
+  LANG = l;
+  try { localStorage.setItem(LKEY, l); } catch(err){}
+  const before = keep ? keep.getBoundingClientRect().top : 0;
+  out.classList.remove("l-swap"); void out.offsetWidth; out.classList.add("l-swap");
+  out.querySelectorAll(".entry").forEach(art => {
+    const e = BY_ID[art.dataset.id]; if(!e) return;
+    art.querySelector(".l-txt").innerHTML = txtHTML(e);
+    art.querySelectorAll(".l-lang button").forEach(x => {
+      const on = x.dataset.l === LANG;
+      x.classList.toggle("on", on); x.setAttribute("aria-pressed", on);
+    });
+  });
+  /* тексти різної довжини зсувають сторінку — тримаємо картку на місці */
+  if(keep) window.scrollBy(0, keep.getBoundingClientRect().top - before);
+}
+document.addEventListener("click", ev => {
+  const b = ev.target.closest && ev.target.closest(".l-lang button"); if(!b) return;
+  setLang(b.dataset.l, b.closest(".entry"));
+});
+
 function entryHTML(e){
   const b = (ST[e.id]||{}).b||0, s = stateOf(b);
   return `<article class="entry" data-id="${e.id}">
     <div class="entry-txt">
-      <span class="code">${e.c}·${e.n} <span class="badge-state bs${s}">${STATE_NAMES[s]}</span></span>
+      <div class="l-head">
+        <span class="code">${e.c}·${e.n} <span class="badge-state bs${s}">${STATE_NAMES[s]}</span></span>
+        ${langHTML()}
+      </div>
       <h3 class="en">${esc(e.en)}</h3>
       ${e.alt?`<p class="alt">${esc(e.alt)}</p>`:""}
       <button class="pl" data-copy="${esc(e.pl).replace(/"/g,"&quot;")}"><span class="tagpl">PL</span><b>${esc(e.pl)}</b></button>
-      <p class="ua">${e.ua}</p>
-      ${e.note?`<p class="note">${e.note}</p>`:""}
+      <div class="l-txt">${txtHTML(e)}</div>
     </div>
     <div class="sample">${e.d}</div>
   </article>`;
