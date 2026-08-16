@@ -1139,6 +1139,11 @@ const DATA = [
 /* ============ B · ПОЛЯ ВВОДУ ============ */
 {c:"B",n:"01",en:"Text field",alt:"input, text input",pl:"pole tekstowe",
  ua:"Однорядкове поле для короткого вводу. Ширина поля має натякати на очікувану довжину — поле для індексу не повинно бути на всю ширину форми.",
+ o:{pl:"Jednowierszowe pole na krótki wpis. Szerokość pola powinna sugerować oczekiwaną długość — pole na kod pocztowy nie ma zajmować całej szerokości formularza.",
+    en:"A single-line field for short input. The width should hint at the expected length — a postcode field shouldn't span the whole form."},
+ ex:{ua:"Звузь це поле — індекс не потребує всієї ширини форми.",
+     pl:"Zwęź to pole tekstowe — kod pocztowy nie potrzebuje całej szerokości formularza.",
+     en:"Narrow that text field — a postcode doesn't need the full form width."},
  d:`<div class="col">
   <label class="lab">Numer katalogowy</label>
   <input class="in" value="LM358N-DIP8">
@@ -1146,6 +1151,11 @@ const DATA = [
 
 {c:"B",n:"02",en:"Textarea",alt:"multiline input",pl:"pole wielowierszowe",
  ua:"Багаторядковий ввід. Висота = очікуваний обсяг тексту. Автозростання краще за скрол усередині поля.",
+ o:{pl:"Wpis wielowierszowy. Wysokość = spodziewana objętość tekstu. Automatyczne rosnięcie jest lepsze niż scroll wewnątrz pola.",
+    en:"Multi-line input. The height should match the expected volume of text. Auto-growing beats scrolling inside the field."},
+ ex:{ua:"Хай textarea росте сама — скрол усередині поля незручний.",
+     pl:"Niech pole wielowierszowe rośnie samo — scroll w środku pola jest niewygodny.",
+     en:"Let the textarea auto-grow — scrolling inside the field is awkward."},
  d:`<div class="col">
   <label class="lab">Uwagi do zamówienia</label>
   <textarea class="ta">Proszę o dostawę na palecie EUR.</textarea>
@@ -1153,7 +1163,14 @@ const DATA = [
 
 {c:"B",n:"03",en:"Label",alt:"field label",pl:"etykieta",
  ua:"Постійний підпис поля. Ніколи не замінюється плейсхолдером: щойно користувач почав друкувати, плейсхолдер зникає — і контекст втрачається.",
+ o:{pl:"Stały podpis pola. Nigdy nie zastępuje się go tekstem zastępczym: gdy tylko użytkownik zacznie pisać, placeholder znika i kontekst przepada.",
+    en:"The field's permanent label. Never replace it with a placeholder: the moment the user starts typing the placeholder disappears and the context is gone."},
+ ex:{ua:"Поверни лейбли над полями — плейсхолдер зникає, і форма стає ребусом.",
+     pl:"Przywróć etykiety nad polami — tekst zastępczy znika i formularz robi się rebusem.",
+     en:"Put the labels back above the fields — the placeholder vanishes and the form becomes a puzzle."},
  note:"Зірочка позначає обов'язкове поле. Якщо обов'язкові майже всі — краще позначати навпаки: <b>(opcjonalne)</b>.",
+ nt:{pl:"Gwiazdka oznacza pole wymagane. Jeśli wymagane są prawie wszystkie — lepiej oznaczać odwrotnie: <b>(opcjonalne)</b>.",
+     en:"An asterisk marks a required field. If almost everything is required, flip it and mark the rest <b>(optional)</b> instead."},
  d:`<div class="col">
   <label class="lab">Adres e-mail <span class="req">*</span></label>
   <input class="in" placeholder="jan.kowalski@firma.pl">
@@ -1161,6 +1178,11 @@ const DATA = [
 
 {c:"B",n:"04",en:"Placeholder",alt:"hint text inside field",pl:"tekst zastępczy",
  ua:"Приклад формату всередині порожнього поля. Низький контраст + зникає при вводі = не місце для інструкцій.",
+ o:{pl:"Przykład formatu w pustym polu. Niski kontrast plus znikanie przy pisaniu = nie miejsce na instrukcje.",
+    en:"An example of the format inside an empty field. Low contrast plus disappearing as you type means it's no place for instructions."},
+ ex:{ua:"Це не плейсхолдер, це інструкція — перенеси її в helper text.",
+     pl:"To nie jest tekst zastępczy, tylko instrukcja — przenieś ją do tekstu pomocniczego.",
+     en:"That's not a placeholder, it's an instruction — move it to the helper text."},
  d:`<div class="col">
   <label class="lab">NIP</label>
   <input class="in" placeholder="np. 725 000 12 34">
@@ -1168,6 +1190,11 @@ const DATA = [
 
 {c:"B",n:"05",en:"Helper text",alt:"hint, description",pl:"tekst pomocniczy",
  ua:"Постійна підказка під полем: формат, обмеження, навіщо це потрібно. На відміну від плейсхолдера — не зникає.",
+ o:{pl:"Stała podpowiedź pod polem: format, ograniczenia, po co to jest. W odróżnieniu od tekstu zastępczego nie znika.",
+    en:"A permanent hint under the field: format, limits, why it's needed. Unlike a placeholder, it doesn't disappear."},
+ ex:{ua:"Додай helper text про формат NIP, бо всі вводять з дефісами.",
+     pl:"Dodaj tekst pomocniczy o formacie NIP-u, bo wszyscy wpisują z myślnikami.",
+     en:"Add helper text about the tax-ID format, everyone types it with dashes."},
  d:`<div class="col">
   <label class="lab">Hasło</label>
   <input class="in" type="password" value="········">
@@ -1176,7 +1203,14 @@ const DATA = [
 
 {c:"B",n:"06",en:"Error message",alt:"validation message",pl:"komunikat o błędzie",
  ua:"Що саме не так і як виправити. Не «Błąd», а «Podaj datę w formacie DD.MM.RRRR». Колір — не єдиний носій сенсу: іконка + текст обов'язкові.",
+ o:{pl:"Co dokładnie jest nie tak i jak to naprawić. Nie «Błąd», tylko «Podaj datę w formacie DD.MM.RRRR». Kolor nie może być jedynym nośnikiem sensu: ikona plus tekst są obowiązkowe.",
+    en:"What exactly is wrong and how to fix it. Not 'Error' but 'Enter the date as DD.MM.YYYY'. Colour can't be the only carrier of meaning: an icon plus text are mandatory."},
+ ex:{ua:"«Błąd» нічого не каже — напиши, який формат дати очікуємо.",
+     pl:"«Błąd» nic nie mówi — napisz, jakiego formatu daty oczekujemy.",
+     en:"'Error' says nothing — write which date format we expect."},
  note:"Валідація <b>on blur</b>, а не на кожному символі. Виняток — індикатор сили пароля.",
+ nt:{pl:"Walidacja <b>on blur</b>, a nie na każdym znaku. Wyjątek — wskaźnik siły hasła.",
+     en:"Validate <b>on blur</b>, not on every keystroke. The one exception is the password strength meter."},
  d:`<div class="col">
   <label class="lab">Kod pocztowy</label>
   <input class="in bad" value="90200">
@@ -1185,6 +1219,11 @@ const DATA = [
 
 {c:"B",n:"07",en:"Prefix / suffix",alt:"input affix, addon",pl:"przedrostek / przyrostek",
  ua:"Статична частина поля: одиниця, валюта, домен. Знімає навантаження з користувача — не треба друкувати «zł» чи «https://».",
+ o:{pl:"Statyczna część pola: jednostka, waluta, domena. Zdejmuje pracę z użytkownika — nie musi wpisywać «zł» ani «https://».",
+    en:"A static part of the field: a unit, a currency, a domain. It saves the user work — no need to type 'zł' or 'https://'."},
+ ex:{ua:"Винеси «zł» у суфікс поля, хай користувач вводить саме число.",
+     pl:"Wynieś «zł» do przyrostka pola, niech użytkownik wpisuje samą liczbę.",
+     en:"Move the currency into a suffix so the user types just the number."},
  d:`<div class="col">
   <label class="lab">Cena netto</label>
   <div class="affix"><input class="in" value="12,40"><span>PLN</span></div>
@@ -1194,6 +1233,11 @@ const DATA = [
 
 {c:"B",n:"08",en:"Character counter",alt:"input counter",pl:"licznik znaków",
  ua:"Показує ліміт. Має сенс лише коли ліміт справді жорсткий; рахунок вниз («залишилось 40») читається швидше за 60/100.",
+ o:{pl:"Pokazuje limit. Ma sens tylko wtedy, gdy limit jest naprawdę twardy; odliczanie w dół («zostało 40») czyta się szybciej niż 60/100.",
+    en:"Shows the limit. Only worth it when the limit is genuinely hard; counting down ('40 left') reads faster than 60/100."},
+ ex:{ua:"Лічильник має рахувати вниз — «zostało 40» читається швидше за 60/100.",
+     pl:"Licznik ma odliczać w dół — «zostało 40» czyta się szybciej niż 60/100.",
+     en:"Make the counter count down — '40 left' reads faster than 60/100."},
  d:`<div class="col">
   <label class="lab">Nazwa projektu</label>
   <input class="in" value="Sterownik LED — rewizja B">
@@ -1202,12 +1246,22 @@ const DATA = [
 
 {c:"B",n:"09",en:"Search field",alt:"search bar, search input",pl:"pole wyszukiwania",
  ua:"Вхідна точка пошуку. Обов'язкові дрібниці: іконка лупи, кнопка очистки, збереження запиту після переходу на результати.",
+ o:{pl:"Punkt wejścia do wyszukiwania. Obowiązkowe drobiazgi: ikona lupy, przycisk czyszczenia, zachowanie zapytania po przejściu na wyniki.",
+    en:"The entry point to search. The mandatory details: a magnifier icon, a clear button, and keeping the query after moving to the results."},
+ ex:{ua:"Запит губиться на сторінці результатів — треба лишати його в полі.",
+     pl:"Zapytanie ginie na stronie wyników — trzeba je zostawiać w polu.",
+     en:"The query is lost on the results page — it has to stay in the field."},
  d:`<div class="col">
   <div class="affix"><span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.4"/><path d="m20 20-4.4-4.4"/></svg></span><input class="in" value="rezystor 4.7k 0805"><span style="cursor:pointer">✕︎</span></div>
  </div>`},
 
 {c:"B",n:"10",en:"Password field",alt:"masked input",pl:"pole hasła",
  ua:"Замаскований ввід з перемикачем «показати». Приховування без можливості перевірити — головна причина помилок при вході.",
+ o:{pl:"Zamaskowany wpis z przełącznikiem «pokaż». Ukrywanie bez możliwości sprawdzenia to główna przyczyna błędów przy logowaniu.",
+    en:"Masked input with a show/hide toggle. Hiding it with no way to check is the main source of sign-in errors."},
+ ex:{ua:"Додай перемикач «показати» — без нього люди помиляються на вході.",
+     pl:"Dodaj przełącznik «pokaż» — bez niego ludzie mylą się przy logowaniu.",
+     en:"Add a show-password toggle — without it people fail the sign-in."},
  d:`<div class="col">
   <label class="lab">Hasło</label>
   <div class="affix"><input class="in" type="password" value="tajnehaslo"><span style="cursor:pointer"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M1.8 12S5.7 5.8 12 5.8 22.2 12 22.2 12 18.3 18.2 12 18.2 1.8 12 1.8 12Z"/><circle cx="12" cy="12" r="2.9"/></svg></span></div>
@@ -1215,6 +1269,11 @@ const DATA = [
 
 {c:"B",n:"11",en:"OTP input",alt:"PIN input, verification code",pl:"pole kodu jednorazowego",
  ua:"Розбитий на клітинки код з SMS/пошти. Має підтримувати вставку всього коду одразу — інакше користувач вставляє 6 цифр у першу клітинку.",
+ o:{pl:"Kod z SMS-a lub maila rozbity na osobne pola. Musi obsługiwać wklejenie całego kodu naraz — inaczej użytkownik wkleja 6 cyfr do pierwszej kratki.",
+    en:"A code from SMS or email split into separate boxes. It must accept the whole code pasted at once — otherwise the user drops all six digits into the first box."},
+ ex:{ua:"OTP не приймає вставку всього коду — люди клеять 6 цифр у першу клітинку.",
+     pl:"Pole kodu nie przyjmuje wklejenia całości — ludzie wklejają 6 cyfr do pierwszej kratki.",
+     en:"The OTP field won't take a full paste — people dump all six digits in the first box."},
  d:`<div class="col" style="align-items:center">
   <div class="otp"><i>4</i><i>0</i><i>7</i><i class="act">|</i><i></i><i></i></div>
   <div class="hint" style="text-align:center">Kod wysłany na +48 ••• ••• 421</div>
@@ -1222,6 +1281,11 @@ const DATA = [
 
 {c:"B",n:"12",en:"File upload",alt:"dropzone, file picker",pl:"przesyłanie plików",
  ua:"Кнопка + зона перетягування. Завжди вказуй дозволені формати й максимальний розмір ДО спроби завантаження.",
+ o:{pl:"Przycisk plus strefa przeciągania. Zawsze podawaj dozwolone formaty i maksymalny rozmiar PRZED próbą wysłania.",
+    en:"A button plus a drop zone. Always state the allowed formats and maximum size BEFORE the upload is attempted."},
+ ex:{ua:"Напиши формати й ліміт до завантаження, а не в помилці після нього.",
+     pl:"Napisz formaty i limit przed wysyłką, a nie w błędzie po niej.",
+     en:"State the formats and the size limit up front, not in an error afterwards."},
  d:`<div class="drop">
   <div style="font-size:19px;margin-bottom:5px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5v-12M7.2 12.8 12 8l4.8 4.8M4 3.5h16"/></svg></div>
   <b>Przeciągnij plik BOM</b>
@@ -1230,6 +1294,11 @@ const DATA = [
 
 {c:"B",n:"13",en:"Form",alt:"data entry form",pl:"formularz",
  ua:"Набір полів з однією метою. Одна колонка, логічні групи, дія-підтвердження внизу зліва або справа — консистентно в межах продукту.",
+ o:{pl:"Zestaw pól z jednym celem. Jedna kolumna, logiczne grupy, akcja potwierdzająca na dole po lewej albo po prawej — konsekwentnie w całym produkcie.",
+    en:"A set of fields with one goal. One column, logical groups, the confirming action at the bottom left or right — consistently across the product."},
+ ex:{ua:"Форму в одну колонку — дві колонки збивають порядок читання.",
+     pl:"Formularz w jednej kolumnie — dwie kolumny psują kolejność czytania.",
+     en:"Make the form single-column — two columns break the reading order."},
  d:`<div class="col">
   <div><label class="lab">Firma</label><input class="in" value="Elektro-Serwis Sp. z o.o."></div>
   <div><label class="lab">NIP</label><input class="in" value="725 000 12 34"></div>
@@ -1238,6 +1307,11 @@ const DATA = [
 
 {c:"B",n:"14",en:"Fieldset",alt:"field group",pl:"grupa pól",
  ua:"Смислова група полів зі спільним заголовком. Для screen reader — <fieldset> + <legend>, інакше зв'язок між групою та полями втрачається.",
+ o:{pl:"Znaczeniowa grupa pól ze wspólnym nagłówkiem. Dla czytnika ekranu — <fieldset> plus <legend>, inaczej związek między grupą a polami przepada.",
+    en:"A meaningful group of fields under a shared heading. For screen readers it's <fieldset> plus <legend>, otherwise the link between the group and the fields is lost."},
+ ex:{ua:"Загорни адресу доставки у fieldset — інакше скрінрідер не бачить групи.",
+     pl:"Zawiń adres dostawy w fieldset — inaczej czytnik ekranu nie widzi grupy.",
+     en:"Wrap the delivery address in a fieldset — otherwise the screen reader can't see the group."},
  d:`<div class="col">
   <div class="cap" style="margin-bottom:2px">Adres dostawy</div>
   <input class="in" value="ul. Ustronna 41" style="margin-bottom:7px">
@@ -1247,7 +1321,14 @@ const DATA = [
 /* ============ C · ВИБІР ============ */
 {c:"C",n:"01",en:"Checkbox",alt:"tick box",pl:"pole wyboru",
  ua:"Множинний вибір або згода. Кожен чекбокс незалежний. Клік по підпису має перемикати стан — це найчастіший недогляд у верстці.",
+ o:{pl:"Wybór wielokrotny albo zgoda. Każde pole wyboru jest niezależne. Kliknięcie w etykietę musi przełączać stan — to najczęstsze niedopatrzenie we wdrożeniu.",
+    en:"Multiple choice or consent. Each checkbox is independent. Clicking the label must toggle it — the most commonly missed detail in implementation."},
+ ex:{ua:"Клік по підпису не перемикає чекбокс — це треба полагодити.",
+     pl:"Kliknięcie w etykietę nie przełącza checkboxa — to trzeba naprawić.",
+     en:"Clicking the label doesn't toggle the checkbox — that needs fixing."},
  note:"У розмові поляки кажуть <b>checkbox</b>; «pole wyboru» — мова документації й локалізації.",
+ nt:{pl:"W rozmowie mówi się <b>checkbox</b>; «pole wyboru» to język dokumentacji i lokalizacji.",
+     en:"In speech Poles say <b>checkbox</b>; «pole wyboru» belongs to documentation and localisation."},
  d:`<div class="col">
   <label class="chk"><input type="checkbox" checked> Produkty dostępne od ręki</label>
   <label class="chk"><input type="checkbox"> Tylko RoHS</label>
@@ -1256,6 +1337,11 @@ const DATA = [
 
 {c:"C",n:"02",en:"Indeterminate checkbox",alt:"partial, mixed state",pl:"stan nieokreślony",
  ua:"Третій стан для батьківського чекбокса, коли частина дочірніх вибрана. Візуально — риска, не галочка.",
+ o:{pl:"Trzeci stan rodzicielskiego pola wyboru, gdy zaznaczona jest część dzieci. Wizualnie kreska, nie ptaszek.",
+    en:"The third state of a parent checkbox when only some children are selected. Shown as a dash, not a tick."},
+ ex:{ua:"Батьківський чекбокс має бути в неозначеному стані — вибрано не всі рядки.",
+     pl:"Rodzicielski checkbox ma być w stanie nieokreślonym — zaznaczone są nie wszystkie wiersze.",
+     en:"The parent checkbox should be indeterminate — not every row is selected."},
  d:`<div class="col">
   <label class="chk"><input type="checkbox" id="ind"> <b>Wszystkie kategorie</b></label>
   <label class="chk" style="margin-left:20px"><input type="checkbox" checked> Rezystory</label>
@@ -1264,7 +1350,14 @@ const DATA = [
 
 {c:"C",n:"03",en:"Radio group",alt:"radio button, option button",pl:"przyciski opcji",
  ua:"Рівно один варіант із кількох. Показуй усі опції одразу (2–6). Не можна зняти вибір — тому має бути безпечне значення за замовчуванням.",
+ o:{pl:"Dokładnie jedna opcja z kilku. Pokazuj wszystkie naraz (2–6). Wyboru nie da się cofnąć, więc musi być bezpieczna wartość domyślna.",
+    en:"Exactly one option out of several. Show them all at once (2–6). The choice can't be undone, so there has to be a safe default."},
+ ex:{ua:"Тут потрібні radio, а не чекбокси — варіанти взаємовиключні.",
+     pl:"Tu trzeba przycisków opcji, nie checkboxów — warianty się wykluczają.",
+     en:"These should be radios, not checkboxes — the options are mutually exclusive."},
  note:"Формально <b>przycisk opcji</b>, у мовленні — <b>radio button</b> / <b>radio</b>.",
+ nt:{pl:"Formalnie <b>przycisk opcji</b>, w mowie — <b>radio button</b> / <b>radio</b>.",
+     en:"Formally <b>przycisk opcji</b> in Polish; in speech it's <b>radio button</b> or just <b>radio</b>."},
  d:`<div class="col">
   <div class="cap" style="margin-bottom:3px">Sposób dostawy</div>
   <label class="chk"><input type="radio" name="dv" checked> Kurier DPD — 18,00 zł</label>
@@ -1274,6 +1367,11 @@ const DATA = [
 
 {c:"C",n:"04",en:"Switch",alt:"toggle",pl:"przełącznik",
  ua:"Вмикає/вимикає налаштування з негайним ефектом — без кнопки «зберегти». Якщо потрібне підтвердження, це чекбокс, а не switch.",
+ o:{pl:"Włącza i wyłącza ustawienie ze skutkiem natychmiastowym — bez przycisku «zapisz». Jeśli potrzebne jest potwierdzenie, to jest checkbox, a nie przełącznik.",
+    en:"Turns a setting on and off with immediate effect — no save button. If it needs confirmation, it's a checkbox, not a switch."},
+ ex:{ua:"Switch працює одразу — якщо тут треба «zapisz», став чекбокс.",
+     pl:"Przełącznik działa natychmiast — jeśli tu trzeba «zapisz», daj checkbox.",
+     en:"A switch applies immediately — if this needs a save button, use a checkbox."},
  d:`<div class="col">
   <label class="sw"><input type="checkbox" checked><i></i> Ceny netto</label>
   <label class="sw"><input type="checkbox"><i></i> Pokaż tylko magazyn PL</label>
@@ -1281,6 +1379,11 @@ const DATA = [
 
 {c:"C",n:"05",en:"Select",alt:"dropdown, select box",pl:"lista rozwijana",
  ua:"Вибір одного зі списку, коли варіантів багато (7+). Приховує опції — для 2–4 варіантів radio або segmented читаються швидше.",
+ o:{pl:"Wybór jednej pozycji z listy, gdy opcji jest dużo (7+). Ukrywa opcje — przy 2–4 wariantach przyciski opcji albo kontrolka segmentowa czytają się szybciej.",
+    en:"Picking one item from a list when there are many options (7+). It hides the options — with 2–4 choices, radios or a segmented control read faster."},
+ ex:{ua:"Тут лише три опції — постав radio, а не list rozwijaną.",
+     pl:"Tu są tylko trzy opcje — daj przyciski opcji, a nie listę rozwijaną.",
+     en:"There are only three options here — use radios, not a dropdown."},
  d:`<div class="col">
   <label class="lab">Obudowa</label>
   <select class="sel"><option>SMD 0805</option><option>SMD 0603</option><option>THT axial</option></select>
@@ -1288,6 +1391,11 @@ const DATA = [
 
 {c:"C",n:"06",en:"Combobox",alt:"select with search",pl:"pole kombi",
  ua:"Поле вводу + випадний список: можна друкувати або вибрати. Стандартне рішення для довгих довідників — країни, виробники, категорії.",
+ o:{pl:"Pole wpisu plus lista rozwijana: można pisać albo wybrać. Standardowe rozwiązanie dla długich słowników — kraje, producenci, kategorie.",
+    en:"A text field plus a dropdown: type or pick. The standard answer for long reference lists — countries, manufacturers, categories."},
+ ex:{ua:"Виробників 400 — тут потрібен combobox з пошуком, а не select.",
+     pl:"Producentów jest 400 — tu trzeba pola kombi z wyszukiwaniem, a nie zwykłej listy.",
+     en:"There are 400 manufacturers — this needs a searchable combobox, not a plain select."},
  d:`<div class="col">
   <label class="lab">Producent</label>
   <input class="in" value="Tex" style="border-color:var(--pcb)">
@@ -1298,6 +1406,11 @@ const DATA = [
 
 {c:"C",n:"07",en:"Multiselect",alt:"multi-select, tag select",pl:"lista wielokrotnego wyboru",
  ua:"Кілька значень в одному полі, вибране показується чипами. Слідкуй за висотою поля — при 10 вибраних воно не має ламати форму.",
+ o:{pl:"Kilka wartości w jednym polu, wybrane pokazują się jako chipy. Pilnuj wysokości pola — przy 10 zaznaczonych nie może rozwalić formularza.",
+    en:"Several values in one field, shown as chips. Watch the field height — ten selections must not blow up the form."},
+ ex:{ua:"Перевір, що буде при 10 вибраних — поле не має рвати форму.",
+     pl:"Sprawdź, co będzie przy 10 zaznaczonych — pole nie może rozwalić formularza.",
+     en:"Check what happens with ten selected — the field mustn't break the form."},
  d:`<div class="col">
   <label class="lab">Certyfikaty</label>
   <div class="in" style="display:flex;gap:5px;flex-wrap:wrap;padding:6px">
@@ -1309,6 +1422,11 @@ const DATA = [
 
 {c:"C",n:"08",en:"Autocomplete",alt:"typeahead, suggestions",pl:"autouzupełnianie",
  ua:"Підказки під час вводу. Виділяй збіг, показуй категорію результату і не змінюй перший результат при кожному натисканні клавіші.",
+ o:{pl:"Podpowiedzi w trakcie pisania. Wyróżniaj dopasowanie, pokazuj kategorię wyniku i nie zmieniaj pierwszego wyniku przy każdym naciśnięciu klawisza.",
+    en:"Suggestions as you type. Highlight the match, show the result's category, and don't reshuffle the first result on every keystroke."},
+ ex:{ua:"Перший результат стрибає на кожному символі — зафіксуй його.",
+     pl:"Pierwszy wynik skacze przy każdym znaku — ustabilizuj go.",
+     en:"The top result jumps on every keystroke — stabilise it."},
  d:`<div class="col">
   <div class="affix"><span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.4"/><path d="m20 20-4.4-4.4"/></svg></span><input class="in" value="rezys"></div>
   <div class="menu" style="width:100%;margin-top:3px">
@@ -1320,6 +1438,11 @@ const DATA = [
 
 {c:"C",n:"09",en:"Slider",alt:"range input",pl:"suwak",
  ua:"Приблизне значення в діапазоні. Погано працює для точних чисел — завжди дублюй числовим полем.",
+ o:{pl:"Przybliżona wartość z zakresu. Źle działa przy dokładnych liczbach — zawsze dubluj polem liczbowym.",
+    en:"An approximate value within a range. Poor for exact numbers — always pair it with a numeric field."},
+ ex:{ua:"Продублюй слайдер числовим полем — точне значення ним не спіймати.",
+     pl:"Zdubluj suwak polem liczbowym — dokładnej wartości nim nie trafisz.",
+     en:"Back the slider with a numeric field — you can't hit an exact value with it."},
  d:`<div class="col">
   <div style="display:flex;justify-content:space-between"><span class="cap">Jasność</span><span class="cap">68%</span></div>
   <input type="range" value="68">
@@ -1327,6 +1450,11 @@ const DATA = [
 
 {c:"C",n:"10",en:"Range slider",alt:"multi-thumb slider",pl:"suwak zakresu",
  ua:"Два маркери — «від» і «до». Класика фільтрів ціни. Обов'язково додай поля вводу: ручками важко влучити в точне значення.",
+ o:{pl:"Dwa znaczniki — «od» i «do». Klasyka filtrów ceny. Koniecznie dodaj pola wpisu: uchwytami trudno trafić w dokładną wartość.",
+    en:"Two handles — 'from' and 'to'. The classic price filter. Always add input fields: handles can't hit an exact value."},
+ ex:{ua:"До range slider додай поля «від» і «до» — інакше ціну не виставиш.",
+     pl:"Do suwaka zakresu dodaj pola «od» i «do» — inaczej ceny nie ustawisz.",
+     en:"Add 'from' and 'to' inputs to the range slider — otherwise you can't set the price."},
  d:`<div class="col" style="align-items:center">
   <div class="dual"><div class="trk"></div><div class="fil"></div><b style="left:26%"></b><b style="right:22%"></b></div>
   <div style="display:flex;gap:7px;width:100%"><input class="in" value="2,50"><input class="in" value="18,00"></div>
@@ -1334,7 +1462,14 @@ const DATA = [
 
 {c:"C",n:"11",en:"Stepper",alt:"number input, spinbutton",pl:"pole liczbowe z krokiem",
  ua:"Число + кнопки «−/+». Для e-commerce критично: поле має лишатись редагованим з клавіатури — інакше 250 шт. набирати неможливо.",
+ o:{pl:"Liczba plus przyciski «−/+». W e-commerce krytyczne: pole musi zostać edytowalne z klawiatury — inaczej nie da się wpisać 250 szt.",
+    en:"A number plus minus and plus buttons. Critical in e-commerce: the field must stay keyboard-editable — otherwise you can't enter 250 pcs."},
+ ex:{ua:"Хай кількість можна вписати з клавіатури — 250 шт. плюсиком не наклацаєш.",
+     pl:"Niech ilość da się wpisać z klawiatury — 250 szt. plusem się nie naklika.",
+     en:"Let people type the quantity — nobody clicks plus 250 times."},
  note:"У специфікації ARIA це <b>spinbutton</b>. У Material — <b>stepper</b>. Не плутати з «stepper» як індикатором кроків (D·11).",
+ nt:{pl:"W specyfikacji ARIA to <b>spinbutton</b>. W Material — <b>stepper</b>. Nie mylić ze stepperem jako wskaźnikiem kroków (D·11).",
+     en:"In the ARIA spec this is a <b>spinbutton</b>. Material calls it a <b>stepper</b>. Not the same as the step indicator in D·11."},
  d:`<div class="row">
   <div class="stp"><button>−</button><input value="250"><button>+</button></div>
   <span class="cap">szt. / opak. 100</span>
@@ -1342,6 +1477,11 @@ const DATA = [
 
 {c:"C",n:"12",en:"Date picker",alt:"calendar picker",pl:"selektor daty",
  ua:"Календар для вибору дати. Завжди залишай ручний ввід: набрати «12.09.2026» швидше, ніж клікати 14 місяців назад.",
+ o:{pl:"Kalendarz do wyboru daty. Zawsze zostawiaj ręczny wpis: wpisać «12.09.2026» jest szybciej niż klikać 14 miesięcy wstecz.",
+    en:"A calendar for picking a date. Always keep manual entry: typing '12.09.2026' is faster than clicking back 14 months."},
+ ex:{ua:"Лиши ручний ввід дати — клацати 14 місяців назад ніхто не буде.",
+     pl:"Zostaw ręczny wpis daty — nikt nie będzie klikał 14 miesięcy wstecz.",
+     en:"Keep manual date entry — nobody's clicking back 14 months."},
  d:`<div class="cal">
   <div class="cal-h"><span>‹</span> wrzesień 2026 <span>›</span></div>
   <div class="cal-g">
@@ -1354,6 +1494,11 @@ const DATA = [
 
 {c:"C",n:"13",en:"Date range picker",alt:"period selector",pl:"selektor zakresu dat",
  ua:"Вибір періоду «від–до». Додавай пресети (ostatnie 7 dni, ten miesiąc) — 80% користувачів беруть саме їх.",
+ o:{pl:"Wybór okresu «od–do». Dodawaj gotowe zakresy (ostatnie 7 dni, ten miesiąc) — 80% użytkowników bierze właśnie je.",
+    en:"Picking an 'from–to' period. Add presets (last 7 days, this month) — 80% of users take those."},
+ ex:{ua:"Додай пресети «ostatnie 7 dni» і «ten miesiąc» — їх беруть найчастіше.",
+     pl:"Dodaj gotowce «ostatnie 7 dni» i «ten miesiąc» — z nich korzysta się najczęściej.",
+     en:"Add 'last 7 days' and 'this month' presets — that's what people pick."},
  d:`<div class="cal">
   <div class="cal-h"><span>‹</span> wrzesień 2026 <span>›</span></div>
   <div class="cal-g">
@@ -1365,6 +1510,11 @@ const DATA = [
 
 {c:"C",n:"14",en:"Color picker",alt:"color well",pl:"próbnik koloru",
  ua:"Вибір кольору. У продуктових інтерфейсах майже завжди достатньо готової палітри, а не повного спектра.",
+ o:{pl:"Wybór koloru. W interfejsach produktowych prawie zawsze wystarcza gotowa paleta zamiast pełnego spektrum.",
+    en:"A colour chooser. In product interfaces a fixed palette is almost always enough — you rarely need the full spectrum."},
+ ex:{ua:"Дай палітру з токенів, а не повний спектр — інакше буде 40 відтінків зеленого.",
+     pl:"Daj paletę z tokenów, a nie pełne spektrum — inaczej będzie 40 odcieni zieleni.",
+     en:"Offer the token palette rather than the full spectrum — otherwise you get 40 shades of green."},
  d:`<div class="swatch">
   <b style="background:#0B5C43"></b><b style="background:#8A6516"></b><b style="background:#A32B1C"></b><b style="background:#14181A"></b>
   <input class="in" value="#0B5C43" style="width:88px;font-family:var(--mono);font-size:11px">
@@ -1372,6 +1522,11 @@ const DATA = [
 
 {c:"C",n:"15",en:"Rating",alt:"star rating",pl:"ocena",
  ua:"Оцінка або відображення середньої. Для вводу — інтерактивна, для показу — статична з числом і кількістю відгуків поруч.",
+ o:{pl:"Ocena albo prezentacja średniej. Do wystawiania — interaktywna, do pokazania — statyczna z liczbą i liczbą opinii obok.",
+    en:"Rating input or an average display. Interactive when the user rates, static with the score and review count when you're just showing it."},
+ ex:{ua:"Поряд із зірками покажи число і кількість відгуків — самі зірки нічого не кажуть.",
+     pl:"Obok gwiazdek pokaż liczbę i liczbę opinii — same gwiazdki nic nie mówią.",
+     en:"Show the score and the review count next to the stars — stars alone say nothing."},
  d:`<div class="row">
   <div class="stars">★︎★︎★︎★︎<span class="off">★︎</span></div>
   <span class="cap">4,2 · 118 opinii</span>
@@ -1380,6 +1535,11 @@ const DATA = [
 /* ============ D · НАВІГАЦІЯ ============ */
 {c:"D",n:"01",en:"Header",alt:"top bar, app bar, navbar",pl:"nagłówek",
  ua:"Верхня смуга: логотип, пошук, акаунт, кошик. Найдорожча нерухомість екрана — сюди йде лише те, що потрібне на будь-якій сторінці.",
+ o:{pl:"Górny pasek: logo, wyszukiwarka, konto, koszyk. Najdroższa nieruchomość na ekranie — trafia tu tylko to, co jest potrzebne na każdej stronie.",
+    en:"The top bar: logo, search, account, cart. The most expensive real estate on the screen — only what's needed on every page belongs here."},
+ ex:{ua:"У шапці забагато всього — лиши те, що треба на кожній сторінці.",
+     pl:"W nagłówku jest za dużo — zostaw to, co potrzebne na każdej stronie.",
+     en:"There's too much in the header — keep only what's needed on every page."},
  d:`<div class="scene"><div style="display:flex;align-items:center;gap:7px;padding:8px 9px;border-bottom:1px solid var(--line)">
    <b style="font:600 11px var(--mono);color:var(--pcb)">LOGO</b>
    <div style="flex:1;height:19px;border:1px solid var(--line);border-radius:2px;background:var(--well)"></div>
@@ -1390,6 +1550,11 @@ const DATA = [
 
 {c:"D",n:"02",en:"Footer",alt:"page footer",pl:"stopka",
  ua:"Низ сторінки: правова інформація, контакти, карта сайту. Для B2B — місце для NIP, умов оплати й сертифікатів.",
+ o:{pl:"Dół strony: informacje prawne, kontakt, mapa serwisu. W B2B to miejsce na NIP, warunki płatności i certyfikaty.",
+    en:"The bottom of the page: legal information, contacts, sitemap. In B2B it's where the tax ID, payment terms and certificates go."},
+ ex:{ua:"Винеси NIP і умови оплати в стопку — у B2B це шукають саме там.",
+     pl:"Wynieś NIP i warunki płatności do stopki — w B2B szuka się tego właśnie tam.",
+     en:"Move the tax ID and payment terms to the footer — in B2B that's where people look."},
  d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar s"></div></div>
   <div style="position:absolute;left:0;right:0;bottom:0;background:var(--ink);color:#fff;padding:9px;font-size:9px;font-family:var(--mono);line-height:1.7">
    O firmie · Kontakt · Regulamin<br>Polityka prywatności · NIP 727-012-46-05
@@ -1398,6 +1563,11 @@ const DATA = [
 
 {c:"D",n:"03",en:"Sidebar",alt:"side navigation, drawer nav",pl:"panel boczny",
  ua:"Вертикальна навігація зліва. Для глибоких каталогів краще за горизонтальне меню: витримує 3 рівні вкладеності без мега-меню.",
+ o:{pl:"Nawigacja pionowa po lewej. Do głębokich katalogów lepsza niż menu poziome: wytrzymuje 3 poziomy zagnieżdżenia bez mega menu.",
+    en:"Vertical navigation on the left. Better than a horizontal menu for deep catalogues: it handles three levels of nesting without a mega menu."},
+ ex:{ua:"Для трьох рівнів каталогу бери сайдбар, горизонтальне меню не витягне.",
+     pl:"Przy trzech poziomach katalogu weź panel boczny, poziome menu tego nie udźwignie.",
+     en:"With three catalogue levels use a sidebar, a horizontal menu won't cope."},
  d:`<div class="scene"><div style="display:flex;height:100%">
   <div style="width:40%;background:var(--well);border-right:1px solid var(--line);padding:8px;font-size:9.5px;line-height:2">
    <div style="color:var(--pcb);font-weight:600">Rezystory</div>
@@ -1410,13 +1580,25 @@ const DATA = [
 
 {c:"D",n:"04",en:"Navigation rail",alt:"icon rail",pl:"wąski pasek nawigacji",
  ua:"Вузька смуга з іконками + підписами. Компроміс між сайдбаром і бургером на планшетах та широких десктопах.",
+ o:{pl:"Wąski pasek z ikonami i podpisami. Kompromis między panelem bocznym a hamburgerem na tabletach i szerokich desktopach.",
+    en:"A narrow strip of icons with labels. The compromise between a sidebar and a hamburger on tablets and wide desktops."},
+ ex:{ua:"На планшеті постав nav rail — сайдбар з'їдає пів екрана.",
+     pl:"Na tablecie daj wąski pasek nawigacji — panel boczny zjada pół ekranu.",
+     en:"Use a navigation rail on tablet — the sidebar eats half the screen."},
  d:`<div class="rail">
   <div class="on"><b>▤︎</b>Katalog</div><div><b><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2S3.9 15 3.9 9.4A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.1 2.8c0 5.6-8.1 10.8-8.1 10.8Z"/></svg></b>Schowek</div><div><b><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.7 12.3a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L21 7.2H6"/></svg></b>Koszyk</div><div><b>☰</b>Konto</div>
  </div>`},
 
 {c:"D",n:"05",en:"Tabs",alt:"tab bar, tabbed panels",pl:"zakładki",
  ua:"Перемикання між рівнозначними панелями в межах одного контексту. URL має змінюватись — інакше вкладку не поділишся посиланням.",
+ o:{pl:"Przełączanie między równorzędnymi panelami w jednym kontekście. URL musi się zmieniać — inaczej nie da się wysłać linku do zakładki.",
+    en:"Switching between equally ranked panels within one context. The URL has to change — otherwise you can't share a link to a tab."},
+ ex:{ua:"Вкладка не міняє URL — посиланням на неї не поділишся.",
+     pl:"Zakładka nie zmienia adresu — nie da się jej wysłać linkiem.",
+     en:"The tab doesn't change the URL — you can't share a link to it."},
  note:"Польською <b>zakładki</b>. Слово <b>karty</b> теж трапляється, але воно ж означає «cards» — уточнюй контекст.",
+ nt:{pl:"Po polsku <b>zakładki</b>. Słowo <b>karty</b> też się pojawia, ale oznacza również «cards» — doprecyzuj kontekst.",
+     en:"Polish uses <b>zakładki</b>. You'll also hear <b>karty</b>, but that also means cards — check the context."},
  d:`<div class="tabs">
   <input type="radio" name="tb" id="t1" checked><input type="radio" name="tb" id="t2"><input type="radio" name="tb" id="t3">
   <div class="tl"><label for="t1">Opis</label><label for="t2">Parametry</label><label for="t3">Do pobrania</label></div>
@@ -1427,16 +1609,35 @@ const DATA = [
 
 {c:"D",n:"06",en:"Breadcrumb",alt:"breadcrumb trail",pl:"okruszki",
  ua:"Шлях по ієрархії. Критично для каталогів з глибокою вкладеністю — показує, де ти, і дає вихід на рівень вище одним кліком.",
+ o:{pl:"Ścieżka po hierarchii. Krytyczna w katalogach o głębokim zagnieżdżeniu — pokazuje, gdzie jesteś, i daje wyjście poziom wyżej jednym kliknięciem.",
+    en:"The trail through the hierarchy. Critical in deeply nested catalogues — it shows where you are and gets you one level up in a single click."},
+ ex:{ua:"Додай okruszki — з четвертого рівня каталогу нема як вийти вгору.",
+     pl:"Dodaj okruszki — z czwartego poziomu katalogu nie da się wyjść wyżej.",
+     en:"Add breadcrumbs — there's no way up from the fourth catalogue level."},
  note:"Повна форма — <b>nawigacja okruszkowa</b>. У командах кажуть <b>okruszki</b> або просто <b>breadcrumbs</b>.",
+ nt:{pl:"Pełna forma to <b>nawigacja okruszkowa</b>. W zespołach mówi się <b>okruszki</b> albo po prostu <b>breadcrumbs</b>.",
+     en:"The full Polish term is <b>nawigacja okruszkowa</b>. Teams say <b>okruszki</b> or just <b>breadcrumbs</b>."},
  d:`<div class="crumb"><a>Katalog</a> › <a>Rezystory</a> › <a>SMD</a> › <b>0805</b></div>`},
 
 {c:"D",n:"07",en:"Pagination",alt:"pager",pl:"paginacja",
  ua:"Розбиття довгого списку на сторінки. Для B2B-каталогів краще за нескінченний скрол: можна повернутись на сторінку 7 і зберегти позицію.",
+ o:{pl:"Podział długiej listy na strony. W katalogach B2B lepsza niż nieskończone przewijanie: można wrócić na stronę 7 i zachować pozycję.",
+    en:"Splitting a long list into pages. Better than infinite scroll for B2B catalogues: you can go back to page 7 and keep your place."},
+ ex:{ua:"Тут краще пагінація, а не нескінченний скрол — люди вертаються на сторінку 7.",
+     pl:"Tu lepsza będzie paginacja, a nie nieskończone przewijanie — ludzie wracają na stronę 7.",
+     en:"Pagination beats infinite scroll here — people come back to page 7."},
  note:"Синонім — <b>stronicowanie</b>. Обидва вживані.",
+ nt:{pl:"Synonim — <b>stronicowanie</b>. Oba są w użyciu.",
+     en:"A synonym in Polish is <b>stronicowanie</b>. Both are in use."},
  d:`<div class="pag"><a>‹</a><a>1</a><a class="on">2</a><a>3</a><a>4</a><span>…</span><a>28</a><a>›</a></div>`},
 
 {c:"D",n:"08",en:"Dropdown menu",alt:"menu, action menu",pl:"menu rozwijane",
  ua:"Список дій, що відкривається з кнопки. Групуй за смислом, розділяй сепаратором, деструктивну дію — вниз і червоним.",
+ o:{pl:"Lista akcji otwierana z przycisku. Grupuj według sensu, rozdzielaj separatorem, akcję niszczącą daj na dół i na czerwono.",
+    en:"A list of actions opened from a button. Group by meaning, separate with a divider, put the destructive action last and in red."},
+ ex:{ua:"«Usuń» перенеси вниз меню і відділи сепаратором.",
+     pl:"«Usuń» przenieś na dół menu i oddziel separatorem.",
+     en:"Move 'Delete' to the bottom of the menu and separate it with a divider."},
  d:`<div class="menu">
   <a><span>Edytuj</span><kbd>⌘︎E</kbd></a>
   <a><span>Duplikuj</span><kbd>⌘︎D</kbd></a>
@@ -1446,6 +1647,11 @@ const DATA = [
 
 {c:"D",n:"09",en:"Context menu",alt:"right-click menu",pl:"menu kontekstowe",
  ua:"Меню по правому кліку, прив'язане до конкретного об'єкта. Ніколи не єдиний спосіб дістатись дії — на тач-пристроях його немає.",
+ o:{pl:"Menu spod prawego przycisku myszy, przypięte do konkretnego obiektu. Nigdy nie może być jedyną drogą do akcji — na urządzeniach dotykowych go nie ma.",
+    en:"A right-click menu tied to a specific object. It must never be the only route to an action — touch devices don't have it."},
+ ex:{ua:"Дія доступна тільки з правого кліку — на тачі до неї не дістатись.",
+     pl:"Akcja jest tylko pod prawym kliknięciem — na dotyku nie da się do niej dojść.",
+     en:"That action is right-click only — there's no way to reach it on touch."},
  d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div></div>
   <div class="menu" style="position:absolute;left:38px;top:38px;width:120px">
    <a style="font-size:11px"><span>Kopiuj symbol</span></a>
@@ -1456,6 +1662,11 @@ const DATA = [
 
 {c:"D",n:"10",en:"Mega menu",alt:"wide dropdown nav",pl:"mega menu",
  ua:"Широка панель з усіма категоріями одразу. Виправдана в каталогах на сотні розділів; вимагає затримки перед відкриттям (~150 мс), щоб не спрацьовувати випадково.",
+ o:{pl:"Szeroki panel ze wszystkimi kategoriami naraz. Uzasadniony w katalogach o setkach działów; wymaga opóźnienia przed otwarciem (~150 ms), żeby nie odpalał się przypadkiem.",
+    en:"A wide panel showing every category at once. Justified in catalogues with hundreds of sections; needs a delay before opening (~150 ms) so it doesn't fire by accident."},
+ ex:{ua:"Мега-меню вискакує від випадкового руху — постав затримку 150 мс.",
+     pl:"Mega menu odpala się od przypadkowego ruchu — daj opóźnienie 150 ms.",
+     en:"The mega menu fires on an accidental sweep — add a 150 ms delay."},
  d:`<div class="scene"><div style="padding:7px 9px;border-bottom:1px solid var(--line);font-size:9.5px;font-family:var(--mono);color:var(--pcb)">Katalog ▾</div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;padding:9px;font-size:8.5px;line-height:1.9;color:var(--muted)">
    <div><b style="color:var(--ink)">Bierne</b><br>Rezystory<br>Kondensatory</div>
@@ -1466,6 +1677,11 @@ const DATA = [
 
 {c:"D",n:"11",en:"Stepper (progress steps)",alt:"wizard, progress indicator",pl:"wskaźnik kroków",
  ua:"Показує, де користувач у багатокроковому процесі. Обов'язковий у чекауті: знімає тривогу «скільки ще залишилось».",
+ o:{pl:"Pokazuje, gdzie użytkownik jest w wielokrokowym procesie. Obowiązkowy w koszyku: zdejmuje niepokój «ile jeszcze zostało».",
+    en:"Shows where the user is in a multi-step process. Mandatory at checkout: it removes the 'how much is left' anxiety."},
+ ex:{ua:"Додай індикатор кроків у чекаут — люди не знають, скільки ще лишилось.",
+     pl:"Dodaj wskaźnik kroków w koszyku — ludzie nie wiedzą, ile jeszcze zostało.",
+     en:"Add a step indicator to checkout — people don't know how much is left."},
  d:`<div class="steps">
   <div class="s done"><b>✓︎</b><span>Koszyk</span></div><div class="ln done"></div>
   <div class="s now"><b>2</b><span>Dostawa</span></div><div class="ln"></div>
@@ -1474,6 +1690,11 @@ const DATA = [
 
 {c:"D",n:"12",en:"Command palette",alt:"quick actions, ⌘︎K",pl:"paleta poleceń",
  ua:"Пошук по всіх діях застосунку з клавіатури. Прискорювач для досвідчених — ніколи не єдиний шлях до функції.",
+ o:{pl:"Wyszukiwanie wszystkich akcji aplikacji z klawiatury. Przyspieszacz dla zaawansowanych — nigdy jedyna droga do funkcji.",
+    en:"Keyboard search across every action in the app. An accelerator for power users — never the only way to a feature."},
+ ex:{ua:"Палітра команд це прискорювач, а не єдиний шлях — лиши функцію і в меню.",
+     pl:"Paleta poleceń to przyspieszacz, a nie jedyna droga — zostaw funkcję też w menu.",
+     en:"The command palette is an accelerator, not the only route — keep the feature in the menu too."},
  d:`<div class="cmdk">
   <div class="q"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.4"/><path d="m20 20-4.4-4.4"/></svg> zam…</div>
   <div class="g">ZAMÓWIENIA</div>
@@ -1485,6 +1706,11 @@ const DATA = [
 
 {c:"D",n:"13",en:"Toolbar",alt:"action bar",pl:"pasek narzędzi",
  ua:"Групa інструментів над контентом. Порядок = частота використання, не алфавіт.",
+ o:{pl:"Grupa narzędzi nad treścią. Kolejność wynika z częstotliwości użycia, nie z alfabetu.",
+    en:"A group of tools above the content. Order by how often things are used, not alphabetically."},
+ ex:{ua:"Переставь інструменти за частотою використання, а не за абеткою.",
+     pl:"Poprzestawiaj narzędzia według częstotliwości użycia, a nie alfabetycznie.",
+     en:"Reorder the toolbar by frequency of use, not alphabetically."},
  d:`<div class="tbar">
   <button class="on"><b>B</b></button><button><i>I</i></button><button><u>U</u></button>
   <div class="sp"></div><button>≡</button><button>⌸︎</button><button><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.8a4 4 0 0 0 5.7 0l2.6-2.6a4 4 0 0 0-5.7-5.7l-1.3 1.3"/><path d="M14 10.2a4 4 0 0 0-5.7 0l-2.6 2.6a4 4 0 0 0 5.7 5.7l1.3-1.3"/></svg></button>
@@ -1492,21 +1718,41 @@ const DATA = [
 
 {c:"D",n:"14",en:"Bottom navigation",alt:"tab bar (mobile)",pl:"dolna nawigacja",
  ua:"3–5 головних розділів у зоні великого пальця. Не для дій — тільки для навігації верхнього рівня.",
+ o:{pl:"3–5 głównych działów w zasięgu kciuka. Nie do akcji — wyłącznie do nawigacji najwyższego poziomu.",
+    en:"Three to five main sections within thumb reach. Not for actions — top-level navigation only."},
+ ex:{ua:"У нижній навігації має бути максимум 5 розділів, і жодних дій.",
+     pl:"W dolnej nawigacji ma być maksymalnie 5 działów i żadnych akcji.",
+     en:"Bottom navigation takes five sections maximum, and no actions."},
  d:`<div class="bnav">
   <div class="on"><b>⌂︎</b>Start</div><div><b>▤︎</b>Katalog</div><div><b><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.7 12.3a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L21 7.2H6"/></svg></b>Koszyk</div><div><b>☰</b>Konto</div>
  </div>`},
 
 {c:"D",n:"15",en:"Hamburger menu",alt:"nav toggle",pl:"menu hamburgerowe",
  ua:"Іконка з трьох ліній, що ховає навігацію. На мобільному — норма, на десктопі — свідомо приховує розділи й падає їхнє використання.",
+ o:{pl:"Ikona z trzech kresek chowająca nawigację. Na mobile to norma, na desktopie świadomie ukrywa działy i ich użycie spada.",
+    en:"The three-line icon that hides the navigation. Normal on mobile; on desktop it deliberately hides sections and their usage drops."},
+ ex:{ua:"На десктопі не ховай розділи в бургер — їх перестануть відкривати.",
+     pl:"Na desktopie nie chowaj działów do hamburgera — przestaną je otwierać.",
+     en:"Don't hide the sections behind a hamburger on desktop — people stop opening them."},
  d:`<div class="row"><button class="b b-s b-i" aria-label="Menu">☰</button><span class="cap">≡ ukryta nawigacja</span></div>`},
 
 {c:"D",n:"16",en:"Skip link",alt:"skip to content",pl:"link pomijający",
  ua:"Прихована ланка, що з'являється на першому Tab і веде одразу до контенту. Обов'язкова за WCAG 2.4.1 — часто забувають.",
+ o:{pl:"Ukryty odnośnik, który pojawia się przy pierwszym Tabie i prowadzi wprost do treści. Wymagany przez WCAG 2.4.1 — często się o nim zapomina.",
+    en:"A hidden link that appears on the first Tab press and jumps straight to the content. Required by WCAG 2.4.1 — and routinely forgotten."},
+ ex:{ua:"Бракує skip link — з клавіатури доводиться протабати все меню.",
+     pl:"Brakuje linku pomijającego — z klawiatury trzeba przetabować całe menu.",
+     en:"There's no skip link — from the keyboard you have to tab through the whole menu."},
  d:`<div class="row"><span class="skip">Przejdź do treści</span></div>`},
 
 /* ============ E · КОНТЕЙНЕРИ ============ */
 {c:"E",n:"01",en:"Card",alt:"tile",pl:"karta",
  ua:"Контейнер для пов'язаного набору даних, який працює як одна одиниця. Якщо картка не клікабельна цілком — це просто блок, не картка.",
+ o:{pl:"Kontener na powiązany zestaw danych, który działa jako jedna całość. Jeśli karta nie jest klikalna w całości — to zwykły blok, a nie karta.",
+    en:"A container for a related set of data that behaves as one unit. If the whole thing isn't clickable, it's just a block, not a card."},
+ ex:{ua:"Клікає тільки заголовок — зроби клікабельною всю картку.",
+     pl:"Klikalny jest tylko tytuł — zrób klikalną całą kartę.",
+     en:"Only the title is clickable — make the whole card clickable."},
  d:`<div class="card"><div class="ph"></div><div class="bd">
   <h4>Rezystor SMD 4,7 kΩ</h4><p>0805 · ±1% · 125 mW</p>
   <button class="b b-s" style="font-size:11.5px;padding:6px 10px">Zobacz</button>
@@ -1514,6 +1760,11 @@ const DATA = [
 
 {c:"E",n:"02",en:"Accordion",alt:"expandable sections",pl:"akordeon",
  ua:"Стос секцій, які розгортаються. Добре для FAQ і специфікацій; погано для контенту, який треба порівнювати між собою.",
+ o:{pl:"Stos rozwijanych sekcji. Dobry do FAQ i specyfikacji; zły do treści, które trzeba ze sobą porównywać.",
+    en:"A stack of expandable sections. Good for FAQs and specifications; bad for content you need to compare side by side."},
+ ex:{ua:"Специфікації в акордеон не клади — їх порівнюють між собою.",
+     pl:"Nie wkładaj specyfikacji w akordeon — porównuje się je między sobą.",
+     en:"Don't put the specs in an accordion — people compare them against each other."},
  d:`<div style="width:100%;max-width:260px">
   <details class="acc" open><summary>Parametry elektryczne</summary><p>Rezystancja 4,7 kΩ · Tolerancja ±1% · Moc 0,125 W</p></details>
   <details class="acc"><summary>Wymiary</summary><p>2,0 × 1,25 × 0,45 mm</p></details>
@@ -1522,11 +1773,23 @@ const DATA = [
 
 {c:"E",n:"03",en:"Disclosure",alt:"collapsible, show more",pl:"rozwijana sekcja",
  ua:"Одна секція «показати/сховати». На відміну від акордеона тут немає групи — це просто прогресивне розкриття деталей.",
+ o:{pl:"Jedna sekcja «pokaż/ukryj». W odróżnieniu od akordeonu nie ma tu grupy — to po prostu stopniowe odsłanianie szczegółów.",
+    en:"A single show/hide section. Unlike an accordion there's no group — it's simply revealing detail step by step."},
+ ex:{ua:"Сховай технічні деталі під «pokaż więcej» — більшості вони не потрібні.",
+     pl:"Schowaj szczegóły techniczne pod «pokaż więcej» — większości nie są potrzebne.",
+     en:"Tuck the technical detail behind a 'show more' — most people don't need it."},
  note:"Патерн називається <b>progressive disclosure</b> — стопенєве ujawnianie informacji.",
+ nt:{pl:"Wzorzec nazywa się <b>progressive disclosure</b> — stopniowe ujawnianie informacji.",
+     en:"The pattern is called <b>progressive disclosure</b> — revealing information gradually."},
  d:`<details class="acc" style="max-width:250px"><summary>Pokaż 12 zamienników</summary><p>LM358P · LM358AN · TL072CP · NE5532P …</p></details>`},
 
 {c:"E",n:"04",en:"Divider",alt:"separator, rule",pl:"separator",
  ua:"Лінія, що розділяє смислові групи. Часто зайва — відступ робить те саме тихіше. Використовуй, коли простору бракує.",
+ o:{pl:"Linia rozdzielająca grupy znaczeniowe. Często zbędna — odstęp robi to samo ciszej. Stosuj, gdy brakuje miejsca.",
+    en:"A line separating meaningful groups. Often unnecessary — spacing does the same job more quietly. Use it when space is tight."},
+ ex:{ua:"Тут вистачить відступу замість лінії — сепаратор зайвий шум.",
+     pl:"Tu wystarczy odstęp zamiast kreski — separator to zbędny szum.",
+     en:"Spacing is enough here instead of a rule — the divider is just noise."},
  d:`<div class="divi">
   <div class="d" style="font-size:12px">Dane firmy</div><hr>
   <div class="d" style="font-size:12px">Adres dostawy</div>
@@ -1536,6 +1799,11 @@ const DATA = [
 
 {c:"E",n:"05",en:"List",alt:"list item, row",pl:"lista",
  ua:"Вертикальний перелік однотипних елементів. Рядок = один об'єкт + одна головна дія. Більше двох дій у рядку — вже меню.",
+ o:{pl:"Pionowe zestawienie jednorodnych elementów. Wiersz = jeden obiekt plus jedna główna akcja. Więcej niż dwie akcje w wierszu to już menu.",
+    en:"A vertical run of similar items. One row = one object plus one main action. More than two actions in a row means it's a menu."},
+ ex:{ua:"Чотири дії в рядку — сховай їх у меню, лиши одну головну.",
+     pl:"Cztery akcje w wierszu — schowaj je do menu, zostaw jedną główną.",
+     en:"Four actions in a row — move them into a menu and keep one primary."},
  d:`<div class="lst">
   <div>Zamówienie #48120 <small>12.09</small></div>
   <div>Zamówienie #48095 <small>09.09</small></div>
@@ -1544,6 +1812,11 @@ const DATA = [
 
 {c:"E",n:"06",en:"Table",alt:"static table",pl:"tabela",
  ua:"Дані в рядках і колонках для порівняння. Числа — вирівнювання по правому краю й моноширинний шрифт, інакше порядок величин не зчитується.",
+ o:{pl:"Dane w wierszach i kolumnach do porównywania. Liczby wyrównuj do prawej i składaj pismem o stałej szerokości, inaczej nie widać rzędów wielkości.",
+    en:"Data in rows and columns for comparison. Right-align numbers and set them in a monospaced face, otherwise the orders of magnitude don't read."},
+ ex:{ua:"Вирівняй числа праворуч і постав табличні цифри — інакше порядки не видно.",
+     pl:"Wyrównaj liczby do prawej i daj cyfry tabelaryczne — inaczej nie widać rzędów wielkości.",
+     en:"Right-align the numbers and use tabular figures — otherwise you can't see the magnitudes."},
  d:`<table class="t">
   <tr><th>Symbol</th><th>Obudowa</th><th>Cena</th></tr>
   <tr><td>RS-4K7-0805</td><td>0805</td><td class="n">0,08 zł</td></tr>
@@ -1553,7 +1826,14 @@ const DATA = [
 
 {c:"E",n:"07",en:"Data table",alt:"data grid",pl:"tabela danych",
  ua:"Інтерактивна таблиця: сортування, фільтри, вибір рядків, масові дії, закріплені колонки. Ядро будь-якого B2B-інтерфейсу.",
+ o:{pl:"Interaktywna tabela: sortowanie, filtry, zaznaczanie wierszy, akcje masowe, przypięte kolumny. Rdzeń każdego interfejsu B2B.",
+    en:"An interactive table: sorting, filters, row selection, bulk actions, pinned columns. The core of any B2B interface."},
+ ex:{ua:"Закріпи першу колонку — при 20 колонках незрозуміло, чий це рядок.",
+     pl:"Przypnij pierwszą kolumnę — przy 20 kolumnach nie wiadomo, czyj to wiersz.",
+     en:"Pin the first column — with 20 columns you lose track of which row you're on."},
  note:"У ARIA інтерактивна версія називається <b>grid</b>, статична — <b>table</b>. Різниця в клавіатурній навігації стрілками.",
+ nt:{pl:"W ARIA wersja interaktywna nazywa się <b>grid</b>, statyczna — <b>table</b>. Różnica jest w nawigacji strzałkami z klawiatury.",
+     en:"In ARIA the interactive version is a <b>grid</b> and the static one a <b>table</b>. The difference is keyboard arrow navigation."},
  d:`<table class="t">
   <tr><th><input type="checkbox" style="accent-color:var(--pcb)"></th><th>Symbol ↓</th><th>Stan</th><th>Cena</th></tr>
   <tr><td><input type="checkbox" checked style="accent-color:var(--pcb)"></td><td>LM358N</td><td class="n">2 400</td><td class="n">1,24 zł</td></tr>
@@ -1562,6 +1842,11 @@ const DATA = [
 
 {c:"E",n:"08",en:"Tree view",alt:"tree, hierarchy",pl:"widok drzewa",
  ua:"Ієрархія з розгортанням гілок. Природна форма для категорій каталогу й структури BOM.",
+ o:{pl:"Hierarchia z rozwijaniem gałęzi. Naturalna forma dla kategorii katalogu i struktury BOM.",
+    en:"A hierarchy with expandable branches. The natural shape for catalogue categories and a BOM structure."},
+ ex:{ua:"Структуру BOM показуй деревом, а не пласким списком.",
+     pl:"Strukturę BOM pokaż drzewem, a nie płaską listą.",
+     en:"Show the BOM structure as a tree, not a flat list."},
  d:`<div class="tree">
   <details open><summary>Elementy bierne</summary>
     <details open><summary>Rezystory</summary><i>SMD</i><i>THT</i></details>
@@ -1571,17 +1856,34 @@ const DATA = [
 
 {c:"E",n:"09",en:"Scroll area",alt:"scroll container",pl:"obszar przewijania",
  ua:"Обмежена зона з власним скролом. Внутрішній скрол усередині сторінкового — часта причина «загубленого» контенту.",
+ o:{pl:"Ograniczona strefa z własnym przewijaniem. Scroll wewnętrzny w scrollu strony to częsta przyczyna «zgubionej» treści.",
+    en:"A bounded area with its own scrollbar. A scroll inside the page scroll is a common cause of content people never find."},
+ ex:{ua:"Скрол у скролі — контент усередині ніхто не догортає.",
+     pl:"Scroll w scrollu — treści w środku nikt nie doprzewija.",
+     en:"A scroll inside a scroll — nobody ever reaches the content inside."},
  d:`<div class="scr">Regulamin sprzedaży<br><br>§1. Postanowienia ogólne. Sprzedawcą jest spółka wpisana do rejestru przedsiębiorców.<br><br>§2. Zamówienia przyjmowane są przez sklep internetowy.<br><br>§3. Ceny podane są w złotych polskich.<br><br>§4. Dostawa realizowana jest na terenie RP.</div>`},
 
 {c:"E",n:"10",en:"Split view",alt:"resizable panes",pl:"widok dzielony",
  ua:"Дві панелі з рухомим роздільником. Патерн master–detail: список зліва, деталі справа. У ARIA роздільник — window splitter.",
+ o:{pl:"Dwa panele z ruchomym rozdzielaczem. Wzorzec master–detail: lista po lewej, szczegóły po prawej. W ARIA rozdzielacz to window splitter.",
+    en:"Two panes with a draggable divider. The master–detail pattern: list on the left, detail on the right. In ARIA the divider is a window splitter."},
+ ex:{ua:"Зроби split view — список ліворуч, деталі праворуч, без переходів.",
+     pl:"Zrób widok dzielony — lista po lewej, szczegóły po prawej, bez przeładowań.",
+     en:"Make it a split view — list on the left, detail on the right, no page changes."},
  d:`<div class="split2">
   <div class="p1">Lista<br>pozycji</div><div class="hnd"></div><div class="p2">Szczegóły wybranej pozycji</div>
  </div>`},
 
 {c:"E",n:"11",en:"Grid",alt:"layout grid, columns",pl:"siatka",
  ua:"Модульна сітка з колонок і жолобів. Не компонент, а каркас усього макета — 12 колонок для десктопа, 4 для мобільного.",
+ o:{pl:"Siatka modułowa z kolumn i rynien. Nie komponent, tylko szkielet całej makiety — 12 kolumn na desktop, 4 na mobile.",
+    en:"A modular grid of columns and gutters. Not a component but the skeleton of the whole layout — 12 columns on desktop, 4 on mobile."},
+ ex:{ua:"Прив'яжи блоки до сітки — зараз кожен живе своїм життям.",
+     pl:"Przypnij bloki do siatki — teraz każdy żyje własnym życiem.",
+     en:"Snap the blocks to the grid — right now each one does its own thing."},
  note:"Не плутати з <b>data grid</b> (E·07). Тут — siatka layoutowa.",
+ nt:{pl:"Nie mylić z <b>data grid</b> (E·07). Tutaj chodzi o siatkę layoutową.",
+     en:"Not to be confused with a <b>data grid</b> (E·07). This is the layout grid."},
  d:`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;max-width:230px">
   <div style="height:34px;background:var(--pcb-soft);border:1px solid #C6DED4;border-radius:2px"></div>
   <div style="height:34px;background:var(--pcb-soft);border:1px solid #C6DED4;border-radius:2px"></div>
@@ -1593,6 +1895,11 @@ const DATA = [
 
 {c:"E",n:"12",en:"Sticky element",alt:"pinned, affix",pl:"element przyklejony",
  ua:"Залипає при скролі: шапка таблиці, панель фільтрів, кнопка «do koszyka» на мобільному. Кожен sticky відбирає висоту екрана — рахуй сумарно.",
+ o:{pl:"Przykleja się przy przewijaniu: nagłówek tabeli, panel filtrów, przycisk «do koszyka» na mobile. Każdy sticky zabiera wysokość ekranu — licz je łącznie.",
+    en:"Sticks while scrolling: a table header, a filter bar, the add-to-cart button on mobile. Every sticky element eats screen height — count them together."},
+ ex:{ua:"Три липкі елементи з'їли пів екрана — лиши один.",
+     pl:"Trzy przyklejone elementy zjadły pół ekranu — zostaw jeden.",
+     en:"Three sticky elements ate half the screen — keep one."},
  d:`<div class="scene"><div style="position:absolute;top:0;left:0;right:0;background:var(--ink);color:#fff;font-size:9px;font-family:var(--mono);padding:6px 9px;z-index:2">SYMBOL · STAN · CENA</div>
   <div class="pg" style="padding-top:26px"><div class="bar"></div><div class="bar m"></div><div class="bar s"></div><div class="bar"></div></div>
   <div style="position:absolute;left:0;right:0;bottom:0;background:var(--pcb);color:#fff;font-size:10px;text-align:center;padding:7px">Dodaj do koszyka · 310,00 zł</div>
@@ -1601,7 +1908,14 @@ const DATA = [
 /* ============ F · ОВЕРЛЕЇ ============ */
 {c:"F",n:"01",en:"Modal",alt:"dialog, modal window",pl:"okno modalne",
  ua:"Блокує інтерфейс до відповіді. Потребує фокус-трапа, закриття по Esc і повернення фокуса на кнопку-джерело. Використовуй рідко — це перебивання задачі.",
+ o:{pl:"Blokuje interfejs do czasu odpowiedzi. Wymaga pułapki fokusa, zamykania Escape i powrotu fokusa na przycisk źródłowy. Stosuj rzadko — to przerwanie zadania.",
+    en:"Blocks the interface until it's answered. It needs a focus trap, Escape to close and focus returned to the triggering button. Use it sparingly — it interrupts the task."},
+ ex:{ua:"Тут модалка зайва — це не переривання, винеси в drawer.",
+     pl:"Tu okno modalne jest zbędne — to nie przerwanie, wynieś do panelu wysuwanego.",
+     en:"A modal is overkill here — this isn't an interruption, put it in a drawer."},
  note:"Польською також <b>okno dialogowe</b>. Модальність = «modalność» — те, що блокує тло.",
+ nt:{pl:"Po polsku także <b>okno dialogowe</b>. Modalność to właśnie to, co blokuje tło.",
+     en:"Polish also says <b>okno dialogowe</b>. Modality is precisely the part that blocks the background."},
  d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div><div class="bar s"></div></div>
   <div class="scrim"></div>
   <div class="dlg"><h5>Zmień ilość</h5><p>Opakowanie zbiorcze to 100 szt. Ilość zostanie zaokrąglona.</p>
@@ -1610,6 +1924,11 @@ const DATA = [
 
 {c:"F",n:"02",en:"Alert dialog",alt:"confirmation dialog",pl:"okno potwierdzenia",
  ua:"Підтвердження незворотної дії. Кнопка має називати саму дію («Usuń zamówienie»), а не «Tak» — тоді рішення читається без заголовка.",
+ o:{pl:"Potwierdzenie nieodwracalnej akcji. Przycisk ma nazywać samą akcję («Usuń zamówienie»), a nie «Tak» — wtedy decyzja czyta się bez nagłówka.",
+    en:"Confirmation of an irreversible action. The button should name the action ('Delete order') rather than say 'Yes' — then the decision reads without the heading."},
+ ex:{ua:"Замість «Tak» напиши на кнопці саму дію — «Usuń zamówienie».",
+     pl:"Zamiast «Tak» napisz na przycisku samą akcję — «Usuń zamówienie».",
+     en:"Instead of 'Yes', put the action on the button — 'Delete order'."},
  d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div></div>
   <div class="scrim"></div>
   <div class="dlg"><h5>Usunąć listę BOM?</h5><p>Tej operacji nie można cofnąć.</p>
@@ -1618,7 +1937,14 @@ const DATA = [
 
 {c:"F",n:"03",en:"Drawer",alt:"side sheet, off-canvas",pl:"panel wysuwany",
  ua:"Виїжджає збоку, не розриваючи контекст сторінки. Ідеально для кошика, фільтрів і деталей рядка таблиці.",
+ o:{pl:"Wysuwa się z boku, nie rwąc kontekstu strony. Idealny do koszyka, filtrów i szczegółów wiersza tabeli.",
+    en:"Slides in from the side without breaking the page context. Ideal for a cart, filters and table row details."},
+ ex:{ua:"Фільтри в drawer, а не в модалку — контекст списку має лишатись.",
+     pl:"Filtry do panelu wysuwanego, a nie do modala — kontekst listy ma zostać.",
+     en:"Put the filters in a drawer, not a modal — the list context has to stay."},
  note:"У Apple HIG — <b>sheet</b>, у Material — <b>side sheet</b>. Польською часто просто <b>szuflada</b> або <b>drawer</b>.",
+ nt:{pl:"W Apple HIG to <b>sheet</b>, w Material — <b>side sheet</b>. Po polsku często po prostu <b>szuflada</b> albo <b>drawer</b>.",
+     en:"Apple HIG calls it a <b>sheet</b>, Material a <b>side sheet</b>. Polish teams often just say <b>szuflada</b> or <b>drawer</b>."},
  d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div></div>
   <div class="scrim"></div>
   <div class="drw"><h5>Koszyk <span>✕︎</span></h5>
@@ -1628,6 +1954,11 @@ const DATA = [
 
 {c:"F",n:"04",en:"Bottom sheet",alt:"mobile sheet",pl:"dolny panel wysuwany",
  ua:"Мобільний аналог drawer, знизу. Grabber (риска зверху) підказує, що панель тягнеться. Має мати кілька позицій висоти.",
+ o:{pl:"Mobilny odpowiednik panelu wysuwanego, od dołu. Uchwyt u góry podpowiada, że panel się ciągnie. Powinien mieć kilka pozycji wysokości.",
+    en:"The mobile equivalent of a drawer, coming from the bottom. The grabber at the top signals it can be dragged. It should have several height positions."},
+ ex:{ua:"Додай grabber зверху — інакше не видно, що панель тягнеться.",
+     pl:"Dodaj uchwyt u góry — inaczej nie widać, że panel się ciągnie.",
+     en:"Add a grabber at the top — otherwise you can't tell the sheet is draggable."},
  d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div></div>
   <div class="scrim"></div>
   <div class="sheet"><div class="grab"></div>
@@ -1638,6 +1969,11 @@ const DATA = [
 
 {c:"F",n:"05",en:"Popover",alt:"popup panel",pl:"wyskakujący panel",
  ua:"Невеликий контейнер, прив'язаний до елемента, з інтерактивним вмістом усередині. На відміну від tooltip — можна клікати і фокусувати.",
+ o:{pl:"Niewielki kontener przypięty do elementu, z interaktywną treścią w środku. W odróżnieniu od podpowiedzi można w niego klikać i ustawiać fokus.",
+    en:"A small container anchored to an element with interactive content inside. Unlike a tooltip it can be clicked and focused."},
+ ex:{ua:"Тут потрібен popover, а не tooltip — усередині є кнопка.",
+     pl:"Tu trzeba wyskakującego panelu, a nie podpowiedzi — w środku jest przycisk.",
+     en:"This needs a popover, not a tooltip — there's a button inside."},
  d:`<div class="scene"><div class="pg"><div class="bar s"></div><div class="bar m"></div></div>
   <div style="position:absolute;left:14px;top:30px;font-size:10px;border-bottom:1.5px dotted var(--muted)">Cena progowa ⓘ︎</div>
   <div class="pop">od 500 szt. &nbsp;0,06 zł<br>od 5 000 szt. &nbsp;0,04 zł</div>
@@ -1645,7 +1981,14 @@ const DATA = [
 
 {c:"F",n:"06",en:"Tooltip",alt:"hint bubble",pl:"podpowiedź",
  ua:"Короткий пояснювальний текст при наведенні або фокусі. Тільки текст, без кнопок і посилань. Ніколи не носій критичної інформації — на тачі його немає.",
+ o:{pl:"Krótki tekst objaśniający przy najechaniu albo fokusie. Tylko tekst, bez przycisków i linków. Nigdy nie nośnik krytycznej informacji — na dotyku go nie ma.",
+    en:"A short explanatory text on hover or focus. Text only, no buttons or links. Never the carrier of critical information — it doesn't exist on touch."},
+ ex:{ua:"У tooltip не клади важливе — на телефоні його просто нема.",
+     pl:"Nie wkładaj do tooltipa rzeczy ważnych — na telefonie go po prostu nie ma.",
+     en:"Don't put anything important in a tooltip — it simply doesn't exist on a phone."},
  note:"Наведи курсор на приклад. Польською також <b>dymek</b>; у мовленні — <b>tooltip</b>.",
+ nt:{pl:"Najedź kursorem na przykład. Po polsku także <b>dymek</b>; w mowie — <b>tooltip</b>.",
+     en:"Hover over the example. Polish also says <b>dymek</b>; in speech it's <b>tooltip</b>."},
  d:`<div class="row" style="padding:14px 0">
   <span class="tipw"><span class="trg" tabindex="0">MOQ</span><span class="tip">Minimalna wielkość zamówienia</span></span>
   <span class="cap">← najedź kursorem</span>
@@ -1653,6 +1996,11 @@ const DATA = [
 
 {c:"F",n:"07",en:"Hover card",alt:"preview card",pl:"karta podglądu",
  ua:"Багатший за tooltip прев'ю при наведенні: зображення, метадані, дії. Затримка перед появою обов'язкова (~300 мс).",
+ o:{pl:"Bogatszy od podpowiedzi podgląd przy najechaniu: obrazek, metadane, akcje. Opóźnienie przed pojawieniem się jest obowiązkowe (~300 ms).",
+    en:"A richer hover preview than a tooltip: image, metadata, actions. A delay before it appears is mandatory (~300 ms)."},
+ ex:{ua:"Hover card вискакує миттєво і заважає — постав затримку 300 мс.",
+     pl:"Karta podglądu wyskakuje natychmiast i przeszkadza — daj opóźnienie 300 ms.",
+     en:"The hover card fires instantly and gets in the way — add a 300 ms delay."},
  d:`<div class="hcard">
   <div class="hd"><div class="av br">TI</div><div><div style="font-size:12px;font-weight:600">Texas Instruments</div><div class="cap">Producent · 1 240 poz.</div></div></div>
   <p>Dostawa 24 h z magazynu w Rzgowie. Autoryzowany dystrybutor.</p>
@@ -1660,7 +2008,14 @@ const DATA = [
 
 {c:"F",n:"08",en:"Backdrop",alt:"scrim, overlay",pl:"przyciemnienie tła",
  ua:"Напівпрозорий шар під модалкою: фокусує увагу і робить тло неактивним. Клік по ньому має закривати немодальні панелі.",
+ o:{pl:"Półprzezroczysta warstwa pod oknem modalnym: skupia uwagę i wyłącza tło. Kliknięcie w nią powinno zamykać panele niemodalne.",
+    en:"A translucent layer under a modal: it focuses attention and deactivates the background. Clicking it should close non-modal panels."},
+ ex:{ua:"Клік по підкладці має закривати панель — зараз нічого не відбувається.",
+     pl:"Kliknięcie w przyciemnienie ma zamykać panel — teraz nic się nie dzieje.",
+     en:"Clicking the backdrop should close the panel — right now nothing happens."},
  note:"Material називає це <b>scrim</b>. Польською — <b>przyciemnienie</b> / <b>nakładka</b>.",
+ nt:{pl:"Material nazywa to <b>scrim</b>. Po polsku — <b>przyciemnienie</b> / <b>nakładka</b>.",
+     en:"Material calls this a <b>scrim</b>. Polish uses <b>przyciemnienie</b> or <b>nakładka</b>."},
  d:`<div class="scene"><div class="pg"><div class="bar m"></div><div class="bar"></div><div class="bar s"></div></div>
   <div class="scrim"></div>
   <div style="position:absolute;bottom:9px;left:0;right:0;text-align:center;color:#fff;font:500 9px var(--mono);letter-spacing:.08em">rgba(20,24,26,.42)</div>
@@ -1668,22 +2023,44 @@ const DATA = [
 
 {c:"F",n:"09",en:"Lightbox",alt:"image viewer",pl:"powiększenie zdjęcia",
  ua:"Повноекранний перегляд зображення. Для каталогу — з зумом і перемиканням між фото товару.",
+ o:{pl:"Pełnoekranny podgląd zdjęcia. W katalogu — z powiększeniem i przełączaniem między zdjęciami produktu.",
+    en:"A full-screen image viewer. In a catalogue it needs zoom and switching between the product photos."},
+ ex:{ua:"У лайтбоксі додай зум і перемикання між фото товару.",
+     pl:"W powiększeniu dodaj zoom i przełączanie między zdjęciami produktu.",
+     en:"Add zoom and switching between product photos in the lightbox."},
  d:`<div class="scene"><div class="pg"><div class="bar s"></div></div>
   <div class="lb"><div class="im"></div><span class="x">✕︎</span></div>
  </div>`},
 
 {c:"F",n:"10",en:"Banner",alt:"system banner, notification bar",pl:"baner informacyjny",
  ua:"Смуга на всю ширину з важливим повідомленням: технічні роботи, зміна умов доставки. Постійна, поки користувач не закриє.",
+ o:{pl:"Pas na całą szerokość z ważnym komunikatem: prace techniczne, zmiana warunków dostawy. Zostaje, dopóki użytkownik go nie zamknie.",
+    en:"A full-width strip carrying an important message: maintenance, a change in delivery terms. It stays until the user dismisses it."},
+ ex:{ua:"Про технічні роботи — банер, а не тост: тост зникне за 4 секунди.",
+     pl:"O pracach technicznych daj baner, a nie toast: toast zniknie po 4 sekundach.",
+     en:"Use a banner for the maintenance notice, not a toast — a toast is gone in four seconds."},
  d:`<div class="bnr">⚑︎ Dostawy 15.08 nieczynne — święto.<span class="x">✕︎</span></div>`},
 
 /* ============ G · СТАТУС І ФІДБЕК ============ */
 {c:"G",n:"01",en:"Toast",alt:"snackbar",pl:"powiadomienie tymczasowe",
  ua:"Коротке підтвердження дії, зникає само за 4–6 с. Не для помилок, які треба прочитати. Дія «Cofnij» усередині — найкорисніший патерн.",
+ o:{pl:"Krótkie potwierdzenie akcji, znika samo po 4–6 s. Nie do błędów, które trzeba przeczytać. Akcja «Cofnij» w środku to najbardziej użyteczny wzorzec.",
+    en:"A short confirmation of an action that disappears by itself after 4–6 s. Not for errors that must be read. An 'Undo' action inside it is the most useful pattern."},
+ ex:{ua:"Помилку в тост не клади — вона зникне раніше, ніж її прочитають.",
+     pl:"Nie wrzucaj błędu do toasta — zniknie, zanim ktoś go przeczyta.",
+     en:"Don't put the error in a toast — it'll be gone before anyone reads it."},
  note:"Material називає це <b>snackbar</b>. У польських командах — <b>toast</b>.",
+ nt:{pl:"Material nazywa to <b>snackbar</b>. W polskich zespołach mówi się <b>toast</b>.",
+     en:"Material calls this a <b>snackbar</b>. Polish teams say <b>toast</b>."},
  d:`<div class="toast">✓︎ Dodano do koszyka<span class="un">COFNIJ</span></div>`},
 
 {c:"G",n:"02",en:"Alert",alt:"inline message, callout",pl:"komunikat",
  ua:"Вбудоване повідомлення на місці проблеми або контексту. Залишається на екрані. Чотири тони: інфо, успіх, попередження, помилка.",
+ o:{pl:"Komunikat osadzony w miejscu problemu albo kontekstu. Zostaje na ekranie. Cztery tony: informacja, sukces, ostrzeżenie, błąd.",
+    en:"A message embedded where the problem or context is. It stays on screen. Four tones: info, success, warning, error."},
+ ex:{ua:"Постав алерт біля поля, а не зверху сторінки — там де проблема.",
+     pl:"Daj komunikat przy polu, a nie na górze strony — tam, gdzie jest problem.",
+     en:"Put the alert next to the field, not at the top of the page — where the problem is."},
  d:`<div class="col">
   <div class="al al-i">ⓘ︎ <div><b>Cena progowa</b>Od 500 szt. cena spada do 0,06 zł.</div></div>
   <div class="al al-w">⚑︎ <div><b>Niski stan</b>Zostało 42 szt. w magazynie.</div></div>
@@ -1692,6 +2069,11 @@ const DATA = [
 
 {c:"G",n:"03",en:"Badge",alt:"counter, notification dot",pl:"znacznik liczbowy",
  ua:"Лічильник або крапка на іконці. Понад 99 — «99+». Крапка без числа, коли важливий сам факт новизни, а не кількість.",
+ o:{pl:"Licznik albo kropka na ikonie. Powyżej 99 — «99+». Kropka bez liczby, gdy liczy się sam fakt nowości, a nie ilość.",
+    en:"A counter or a dot on an icon. Over 99 it becomes '99+'. Use a dot with no number when the fact that something is new matters more than how much."},
+ ex:{ua:"Тут вистачить крапки — точна кількість непрочитаних нікому не потрібна.",
+     pl:"Tu wystarczy kropka — dokładna liczba nieprzeczytanych nikomu nie jest potrzebna.",
+     en:"A dot is enough here — nobody needs the exact unread count."},
  d:`<div class="row" style="gap:18px">
   <span class="bwrap"><button class="b b-s b-i"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.7 12.3a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L21 7.2H6"/></svg></button><span class="badge">7</span></span>
   <span class="bwrap"><button class="b b-s b-i"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3.2 6.7 12 13l8.8-6.3"/></svg></button><span class="badge">99+</span></span>
@@ -1700,6 +2082,11 @@ const DATA = [
 
 {c:"G",n:"04",en:"Status indicator",alt:"status pill, state chip",pl:"wskaźnik statusu",
  ua:"Показує стан об'єкта. Колір + текст + іконка — колір сам по собі не читається дальтоніками (8% чоловіків).",
+ o:{pl:"Pokazuje stan obiektu. Kolor plus tekst plus ikona — sam kolor nie czyta się dla daltonistów (8% mężczyzn).",
+    en:"Shows an object's state. Colour plus text plus icon — colour alone doesn't read for colour-blind users (8% of men)."},
+ ex:{ua:"Статус тільки кольором не читається — додай текст і іконку.",
+     pl:"Sam kolor statusu się nie czyta — dodaj tekst i ikonę.",
+     en:"Colour alone doesn't convey the status — add text and an icon."},
  d:`<div class="row">
   <span class="pill ok"><i></i>Na magazynie</span>
   <span class="pill wr"><i></i>Na zamówienie</span>
@@ -1708,18 +2095,33 @@ const DATA = [
 
 {c:"G",n:"05",en:"Progress bar",alt:"determinate progress",pl:"pasek postępu",
  ua:"Прогрес із відомим завершенням. Показуй відсоток або «3 z 5» — сама смуга без числа не знімає невизначеності.",
+ o:{pl:"Postęp o znanym końcu. Pokazuj procent albo «3 z 5» — sam pasek bez liczby nie zdejmuje niepewności.",
+    en:"Progress with a known end. Show a percentage or '3 of 5' — a bar without a number doesn't remove the uncertainty."},
+ ex:{ua:"Додай до смуги число — «3 z 5» знімає питання, скільки лишилось.",
+     pl:"Dodaj do paska liczbę — «3 z 5» zdejmuje pytanie, ile jeszcze zostało.",
+     en:"Put a number on the bar — '3 of 5' answers how much is left."},
  d:`<div class="prog"><div class="tr"><div class="fl"></div></div>
   <div class="mt"><span>Import BOM</span><span>64% · 320/500</span></div>
  </div>`},
 
 {c:"G",n:"06",en:"Indeterminate progress",alt:"loading bar",pl:"pasek nieokreślony",
  ua:"Тривалість невідома. Використовуй, коли не можеш порахувати прогрес — але додай текст, що саме відбувається.",
+ o:{pl:"Czas trwania nieznany. Stosuj, gdy nie da się policzyć postępu — ale dopisz, co się właściwie dzieje.",
+    en:"The duration is unknown. Use it when progress can't be measured — but add text saying what's actually happening."},
+ ex:{ua:"Якщо не можемо порахувати прогрес — хоч напиши, що зараз відбувається.",
+     pl:"Jeśli nie umiemy policzyć postępu — napisz chociaż, co się teraz dzieje.",
+     en:"If we can't measure progress, at least say what's happening."},
  d:`<div class="prog ind"><div class="tr"><div class="fl"></div></div>
   <div class="mt"><span>Sprawdzanie dostępności…</span><span></span></div>
  </div>`},
 
 {c:"G",n:"07",en:"Spinner",alt:"loader, activity indicator",pl:"wskaźnik ładowania",
  ua:"Кругове очікування. До ~1 с краще нічого не показувати, після ~10 с — потрібен текст або скасування.",
+ o:{pl:"Okrągłe oczekiwanie. Do ~1 s lepiej nie pokazywać nic, po ~10 s potrzebny jest tekst albo możliwość anulowania.",
+    en:"A circular wait. Under ~1 s show nothing at all; after ~10 s you need text or a way to cancel."},
+ ex:{ua:"Спінер висить 15 секунд без пояснень — додай текст і скасування.",
+     pl:"Wskaźnik ładowania wisi 15 sekund bez wyjaśnień — dodaj tekst i anulowanie.",
+     en:"The spinner hangs for 15 seconds with no explanation — add text and a cancel."},
  d:`<div class="row" style="gap:20px">
   <div class="spin"></div>
   <div class="dots"><span></span><span></span><span></span></div>
@@ -1727,10 +2129,20 @@ const DATA = [
 
 {c:"G",n:"08",en:"Skeleton",alt:"placeholder loader",pl:"szkielet ładowania",
  ua:"Сірий каркас майбутнього контенту. Знижує відчуття очікування краще за спінер, бо показує структуру наперед.",
+ o:{pl:"Szary szkielet przyszłej treści. Zmniejsza odczucie czekania lepiej niż spinner, bo z góry pokazuje strukturę.",
+    en:"A grey skeleton of the content to come. It reduces the feeling of waiting better than a spinner because it shows the structure in advance."},
+ ex:{ua:"Постав skeleton замість спінера — видно структуру ще до завантаження.",
+     pl:"Daj szkielet ładowania zamiast spinnera — widać strukturę jeszcze przed załadowaniem.",
+     en:"Use a skeleton instead of a spinner — you see the structure before it loads."},
  d:`<div class="skel"><div class="t"></div><div></div><div class="w8"></div><div class="w6"></div></div>`},
 
 {c:"G",n:"09",en:"Empty state",alt:"blank state, zero state",pl:"stan pusty",
  ua:"Екран без даних. Три обов'язкові частини: що тут буде, чому зараз пусто, кнопка першої дії. Найчастіше проєктується в останню чергу — і дарма.",
+ o:{pl:"Ekran bez danych. Trzy obowiązkowe części: co tu będzie, dlaczego teraz jest pusto, przycisk pierwszej akcji. Najczęściej projektowany na końcu — i niesłusznie.",
+    en:"A screen with no data. Three mandatory parts: what will be here, why it's empty now, and a button for the first action. Usually designed last — and it shouldn't be."},
+ ex:{ua:"Порожній стан не може бути просто «Brak danych» — дай першу дію.",
+     pl:"Stan pusty nie może być samym «Brak danych» — daj pierwszą akcję.",
+     en:"An empty state can't just say 'No data' — give people a first action."},
  d:`<div class="mty"><div class="ic">▤︎</div>
   <b>Brak zapisanych list BOM</b>
   <p>Wgraj plik CSV lub dodaj pozycje ręcznie z katalogu.</p>
@@ -1739,24 +2151,51 @@ const DATA = [
 
 {c:"G",n:"10",en:"Error state",alt:"404, error page",pl:"strona błędu",
  ua:"Що зламалось + що робити далі. Ніколи не залишай тупик: посилання на пошук, каталог або підтримку.",
+ o:{pl:"Co się zepsuło plus co robić dalej. Nigdy nie zostawiaj ślepego zaułka: link do wyszukiwarki, katalogu albo wsparcia.",
+    en:"What broke plus what to do next. Never leave a dead end: link to search, the catalogue or support."},
+ ex:{ua:"З 404 нема куди йти — додай пошук і посилання на каталог.",
+     pl:"Z 404 nie ma dokąd pójść — dodaj wyszukiwarkę i link do katalogu.",
+     en:"There's nowhere to go from that 404 — add search and a link to the catalogue."},
  d:`<div class="err404"><b>404</b><p>Nie znaleźliśmy tej strony.<br>Spróbuj wyszukać symbol produktu.</p></div>`},
 
 {c:"G",n:"11",en:"Meter",alt:"gauge",pl:"miernik",
  ua:"Значення в межах шкали з якісними зонами (добре / погано). На відміну від progress не рухається до завершення — це вимірювання.",
+ o:{pl:"Wartość w granicach skali ze strefami jakościowymi (dobrze / źle). W odróżnieniu od paska postępu nie zmierza do końca — to pomiar.",
+    en:"A value within a scale that has qualitative zones (good / bad). Unlike a progress bar it isn't heading towards completion — it's a measurement."},
+ ex:{ua:"Це не прогрес, а вимірювання — тут потрібен miernik, не pasek postępu.",
+     pl:"To nie postęp, tylko pomiar — tu trzeba miernika, a nie paska postępu.",
+     en:"That's a measurement, not progress — you need a meter, not a progress bar."},
  d:`<div class="gauge"><div class="tr"><div class="nd"></div></div><small>Wykorzystanie limitu kupieckiego · 56%</small></div>`},
 
 /* ============ H · КОНТЕНТ І ДАНІ ============ */
 {c:"H",n:"01",en:"Avatar",alt:"user picture",pl:"awatar",
  ua:"Візуальне представлення людини або компанії. Fallback-ланцюжок: фото → ініціали → іконка. Ініціали мають бути детерміновані за кольором.",
+ o:{pl:"Wizualna reprezentacja osoby albo firmy. Łańcuch zastępczy: zdjęcie → inicjały → ikona. Kolor inicjałów musi być deterministyczny.",
+    en:"A visual stand-in for a person or company. The fallback chain: photo → initials → icon. The initials' colour has to be deterministic."},
+ ex:{ua:"Хай колір ініціалів рахується з імені — інакше він стрибає при кожному рендері.",
+     pl:"Niech kolor inicjałów liczy się z imienia — inaczej skacze przy każdym renderze.",
+     en:"Derive the initials colour from the name — otherwise it changes on every render."},
  d:`<div class="row"><div class="av">DK</div><div class="av br">MW</div><div class="av gr sq">TI</div></div>`},
 
 {c:"H",n:"02",en:"Avatar group",alt:"stacked avatars",pl:"grupa awatarów",
  ua:"Кілька учасників у стосі з лічильником залишку. Показуй максимум 3–5, решту — «+N».",
+ o:{pl:"Kilku uczestników w stosie z licznikiem reszty. Pokazuj maksymalnie 3–5, resztę jako «+N».",
+    en:"Several participants stacked with a counter for the rest. Show three to five at most and put the remainder in a '+N'."},
+ ex:{ua:"Показуй 4 аватари і «+N» — далі вони просто злипаються.",
+     pl:"Pokazuj 4 awatary i «+N» — dalej po prostu się zlewają.",
+     en:"Show four avatars and a '+N' — beyond that they just merge together."},
  d:`<div class="avg"><div class="av">DK</div><div class="av br">MW</div><div class="av gr">AN</div><div class="av more">+6</div></div>`},
 
 {c:"H",n:"03",en:"Chip",alt:"tag, pill, token",pl:"chip / etykieta",
  ua:"Компактний елемент: активний фільтр, тег, вибране значення. Якщо є «✕︎» — його має бути видно, що він видаляє саме чип, а не весь блок.",
+ o:{pl:"Kompaktowy element: aktywny filtr, tag, wybrana wartość. Jeśli ma «✕», musi być widać, że usuwa właśnie ten chip, a nie cały blok.",
+    en:"A compact element: an active filter, a tag, a selected value. If it has an ✕, it must be obvious that it removes that chip and not the whole block."},
+ ex:{ua:"З чипа незрозуміло, що видалить хрестик — фільтр чи всю групу.",
+     pl:"Z chipa nie wiadomo, co usunie krzyżyk — filtr czy całą grupę.",
+     en:"It's not clear what that chip's ✕ removes — the filter or the whole group."},
  note:"Material розрізняє чотири типи: <b>assist, filter, input, suggestion</b>. Польською часто просто <b>tag</b> або <b>etykieta</b>.",
+ nt:{pl:"Material rozróżnia cztery typy: <b>assist, filter, input, suggestion</b>. Po polsku często po prostu <b>tag</b> albo <b>etykieta</b>.",
+     en:"Material distinguishes four kinds: <b>assist, filter, input, suggestion</b>. Polish often just says <b>tag</b> or <b>etykieta</b>."},
  d:`<div class="row">
   <span class="chip on">RoHS <i class="x">✕︎</i></span>
   <span class="chip">SMD 0805</span>
@@ -1766,28 +2205,58 @@ const DATA = [
 
 {c:"H",n:"04",en:"Icon",alt:"glyph, symbol",pl:"ikona",
  ua:"Графічний символ. Однозначні (кошик, друк, пошук) працюють самі; решта потребує підпису. Одна сітка, одна товщина штриха на весь продукт.",
+ o:{pl:"Symbol graficzny. Jednoznaczne (koszyk, drukowanie, wyszukiwanie) działają same; reszta wymaga podpisu. Jedna siatka i jedna grubość kreski w całym produkcie.",
+    en:"A graphic symbol. The unambiguous ones (cart, print, search) work alone; the rest need a label. One grid and one stroke weight across the whole product."},
+ ex:{ua:"Ці іконки з різних наборів — товщина штриха не збігається.",
+     pl:"Te ikony są z różnych zestawów — grubość kreski się nie zgadza.",
+     en:"Those icons come from different sets — the stroke weights don't match."},
  d:`<div class="row" style="font-size:18px;gap:14px;color:var(--pcb)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.4"/><path d="m20 20-4.4-4.4"/></svg> <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2.6l2.7 12.3a1.4 1.4 0 0 0 1.4 1.1h8.6a1.4 1.4 0 0 0 1.4-1.1L21 7.2H6"/></svg> <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v12M7.2 11.2 12 16l4.8-4.8M4 20.5h16"/></svg> <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.1"/><path d="M12 2.4v3M12 18.6v3M2.4 12h3M18.6 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/></svg> <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2S3.9 15 3.9 9.4A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.1 2.8c0 5.6-8.1 10.8-8.1 10.8Z"/></svg> ⚑︎</div>`},
 
 {c:"H",n:"05",en:"Thumbnail",alt:"preview image",pl:"miniatura",
  ua:"Зменшене зображення товару або файлу. Однакове співвідношення сторін для всієї сітки — інакше картки «стрибають».",
+ o:{pl:"Pomniejszony obraz produktu albo pliku. Jednakowe proporcje w całej siatce — inaczej karty «skaczą».",
+    en:"A shrunken image of a product or file. Keep the aspect ratio identical across the grid — otherwise the cards jump."},
+ ex:{ua:"Мініатюри різних пропорцій — сітка через це стрибає.",
+     pl:"Miniatury mają różne proporcje — przez to siatka skacze.",
+     en:"The thumbnails have different ratios — that's what's making the grid jump."},
  d:`<div class="row"><div class="thumb"></div><div class="thumb"></div><div class="thumb"></div></div>`},
 
 {c:"H",n:"06",en:"Carousel",alt:"slider, image rotator",pl:"karuzela",
  ua:"Горизонтальна стрічка контенту. Автопрокрутка шкодить: користувач не встигає прочитати, а перший слайд бачать ~90%, останній — 1%.",
+ o:{pl:"Pozioma wstęga treści. Autoprzewijanie szkodzi: użytkownik nie zdąży przeczytać, a pierwszy slajd widzi ~90%, ostatni — 1%.",
+    en:"A horizontal ribbon of content. Auto-rotation hurts: people can't finish reading, and while ~90% see the first slide, only 1% see the last."},
+ ex:{ua:"Вимкни автопрокрутку — останній слайд однаково бачить 1%.",
+     pl:"Wyłącz autoprzewijanie — ostatni slajd i tak widzi 1%.",
+     en:"Turn off the auto-rotation — only 1% ever see the last slide anyway."},
  d:`<div class="carou"><div class="fr"><div></div><div></div><div style="opacity:.5"></div></div>
   <div class="dt"><i class="on"></i><i></i><i></i><i></i></div>
  </div>`},
 
 {c:"H",n:"07",en:"Chart",alt:"graph, data visualization",pl:"wykres",
  ua:"Візуалізація даних. Тип обирається за задачею: динаміка — лінія, порівняння — стовпці, частка — не пиріг, а стовпчик.",
+ o:{pl:"Wizualizacja danych. Typ dobiera się do zadania: dynamika — linia, porównanie — słupki, udział — nie kołowy, tylko słupek.",
+    en:"Data visualisation. Pick the type to fit the job: a line for change over time, bars for comparison, and for shares a bar rather than a pie."},
+ ex:{ua:"Пиріг тут не читається — постав стовпчики, їх порівнюють очима.",
+     pl:"Kołowy się tu nie czyta — daj słupki, one porównują się wzrokiem.",
+     en:"The pie doesn't read here — use bars, the eye can compare them."},
  d:`<div class="chart"><b style="height:32%"></b><b style="height:52%"></b><b style="height:44%"></b><b style="height:78%"></b><b style="height:64%"></b><b style="height:96%"></b></div>`},
 
 {c:"H",n:"08",en:"Stat",alt:"KPI card, metric",pl:"kafelek ze wskaźnikiem",
  ua:"Одне число з підписом і зміною. Без порівняння (з минулим періодом чи планом) число нічого не означає.",
+ o:{pl:"Jedna liczba z podpisem i zmianą. Bez porównania (z poprzednim okresem albo planem) liczba nic nie znaczy.",
+    en:"One number with a label and a delta. Without a comparison — to the previous period or to plan — the number means nothing."},
+ ex:{ua:"Саме число нічого не каже — додай порівняння з минулим місяцем.",
+     pl:"Sama liczba nic nie mówi — dodaj porównanie z poprzednim miesiącem.",
+     en:"The number alone says nothing — add a comparison with last month."},
  d:`<div class="stat"><div class="k">Zamówienia / 30 dni</div><div class="v">1 284</div><div class="d">▲ 12,4% wobec sierpnia</div></div>`},
 
 {c:"H",n:"09",en:"Timeline",alt:"activity feed, history",pl:"oś czasu",
  ua:"Хронологія подій. Для замовлень — стандарт відображення статусу: що вже сталось, що зараз, що далі.",
+ o:{pl:"Chronologia zdarzeń. Dla zamówień to standardowy sposób pokazania statusu: co już się stało, co dzieje się teraz, co dalej.",
+    en:"A chronology of events. For orders it's the standard way to show status: what has happened, what's happening now, what comes next."},
+ ex:{ua:"Статус замовлення покажи віссю часу — видно, що вже було і що далі.",
+     pl:"Status zamówienia pokaż osią czasu — widać, co już było i co dalej.",
+     en:"Show the order status as a timeline — you can see what's done and what's next."},
  d:`<div class="tml">
   <div class="on"><b>Zamówienie przyjęte</b><small>12.09 · 09:42</small></div>
   <div class="on"><b>Skompletowane</b><small>12.09 · 14:10</small></div>
@@ -1796,16 +2265,31 @@ const DATA = [
 
 {c:"H",n:"10",en:"Kbd",alt:"keyboard key",pl:"klawisz skrótu",
  ua:"Позначення клавіші в тексті. Показуй скорочення поруч із дією в меню — так вони вивчаються без окремої довідки.",
+ o:{pl:"Oznaczenie klawisza w tekście. Pokazuj skrót obok akcji w menu — wtedy uczą się go bez osobnej pomocy.",
+    en:"A keyboard key rendered in text. Show the shortcut next to the action in the menu — that's how people learn it without a help page."},
+ ex:{ua:"Постав скорочення поруч із дією в меню — так їх запам'ятовують.",
+     pl:"Daj skrót obok akcji w menu — tak się je zapamiętuje.",
+     en:"Put the shortcut next to the action in the menu — that's how they stick."},
  d:`<div class="row"><kbd class="k">⌘︎</kbd><span class="cap">+</span><kbd class="k">K</kbd><span class="cap" style="margin-left:8px">otwórz wyszukiwarkę</span></div>`},
 
 {c:"H",n:"11",en:"Code block",alt:"snippet, pre",pl:"blok kodu",
  ua:"Моноширинний блок з підсвіткою і кнопкою копіювання. У документації дизайн-системи — головний носій прикладів.",
+ o:{pl:"Blok o stałej szerokości znaku z podświetleniem składni i przyciskiem kopiowania. W dokumentacji systemu projektowego to główny nośnik przykładów.",
+    en:"A monospaced block with syntax highlighting and a copy button. In design-system documentation it's the main vehicle for examples."},
+ ex:{ua:"Додай кнопку копіювання до блоку коду — без неї виділяти незручно.",
+     pl:"Dodaj przycisk kopiowania do bloku kodu — bez niego zaznaczanie jest niewygodne.",
+     en:"Add a copy button to the code block — selecting it by hand is a pain."},
  d:`<pre class="code2"><span class="c">// wariant przycisku</span>
 &lt;Button variant=<span class="s">"primary"</span>
         size=<span class="s">"md"</span> /&gt;</pre>`},
 
 {c:"H",n:"12",en:"Truncation",alt:"ellipsis, line clamp",pl:"skracanie tekstu",
  ua:"Обрізка довгого тексту з «…». Обрізаний текст має бути доступний повністю — через tooltip або розкриття. У таблицях обрізай з кінця, не з середини.",
+ o:{pl:"Skracanie długiego tekstu wielokropkiem. Skrócony tekst musi być gdzieś dostępny w całości — przez podpowiedź albo rozwinięcie. W tabelach skracaj od końca, nie ze środka.",
+    en:"Cutting long text with an ellipsis. The full text has to be available somewhere — a tooltip or an expand. In tables truncate at the end, not in the middle."},
+ ex:{ua:"Обрізаний символ не видно повністю — додай tooltip з повною назвою.",
+     pl:"Nie widać pełnego symbolu po skróceniu — dodaj podpowiedź z pełną nazwą.",
+     en:"The truncated part number isn't recoverable — add a tooltip with the full name."},
  d:`<div class="trunc">
   <div class="one">Rezystor grubowarstwowy SMD 4,7 kΩ 0805 ±1% 125 mW</div>
   <div class="two">Rezystor grubowarstwowy SMD 4,7 kΩ 0805 ±1% 125 mW, temperatura pracy −55…+155°C, zgodny z RoHS i REACH, opakowanie 5 000 szt.</div>
@@ -1814,6 +2298,11 @@ const DATA = [
 /* ============ I · E-COMMERCE ============ */
 {c:"I",n:"01",en:"Product card",alt:"product tile",pl:"karta produktu",
  ua:"Товар у списку. Для B2B пріоритет інший, ніж у B2C: символ, наявність, ціна за штуку й ціна за упаковку важливіші за велике фото.",
+ o:{pl:"Produkt na liście. W B2B priorytet jest inny niż w B2C: symbol, dostępność, cena za sztukę i cena za opakowanie ważniejsze niż duże zdjęcie.",
+    en:"A product in a list. B2B priorities differ from B2C: the part number, availability, unit price and pack price matter more than a big photo."},
+ ex:{ua:"На картці спершу символ і наявність, а вже потім фото — це B2B.",
+     pl:"Na karcie najpierw symbol i dostępność, a dopiero potem zdjęcie — to jest B2B.",
+     en:"On the card lead with the part number and stock, then the photo — this is B2B."},
  d:`<div class="pcard"><div class="im"></div>
   <div class="sym">RS-4K7-0805</div>
   <h4>Rezystor SMD 4,7 kΩ ±1%</h4>
@@ -1823,7 +2312,14 @@ const DATA = [
 
 {c:"I",n:"02",en:"Product listing",alt:"SERP, category page",pl:"listing produktów",
  ua:"Сторінка результатів. Три речі вирішують усе: релевантність сортування за замовчуванням, щільність рядка й швидкість фільтрів.",
+ o:{pl:"Strona wyników. Decydują trzy rzeczy: trafność domyślnego sortowania, gęstość wiersza i szybkość filtrów.",
+    en:"The results page. Three things decide everything: the relevance of the default sort, the row density and the speed of the filters."},
+ ex:{ua:"На лістингу вирішує щільність рядка — інженер хоче бачити 30 позицій, не 8.",
+     pl:"Na listingu decyduje gęstość wiersza — inżynier chce widzieć 30 pozycji, nie 8.",
+     en:"Row density decides the listing — an engineer wants 30 items visible, not 8."},
  note:"У внутрішній мові — <b>listing</b> або <b>wyniki wyszukiwania</b> (SERP).",
+ nt:{pl:"W mowie wewnętrznej — <b>listing</b> albo <b>wyniki wyszukiwania</b> (SERP).",
+     en:"Internally people say <b>listing</b> or <b>wyniki wyszukiwania</b> (SERP)."},
  d:`<div class="scene"><div style="padding:7px 9px;border-bottom:1px solid var(--line);font-size:9px;font-family:var(--mono);color:var(--muted)">1 240 wyników · trafność ▾</div>
   <div style="display:flex;height:calc(100% - 26px)">
    <div style="width:34%;background:var(--well);border-right:1px solid var(--line);padding:7px;font-size:8px;color:var(--muted);line-height:2">■ SMD<br>□ THT<br>■ RoHS</div>
@@ -1837,6 +2333,11 @@ const DATA = [
 
 {c:"I",n:"03",en:"Facets",alt:"filters, parametric search",pl:"filtry parametryczne",
  ua:"Фільтри за параметрами з лічильниками. У B2B-каталогах — головний інструмент пошуку. Ніколи не показуй опцію, що дає 0 результатів.",
+ o:{pl:"Filtry po parametrach z licznikami. W katalogach B2B to główne narzędzie wyszukiwania. Nigdy nie pokazuj opcji, która daje 0 wyników.",
+    en:"Parametric filters with counts. In B2B catalogues this is the main search tool. Never show an option that returns zero results."},
+ ex:{ua:"Не показуй фасети з нулем результатів — це глухий кут.",
+     pl:"Nie pokazuj filtrów z zerem wyników — to ślepy zaułek.",
+     en:"Don't show facets with zero results — that's a dead end."},
  d:`<div class="facet"><div class="ft">Tolerancja</div>
   <label><input type="checkbox" checked> ±1% <span>842</span></label>
   <label><input type="checkbox"> ±5% <span>318</span></label>
@@ -1847,12 +2348,22 @@ const DATA = [
 
 {c:"I",n:"04",en:"Sort control",alt:"sort by",pl:"sortowanie",
  ua:"Порядок результатів. Значення за замовчуванням має бути явно підписане — «trafność», а не порожнє поле.",
+ o:{pl:"Kolejność wyników. Wartość domyślna musi być wprost podpisana — «trafność», a nie puste pole.",
+    en:"The order of results. The default has to be labelled explicitly — 'relevance', not an empty field."},
+ ex:{ua:"Підпиши сортування за замовчуванням — порожнє поле нічого не пояснює.",
+     pl:"Podpisz domyślne sortowanie — puste pole nic nie tłumaczy.",
+     en:"Label the default sort — an empty field explains nothing."},
  d:`<div class="row"><span class="cap">Sortuj</span>
   <select class="sel" style="width:auto"><option>Trafność</option><option>Cena rosnąco</option><option>Dostępność</option></select>
  </div>`},
 
 {c:"I",n:"05",en:"Quantity selector",alt:"qty stepper",pl:"wybór ilości",
  ua:"Кількість товару. Для дистрибуції обов'язково: крок = кратність упаковки, мінімум = MOQ, і підказка, що саме буде додано.",
+ o:{pl:"Ilość towaru. W dystrybucji obowiązkowo: krok = wielokrotność opakowania, minimum = MOQ, plus podpowiedź, co dokładnie zostanie dodane.",
+    en:"The product quantity. In distribution this is mandatory: the step equals the pack multiple, the minimum is the MOQ, plus a hint about what exactly will be added."},
+ ex:{ua:"Крок кількості має дорівнювати кратності упаковки, а мінімум — MOQ.",
+     pl:"Krok ilości ma odpowiadać wielokrotności opakowania, a minimum — MOQ.",
+     en:"The quantity step has to match the pack multiple, and the minimum the MOQ."},
  d:`<div class="col" style="align-items:center">
   <div class="stp"><button>−</button><input value="500"><button>+</button></div>
   <div class="hint" style="text-align:center">Wielokrotność 100 szt. · MOQ 100</div>
@@ -1860,6 +2371,11 @@ const DATA = [
 
 {c:"I",n:"06",en:"Tiered pricing",alt:"price breaks, volume pricing",pl:"ceny progowe",
  ua:"Таблиця цін за обсягом. Активний рівень має підсвічуватись відповідно до введеної кількості — це показує вигоду наступного порогу.",
+ o:{pl:"Tabela cen zależnych od ilości. Aktywny próg powinien się podświetlać zgodnie z wpisaną ilością — to pokazuje korzyść z następnego progu.",
+    en:"A table of quantity-based prices. The active tier should highlight according to the quantity entered — that's what shows the benefit of the next break."},
+ ex:{ua:"Підсвічуй активний поріг ціни — клієнт має бачити вигоду наступного.",
+     pl:"Podświetlaj aktywny próg cenowy — klient ma widzieć korzyść z następnego.",
+     en:"Highlight the active price break — the customer should see what the next one saves."},
  d:`<table class="ptable">
   <tr><td>1+</td><td>0,11 zł</td></tr>
   <tr class="on"><td>500+</td><td>0,08 zł</td></tr>
@@ -1869,6 +2385,11 @@ const DATA = [
 
 {c:"I",n:"07",en:"Stock indicator",alt:"availability",pl:"wskaźnik dostępności",
  ua:"Наявність і термін. У B2B це часто вирішальний фактор — точна кількість переконує сильніше за «в наявності».",
+ o:{pl:"Dostępność i termin. W B2B to często czynnik decydujący — dokładna liczba przekonuje mocniej niż «dostępny».",
+    en:"Availability and lead time. In B2B this is often the deciding factor — an exact number convinces more than 'in stock'."},
+ ex:{ua:"Пиши точну кількість на складі, а не «dostępny» — це вирішальний фактор.",
+     pl:"Podawaj dokładny stan magazynowy, a nie «dostępny» — to czynnik decydujący.",
+     en:"Give the exact stock figure rather than 'available' — it's the deciding factor."},
  d:`<div class="col" style="max-width:220px">
   <span class="pill ok"><i></i>2 400 szt. — wysyłka dziś</span>
   <span class="pill wr"><i></i>Na zamówienie — 14 dni</span>
@@ -1877,6 +2398,11 @@ const DATA = [
 
 {c:"I",n:"08",en:"Mini cart",alt:"cart drawer, cart preview",pl:"mini koszyk",
  ua:"Швидкий перегляд кошика без переходу. Має показувати суму й давати змінити кількість — інакше користувач все одно йде на сторінку кошика.",
+ o:{pl:"Szybki podgląd koszyka bez przechodzenia dalej. Musi pokazywać sumę i pozwalać zmienić ilość — inaczej użytkownik i tak idzie na stronę koszyka.",
+    en:"A quick look at the cart without leaving the page. It has to show the total and let you change quantities — otherwise the user goes to the cart page anyway."},
+ ex:{ua:"У міні-кошику дай змінити кількість — інакше він марний.",
+     pl:"W mini koszyku daj zmienić ilość — inaczej jest bezużyteczny.",
+     en:"Let people change quantities in the mini cart — otherwise it's useless."},
  d:`<div class="mini">
   <div class="li"><div class="th"></div><div>LM358N<br><span class="cap">100 szt.</span></div><span class="pz">124,00</span></div>
   <div class="li"><div class="th"></div><div>NE555P<br><span class="cap">50 szt.</span></div><span class="pz">49,00</span></div>
@@ -1885,6 +2411,11 @@ const DATA = [
 
 {c:"I",n:"09",en:"Compare",alt:"comparison table",pl:"porównywarka",
  ua:"Порівняння товарів по параметрах. Підсвічуй відмінності, а не всі рядки — інакше таблиця не допомагає обрати.",
+ o:{pl:"Porównanie produktów po parametrach. Podświetlaj różnice, a nie wszystkie wiersze — inaczej tabela nie pomaga wybrać.",
+    en:"Comparing products by parameter. Highlight the differences rather than every row — otherwise the table doesn't help anyone choose."},
+ ex:{ua:"Підсвіти тільки відмінності — інакше порівнялка не допомагає обрати.",
+     pl:"Podświetl tylko różnice — inaczej porównywarka nie pomaga wybrać.",
+     en:"Highlight only the differences — otherwise the comparison doesn't help you choose."},
  d:`<table class="cmp">
   <tr><th></th><th>4K7</th><th>10K</th></tr>
   <tr><td>Obudowa</td><td>0805</td><td>0805</td></tr>
@@ -1894,11 +2425,23 @@ const DATA = [
 
 {c:"I",n:"10",en:"Wishlist",alt:"saved items, favourites",pl:"schowek",
  ua:"Збережені позиції. У B2B це не «улюблене», а робочий список для наступного замовлення — тому потрібен експорт і переніс у кошик одним кліком.",
+ o:{pl:"Zapisane pozycje. W B2B to nie «ulubione», tylko robocza lista pod następne zamówienie — dlatego potrzebny jest eksport i przeniesienie do koszyka jednym kliknięciem.",
+    en:"Saved items. In B2B this isn't 'favourites' but a working list for the next order — so it needs export and a one-click move to the cart."},
+ ex:{ua:"Це не «ulubione», а робочий список — потрібен експорт і перенесення в кошик.",
+     pl:"To nie są «ulubione», tylko lista robocza — potrzebny jest eksport i przeniesienie do koszyka.",
+     en:"This isn't a favourites list, it's a working list — it needs export and a move to cart."},
  note:"Польською <b>schowek</b> або <b>lista życzeń</b>; у B2B частіше <b>schowek</b> / <b>zapisane listy</b>.",
+ nt:{pl:"Po polsku <b>schowek</b> albo <b>lista życzeń</b>; w B2B częściej <b>schowek</b> / <b>zapisane listy</b>.",
+     en:"Polish says <b>schowek</b> or <b>lista życzeń</b>; in B2B it's usually <b>schowek</b> or <b>zapisane listy</b>."},
  d:`<div class="row"><button class="b b-s"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2S3.9 15 3.9 9.4A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.1 2.8c0 5.6-8.1 10.8-8.1 10.8Z"/></svg> Do schowka</button><button class="b b-s" style="color:var(--pcb);border-color:var(--pcb)"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.2S3.9 15 3.9 9.4A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 8.1 2.8c0 5.6-8.1 10.8-8.1 10.8Z" fill="currentColor" stroke="none"/></svg> W schowku</button></div>`},
 
 {c:"I",n:"11",en:"BOM upload",alt:"bulk order, quick order",pl:"zamówienie zbiorcze",
  ua:"Завантаження списку позицій файлом. Ключове для інженерів. Обов'язковий крок — екран зіставлення: що розпізналось, що ні, чим замінити.",
+ o:{pl:"Wgranie listy pozycji plikiem. Kluczowe dla inżynierów. Obowiązkowy krok to ekran dopasowania: co się rozpoznało, co nie, czym zastąpić.",
+    en:"Uploading a list of line items as a file. Critical for engineers. The mandatory step is a matching screen: what was recognised, what wasn't, and what to substitute."},
+ ex:{ua:"Після завантаження BOM обов'язково покажи екран зіставлення позицій.",
+     pl:"Po wgraniu BOM-u koniecznie pokaż ekran dopasowania pozycji.",
+     en:"After the BOM upload you have to show the line-matching screen."},
  d:`<div class="col">
   <div class="drop" style="padding:11px"><b>Wgraj listę BOM</b><small>.csv · .xlsx</small></div>
   <div class="al al-w" style="font-size:11px">⚑︎ <div><b>3 z 48 pozycji</b>nie rozpoznano symbolu</div></div>
