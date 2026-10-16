@@ -506,7 +506,10 @@ table.t td.n{font-family:var(--mono);text-align:right}
   border:4px solid transparent;border-top-color:var(--ink);
 }
 .tipw:hover .tip,.tipw:focus-within .tip,.tipw:active .tip{opacity:1}
-@media (hover:none){.sample .tip,.qstage .tip{opacity:1;position:static;transform:none;display:inline-block;margin-left:9px;white-space:normal}.sample .tip::after,.qstage .tip::after{display:none}}
+@media (hover:none){.sample .tip{opacity:1;position:static;transform:none;display:inline-block;margin-left:9px;white-space:normal}.sample .tip::after{display:none}}
+/* у навчанні демо інертні (inert) — навести не вийде, тому підказку видно одразу */
+.qstage .tip,.l-optdemo .tip{opacity:1;position:static;transform:none;display:inline-block;margin-left:9px;white-space:normal}
+.qstage .tip::after,.l-optdemo .tip::after{display:none}
 .hcard{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   padding:10px;width:190px;box-shadow:0 7px 18px rgba(0,0,0,.12);
@@ -952,6 +955,11 @@ pre.code2 .s{color:#D9B980}
   width:161%;height:161%;margin-left:-30.5%;margin-top:-30.5%;
   display:flex;align-items:center;justify-content:center;pointer-events:none;
 }
+/* прозора кнопка поверх демо: демо з власними <button> не можна вкладати в <button> */
+.l-optpick{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;
+  background:none;border:0;padding:0;margin:0;cursor:pointer;border-radius:var(--r)}
+.l-optpick[disabled]{cursor:default}
+.l-optpick:focus-visible{outline:2px solid var(--pcb);outline-offset:-3px}
 .l-optdemo.ok{border-color:var(--pcb);box-shadow:inset 0 0 0 2px var(--pcb)}
 .l-optdemo.no{border-color:var(--danger);box-shadow:inset 0 0 0 2px var(--danger)}
 .l-reveal{padding:0 14px 13px}
@@ -3602,7 +3610,7 @@ function cPick(){
   }
   const e = S.pool[S.p];
   vLearn.innerHTML = shell(`
-    <div class="qstage">${e.d}</div>
+    <div class="qstage" inert>${e.d}</div>
     <div class="l-prompt"><div class="big">${esc(e.en)}</div>${e.alt?`<div class="alt">${esc(e.alt)}</div>`:""}</div>
     <div class="l-hint3">Znasz już to pojęcie?</div>
     ${actHTML("Już to znam", "Chcę się tego nauczyć")}`,
@@ -3621,7 +3629,7 @@ function cLearn(e){
   const label = isRev ? "Powtórka" : "Nowe pojęcie";
   const meta  = isRev ? (box + ". powtórka") : ("poziom " + box + "/5");
   vLearn.innerHTML = shell(`
-    <div class="qstage">${e.d}</div>
+    <div class="qstage" inert>${e.d}</div>
     <div class="l-prompt"><div class="big">${esc(e.en)}</div>${e.alt?`<div class="alt">${esc(e.alt)}</div>`:""}</div>
     <div class="l-hint3">Powiedz po polsku — potem sprawdź się.</div>
     <div class="l-ways" id="ways">
@@ -3727,13 +3735,13 @@ function cPair(){
     <div class="l-prompt"><div class="big">${esc(e.en)}</div>
       <div class="alt">${esc(e.pl)}</div></div>
     <div class="l-hint3">Który to? Te pojęcia najłatwiej pomylić.</div>
-    <div class="l-opts two">${opts.map(o=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner">${o.d}</div></div>`).join("")}</div>
+    <div class="l-opts two">${opts.map((o,i)=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner" inert>${o.d}</div><button type="button" class="l-optpick" aria-label="Wariant ${i+1}"></button></div>`).join("")}</div>
     <div class="l-fbk" id="fbk"></div>`, "Co jest co?", "bez wpływu na postęp", S.i);
   bindQuit();
   const nodes = [].slice.call(vLearn.querySelectorAll(".l-optdemo"));
-  nodes.forEach(n => n.onclick = () => {
+  nodes.forEach(n => n.querySelector(".l-optpick").onclick = () => {
     const ok = n.dataset.id === e.id;
-    nodes.forEach(x => { x.onclick = null;
+    nodes.forEach(x => { x.querySelector(".l-optpick").disabled = true;
       if(x.dataset.id === e.id) x.classList.add("ok"); else if(x === n) x.classList.add("no"); });
     ok ? S.right++ : S.wrong++;
     document.getElementById("fbk").innerHTML =
