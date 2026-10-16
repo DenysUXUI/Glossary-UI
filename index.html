@@ -3601,7 +3601,8 @@ function nextCard(){ S.i++; renderCard(); }
 function cPick(){
   if(S.items.length >= S.target || S.p >= S.pool.length){
     if(!S.items.length) return renderDone();
-    S.phase = "learn"; S.i = 0; interleave(S.items); return renderCard();
+    /* пул міг скінчитися раніше за 5 — лічильник рахує те, що реально відібрано */
+    S.phase = "learn"; S.i = 0; S.target = S.items.length; interleave(S.items); return renderCard();
   }
   const e = S.pool[S.p];
   vLearn.innerHTML = shell(`
@@ -3698,11 +3699,11 @@ function typeMode(e){
 
 function finish(e, ok){
   bump(e, ok);
-  if(ok){ S.done++; nextCard(); }
-  else {
-    if(S.mode === "new"){ S.items.push(e); }   // «pokazuj dalej» — повертається в кінець сесії
-    nextCard();
-  }
+  /* у Powtórce кожна відповідь закриває картку: промах уже в боксі 1
+     і прийде в наступній Powtórce. У нових — «Pokazuj dalej» у кінець сесії */
+  if(ok || S.mode === "rev") S.done++;
+  else S.items.push(e);
+  nextCard();
 }
 
 /* ---------- розрізнення схожих ---------- */
