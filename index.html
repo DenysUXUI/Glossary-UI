@@ -3273,12 +3273,26 @@ const PAIRS = [
   ["L-03","L-04","L-05"], ["L-01","L-02"], ["L-11","L-12"], ["J-07","K-18"]
 ];
 
+/* ---------- нормалізація тексту ----------
+   Одна функція для звірки відповіді й для пошуку: регістр, польська
+   діакритика, пробіли. Стоїть ДО helpers — нею будується e.hay.
+   NFC — бо macOS і вставлений текст дають «s + ´» замість «ś»;
+   пробіли навколо «/» необов'язкові; кінцеву крапку знімаємо після trim,
+   бо iOS ставить пробіл після крапки */
+const DIA = {"ą":"a","ć":"c","ę":"e","ł":"l","ń":"n","ó":"o","ś":"s","ź":"z","ż":"z"};
+const norm = s => String(s||"").toLowerCase().normalize("NFC")
+  .replace(/[ąćęłńóśźż]/g, c => DIA[c])
+  .replace(/\s*\/\s*/g, " / ")
+  .replace(/\s+/g, " ").trim()
+  .replace(/[.,;:!?]+$/, "").trim();
+
 /* ---------- helpers ---------- */
 const strip = s => (s||"").replace(/<[^>]*>/g,"");
 DATA.forEach(e => {
   e.id = e.c+"-"+e.n;
   const more = [].concat(Object.values(e.o||{}), Object.values(e.nt||{}), Object.values(e.ex||{}));
-  e.hay = [e.en,e.alt,e.pl,strip(e.ua),strip(e.note)].concat(more.map(strip)).concat(e.id).join(" ").toLowerCase();
+  const raw = [e.en,e.alt,e.pl,strip(e.ua),strip(e.note)].concat(more.map(strip)).concat(e.id).join(" ");
+  e.hay = norm(raw.replace(/&nbsp;|&#160;/g," ").replace(/&amp;/g,"&"));   // «swiatlo» знаходить «światło»
 });
 const BY_ID = {}; DATA.forEach(e => BY_ID[e.id] = e);
 const DAY = 864e5;
@@ -3393,16 +3407,8 @@ function interleave(items){
 
 /* ---------- клавіатурна перевірка ----------
    62 зі 160 термінів мають польську діакритику, 10 — це перелік через / або vs.
-   Тому звіряємо нормалізовано, а перелік зараховуємо за будь-яким фрагментом. */
-const DIA = {"ą":"a","ć":"c","ę":"e","ł":"l","ń":"n","ó":"o","ś":"s","ź":"z","ż":"z"};
-/* NFC — бо macOS і вставлений текст дають «s + ´» замість «ś»;
-   пробіли навколо «/» необов'язкові; кінцеву крапку знімаємо після trim,
-   бо iOS ставить пробіл після крапки */
-const norm = s => String(s||"").toLowerCase().normalize("NFC")
-  .replace(/[ąćęłńóśźż]/g, c => DIA[c])
-  .replace(/\s*\/\s*/g, " / ")
-  .replace(/\s+/g, " ").trim()
-  .replace(/[.,;:!?]+$/, "").trim();
+   Тому звіряємо нормалізовано (norm — вище, біля helpers), а перелік
+   зараховуємо за будь-яким фрагментом. */
 function accepted(e){
   return e.pl.split(/\s*\/\s*|\s+vs\s+/i).map(norm).filter(Boolean).concat(norm(e.pl));
 }
@@ -3955,7 +3961,7 @@ function renderCat(list){
       <h2 class="sectitle">${CATS[k][1]}</h2><span class="secua" lang="uk">${CATS[k][0]}</span></div>
       ${items.map(entryHTML).join("")}</section>`;
   });
-  out.innerHTML = html || `<div class="empty">Nic nie znaleziono.</div>`;
+  out.innerHTML = html || `<div class="empty">Nic nie znaleziono. Spróbuj krótszego słowa albo nazwy po angielsku.</div>`;
   document.getElementById("count").textContent = list.length + " / " + DATA.length;
   const ind = document.getElementById("ind"); if(ind) ind.indeterminate = true;
   syncCats();
@@ -4030,10 +4036,15 @@ window.addEventListener("scroll", () => {
   });
 }, {passive: true});
 
-document.getElementById("q").addEventListener("input", ev => {
-  const v = ev.target.value.trim().toLowerCase();
-  renderCat(v ? DATA.filter(e=>e.hay.includes(v)) : DATA);
-});
+/* пошук: один фільтр для поля і для повернення на вкладку Katalog
+   (раніше в полі лишалось «margin», а показувались усі 160) */
+const qIn = document.getElementById("q");
+function applySearch(){
+  const v = norm(qIn.value);
+  renderCat(v ? DATA.filter(e => e.hay.includes(v)) : DATA);
+}
+let qT = 0;
+qIn.addEventListener("input", () => { clearTimeout(qT); qT = setTimeout(applySearch, 120); });
 
 /* copy PL term */
 const flash = document.getElementById("copied"); let ft;
@@ -4056,7 +4067,7 @@ const VIEWS = {learn:"v-learn", cat:"v-cat", prog:"v-prog"};
   const isCat = b.dataset.v==="cat";
   document.getElementById("searchrow").style.display = isCat?"flex":"none";
   document.getElementById("cats").style.display = isCat?"flex":"none";
-  if(isCat) renderCat(DATA);
+  if(isCat) applySearch();
   if(b.dataset.v==="prog") renderProg();
   if(b.dataset.v==="learn" && !S) renderStart();
   window.scrollTo(0,0);
@@ -4066,7 +4077,7 @@ const VIEWS = {learn:"v-learn", cat:"v-cat", prog:"v-prog"};
 load();
 if(STORE_BAD) showStoreWarn();
 renderStart();
-renderCat(DATA);
+applySearch();
 </script>
 </body>
 </html>
