@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="pl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Katalog UI — глосарій інтерфейсних елементів (EN · PL · UA)</title>
+<title>Katalog UI — słownik elementów interfejsu (EN · PL · UA)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -95,7 +95,7 @@ a{color:var(--pcb)}
 }
 .secnum{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.08em}
 .sectitle{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin:0}
-.secpl{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:auto;letter-spacing:.04em}
+.secua{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:auto;letter-spacing:.04em}
 
 /* ---------- entry ---------- */
 .entry{
@@ -1127,7 +1127,7 @@ pre.code2 .s{color:#D9B980}
     <div class="searchrow" id="searchrow" style="display:none">
       <div class="searchbox">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input id="q" type="search" placeholder="Шукати: tooltip, podpowiedź, підказка…" autocomplete="off">
+        <input id="q" type="search" placeholder="Szukaj: tooltip, podpowiedź, підказка…" autocomplete="off">
       </div>
       <span class="count" id="count"></span>
     </div>
@@ -3313,7 +3313,7 @@ function save(){
 }
 function st(id){ return ST[id] || (ST[id] = {b:0, due:0, l:0, s:0}); }
 const stateOf = b => b===0?0 : b<=2?1 : b<=4?2 : 3;
-const STATE_NAMES = ["Нове","Вчу","Знаю","Засвоєно"];
+const STATE_NAMES = ["Nowe","Uczę się","Znam","Opanowane"];
 
 /* ---------- сесія v2 ----------
    Три режими: нові поняття (відбір → вивчення), повторення, розрізнення.
@@ -3773,9 +3773,9 @@ function renderProg(){
     <div class="pgrid">
       ${counts.map((v,i)=>`<div class="pcell s${i}"><b>${v}</b><span>${STATE_NAMES[i]}</span></div>`).join("")}
     </div>
-    <h3 class="pgsec">Za kategorią</h3>
+    <h3 class="pgsec">Według kategorii</h3>
     ${cats.map(c=>`<div class="catrow">
-        <span class="nm">${CATS[c.k][0]}</span>
+        <span class="nm">${CATS[c.k][1]}</span>
         <span class="tr">
           <span class="f3" style="width:${c.c[3]/c.n*100}%"></span>
           <span class="f2" style="width:${c.c[2]/c.n*100}%"></span>
@@ -3784,8 +3784,8 @@ function renderProg(){
         <span class="pc">${c.pct}%</span>
       </div>`).join("")}
     <div class="weak"><h3>Słabe punkty</h3>
-      ${weak.length ? weak.map(e=>`<div class="weakitem"><span style="color:var(--ink);font-family:var(--sans)">${esc(e.en)} · ${esc(e.pl)}</span><span>${ST[e.id].l}× błąd</span></div>`).join("")
-        : '<div class="hint2">Поки порожньо. Тут з’являться елементи, які ти завалив 2+ рази.</div>'}
+      ${weak.length ? weak.map(e=>`<div class="weakitem"><span style="color:var(--ink);font-family:var(--sans)">${esc(e.en)} · ${esc(e.pl)}</span><span>${ST[e.id].l} ${plural(ST[e.id].l,"błąd","błędy","błędów")}</span></div>`).join("")
+        : '<div class="hint2">Na razie pusto. Tu trafią pojęcia, przy których pomylisz się w powtórce co najmniej 2 razy.</div>'}
     </div>
     <div class="tools">
       <button id="exp">Eksportuj postęp (JSON)</button>
@@ -3793,7 +3793,7 @@ function renderProg(){
       <button id="rst" class="dg">Zresetuj</button>
       <input type="file" id="impf" accept="application/json" style="display:none">
     </div>
-    <div class="hint2">Прогрес зберігається у цьому браузері. Експортуй файл перед зміною пристрою або чисткою кешу.</div>`;
+    <div class="hint2">Postęp jest zapisany tylko w tej przeglądarce. Wyeksportuj plik przed zmianą urządzenia lub czyszczeniem danych przeglądarki.</div>`;
   document.getElementById("exp").onclick = () => {
     const blob = new Blob([JSON.stringify(ST)], {type:"application/json"});
     const a = document.createElement("a");
@@ -3819,14 +3819,14 @@ function renderProg(){
     r.readAsText(f);
   };
   document.getElementById("rst").onclick = () => {
-    if(confirm("Скинути весь прогрес? Дію не можна скасувати.")){ ST={}; save(); S = null; renderStart(); renderProg(); }
+    if(confirm("Usunąć cały postęp? Tej operacji nie można cofnąć.")){ ST={}; save(); S = null; renderStart(); renderProg(); }
   };
 }
 
 /* ---------- render: catalog ---------- */
 const out = document.getElementById("out");
 document.getElementById("cats").innerHTML =
-  ORDER.map((k,i)=>`<a class="cat" href="#s-${k}" data-k="${k}" data-sec="s-${k}">${String(i+1).padStart(2,"0")} · ${CATS[k][0]}</a>`).join("");
+  ORDER.map((k,i)=>`<a class="cat" href="#s-${k}" data-k="${k}" data-sec="s-${k}">${String(i+1).padStart(2,"0")} · ${CATS[k][1]}</a>`).join("");
 
 /* ---------- мова текстового блоку ----------
    Перемикається лише пояснення, note і приклад фрази.
@@ -3903,7 +3903,7 @@ function renderCat(list){
     const items = list.filter(e=>e.c===k); if(!items.length) return;
     html += `<section class="sec" id="s-${k}"><div class="sechead">
       <span class="secnum">${String(i+1).padStart(2,"0")}</span>
-      <h2 class="sectitle">${CATS[k][0]}</h2><span class="secpl">${CATS[k][1]}</span></div>
+      <h2 class="sectitle">${CATS[k][1]}</h2><span class="secua" lang="uk">${CATS[k][0]}</span></div>
       ${items.map(entryHTML).join("")}</section>`;
   });
   out.innerHTML = html || `<div class="empty">Nic nie znaleziono.</div>`;
