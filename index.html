@@ -103,7 +103,7 @@ a{color:var(--pcb)}
 }
 .secnum{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.08em}
 .sectitle{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin:0}
-.secua{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:auto;letter-spacing:.04em}
+.l-secua{font-family:var(--mono);font-size:11px;color:var(--muted);margin-left:auto;letter-spacing:.04em}
 
 /* ---------- entry ---------- */
 .entry{
@@ -1040,7 +1040,7 @@ pre.code2 .s{color:#D9B980}
 .l-prompt{padding:17px 14px 4px;text-align:center}
 .l-prompt .big{font-size:23px;font-weight:600;letter-spacing:-.015em;line-height:1.15}
 .l-prompt .alt{font:400 12px var(--mono);color:var(--muted);margin-top:4px}
-.l-prompt .big:focus{outline:none}     /* фокус тут — точка читання, не дія */
+.l-prompt .big:focus,.l-revealbox:focus{outline:none}     /* фокус тут — точка читання, не дія */
 
 /* два способи відповіді */
 .l-ways{padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -1112,7 +1112,7 @@ pre.code2 .s{color:#D9B980}
 .weak{margin-top:20px}
 .weak h3,.pgsec{font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;margin:0 0 9px;padding-bottom:6px;border-bottom:1.5px solid var(--ink)}
 .weakitem{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line-soft);font-size:12.5px}
-.weakitem .wc{font-family:var(--mono);font-size:11px;color:var(--danger);flex:0 0 auto}
+.weakitem .l-wc{font-family:var(--mono);font-size:11px;color:var(--danger);flex:0 0 auto}
 .tools{display:flex;gap:7px;flex-wrap:wrap;margin-top:22px}
 .tools button{font:500 11.5px var(--sans);padding:8px 12px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);cursor:pointer;color:var(--ink)}
 .tools button.dg{color:var(--danger)}
@@ -2806,7 +2806,7 @@ const DATA = [
      en:"Use a 16 gap instead of a margin on every card — then you don't have to clean up the last one."},
  d:`<div class="gap-demo">
   <div class="gd"><i></i><span class="gap-m">gap 8</span><i></i><span class="gap-m">gap 8</span><i></i></div>
-  <div class="cap" style="margin-top:9px;text-transform:none">крайніх відступів немає</div>
+  <div class="cap" style="margin-top:9px;text-transform:none">tylko między, nie na brzegach</div>
  </div>`},
 
 {c:"K",n:"04",en:"Gutter",alt:"column gutter",pl:"rynna",
@@ -3291,6 +3291,7 @@ const PAIRS = [
 const DIA = {"ą":"a","ć":"c","ę":"e","ł":"l","ń":"n","ó":"o","ś":"s","ź":"z","ż":"z"};
 const norm = s => String(s||"").toLowerCase().normalize("NFC")
   .replace(/[ąćęłńóśźż]/g, c => DIA[c])
+  .replace(/[’ʼ`]/g, "'")                  // iOS ставить ’ замість ' — «з’являється» = «з'являється»
   .replace(/\s*\/\s*/g, " / ")
   .replace(/\s+/g, " ").trim()
   .replace(/[.,;:!?]+$/, "").trim();
@@ -3591,7 +3592,7 @@ function armSwipe(onLeft, onRight){
   const TH = 78;
   card.style.touchAction = "pan-y";
   card.addEventListener("pointerdown", ev => {
-    if(card.dataset.fly) return;
+    if(card.dataset.fly || Date.now() < FLY_UNTIL) return;
     if(ev.target.closest("input, button, a")) return;
     x0 = ev.clientX; dx = 0; live = true;
     card.style.transition = "none";
@@ -3616,10 +3617,15 @@ function armSwipe(onLeft, onRight){
 }
 /* картка летить один раз: повторний тап під час вильоту ігноруємо, інакше
    бокс стрибав на +2, а наступна картка зараховувалась без показу.
-   Прапорець живе на самій картці — нова картка = новий елемент. */
+   Прапорець живе на самій картці — нова картка = новий елемент.
+   FLY_UNTIL накриває ще й наступну картку: на відборі вона має кнопки в тому
+   самому місці, і другий тап подвійного тапу (з Reduce Motion — одразу,
+   без анімації — через 165+ мс) влучав би в неї */
+let FLY_UNTIL = 0;
 function flyOut(card, dir, cb){
   noteFocus();                       // до вимкнення кнопок: після нього фокус уже на body
-  if(card.dataset.fly) return;
+  if(card.dataset.fly || Date.now() < FLY_UNTIL) return;
+  FLY_UNTIL = Date.now() + (noMotion.matches ? 0 : 165) + 350;   // 350 мс після появи нової картки ≈ вікно подвійного тапу
   card.dataset.fly = "1";
   card.querySelectorAll("#actL, #actR").forEach(b => b.disabled = true);
   if(noMotion.matches){ cb(); return; }
@@ -3713,7 +3719,10 @@ function reveal(e, forced){
   if(ways) ways.outerHTML = html; else document.getElementById("card").insertAdjacentHTML("beforeend", html);
   if(forced === null){
     armSwipe(() => finish(e, true), () => finish(e, false));
-    focusTo(document.getElementById("actL"));
+    /* фокус на розкриття, не на «Pamiętam»: з фокусом на кнопці Space,
+       яким гортають сторінку, мовчки оцінював картку */
+    const box = document.querySelector("#card .l-revealbox");
+    if(box){ box.tabIndex = -1; focusTo(box); }
   } else {
     document.getElementById("nx").onclick = () => finish(e, forced);
     focusTo(document.getElementById("nx"));
@@ -3737,7 +3746,7 @@ function typeMode(e){
     <div class="l-hint3" style="padding-top:12px">Ogonki nieobowiązkowe — <b>swiatlo</b> zaliczy się tak samo.</div>`;
   const inp = document.getElementById("ans");
   inp.focus();
-  const done = ok => { clearTimeout(shake); inp.classList.add(ok?"ok":"no"); inp.disabled = true;
+  const done = ok => { clearTimeout(shake); inp.classList.toggle("no", !ok); inp.classList.toggle("ok", ok); inp.disabled = true;
     document.getElementById("chk").disabled = true;
     document.getElementById("hint").disabled = true;
     if(!ok) inp.value = e.pl;
@@ -3749,7 +3758,7 @@ function typeMode(e){
          у нових картка йде в кінець сесії, у Powtórce — знову з рівня 1 */
       const t = norm(inp.value);
       if(hinted && hinted >= Math.ceil(t.length / 2)){
-        clearTimeout(shake); inp.classList.add("ok"); inp.disabled = true;
+        clearTimeout(shake); inp.classList.remove("no"); inp.classList.add("ok"); inp.disabled = true;
         document.getElementById("chk").disabled = true;
         document.getElementById("hint").disabled = true;
         document.getElementById("tries").textContent = "Z podpowiedzią — wrócimy do tego";
@@ -3858,7 +3867,7 @@ function renderProg(){
         <span class="pc">${c.known}/${c.n}</span>
       </div>`).join("")}
     <div class="weak"><h3>Słabe punkty</h3>
-      ${weak.length ? weak.map(e=>`<div class="weakitem"><span class="wn"><span lang="en">${esc(e.en)}</span> · <span lang="pl">${esc(e.pl)}</span></span><span class="wc">${ST[e.id].l} ${plural(ST[e.id].l,"błąd","błędy","błędów")}</span></div>`).join("")
+      ${weak.length ? weak.map(e=>`<div class="weakitem"><span class="l-wn"><span lang="en">${esc(e.en)}</span> · <span lang="pl">${esc(e.pl)}</span></span><span class="l-wc">${ST[e.id].l} ${plural(ST[e.id].l,"błąd","błędy","błędów")}</span></div>`).join("")
         : '<div class="hint2">Na razie pusto. Tu trafią pojęcia, przy których pomylisz się w powtórce co najmniej 2 razy.</div>'}
     </div>
     <div class="tools">
@@ -3980,7 +3989,7 @@ function renderCat(list){
     const items = list.filter(e=>e.c===k); if(!items.length) return;
     html += `<section class="sec" id="s-${k}"><div class="sechead">
       <span class="secnum">${String(i+1).padStart(2,"0")}</span>
-      <h2 class="sectitle">${CATS[k][1]}</h2><span class="secua" lang="uk">${CATS[k][0]}</span></div>
+      <h2 class="sectitle">${CATS[k][1]}</h2><span class="l-secua" lang="uk">${CATS[k][0]}</span></div>
       ${items.map(entryHTML).join("")}</section>`;
   });
   out.innerHTML = html || `<div class="empty">Nic nie znaleziono. Spróbuj krótszego słowa albo nazwy po angielsku.</div>`;
