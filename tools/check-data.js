@@ -29,18 +29,28 @@ DATA.forEach((e, i) => {
   if (!e.o || !e.o.pl || !e.o.en) warns.push(`${where}: немає o.pl / o.en (покажеться «wkrótce»)`);
   if (!e.ex || !e.ex.ua || !e.ex.pl || !e.ex.en) warns.push(`${where}: немає ex.ua / ex.pl / ex.en`);
   if (!!e.note !== !!e.nt) warns.push(`${where}: note і nt мають бути разом`);
+  // pe:1 — «польського терміна немає, у командах кажуть англійською» (handoff-02, D2)
+  if (e.pe !== undefined && e.pe !== 1) errors.push(`${where}: pe може бути лише 1 або відсутнім`);
   // кирилиця в польському чи англійському полі — майже завжди помилка копіювання
   const cyr = /[Ѐ-ӿ]/;
-  [["pl", e.pl], ["o.pl", e.o && e.o.pl], ["o.en", e.o && e.o.en], ["ex.pl", e.ex && e.ex.pl], ["ex.en", e.ex && e.ex.en]]
+  [["en", e.en], ["alt", e.alt], ["pl", e.pl], ["o.pl", e.o && e.o.pl], ["o.en", e.o && e.o.en],
+   ["nt.pl", e.nt && e.nt.pl], ["nt.en", e.nt && e.nt.en], ["ex.pl", e.ex && e.ex.pl], ["ex.en", e.ex && e.ex.en]]
     .forEach(([k, v]) => { if (v && cyr.test(strip(v))) errors.push(`${where}: кирилиця в полі ${k}`); });
+  // поле pl проходить через esc(): сутності й позначки статусу там показались би буквально
+  if (/&\w+;|[✅⚠️❌]/.test(e.pl || "")) errors.push(`${where}: у pl сутність або позначка статусу`);
+  if (/[·,()]/.test(e.pl || "")) warns.push(`${where}: у pl є «·», кома чи дужки — звірка ділить відповідь лише по « / » і « vs »`);
   // демо не повинно підказувати польську відповідь
   const ans = e.pl.split(/\s*\/\s*|\s+vs\s+/i).map(s => s.trim().toLowerCase()).filter(s => s.length > 3);
   const demo = strip(e.d).toLowerCase();
   ans.forEach(a => { if (demo.includes(a)) warns.push(`${where}: демо містить відповідь «${a}»`); });
-  // класи демо не повинні збігатися з класами застосунку без префікса l- (історія з .done)
+  // класи демо не повинні збігатися з класами застосунку (історія з .done)
+  const APP = ["pl", "en", "alt", "ua", "note", "code", "sample", "entry", "cat", "view", "count", "empty", "qstage", "qcard", "sess"];
   (e.d.match(/class="([^"]+)"/g) || []).forEach(m => m.slice(7, -1).split(/\s+/).forEach(c => {
-    if (/^l-/.test(c)) errors.push(`${where}: демо використовує клас застосунку ${c}`);
+    if (/^l-/.test(c) || APP.includes(c)) errors.push(`${where}: демо використовує клас застосунку .${c}`);
   }));
+  // id / for / name у демо дублюються, коли каталог і картка навчання змонтовані разом
+  const hooks = (e.d.match(/\s(?:id|for|name)="[^"]+"/g) || []).map(s => s.trim());
+  if (hooks.length) warns.push(`${where}: демо має ${[...new Set(hooks)].join(" ")} — див. handoff-02, 2.12`);
 });
 
 PAIRS.forEach((p, i) => p.forEach(x => { if (!ids.has(x)) errors.push(`PAIRS[${i}]: немає запису ${x}`); }));
