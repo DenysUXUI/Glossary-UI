@@ -3497,6 +3497,7 @@ function armSwipe(onLeft, onRight){
   const TH = 78;
   card.style.touchAction = "pan-y";
   card.addEventListener("pointerdown", ev => {
+    if(card.dataset.fly) return;
     if(ev.target.closest("input, button, a")) return;
     x0 = ev.clientX; dx = 0; live = true;
     card.style.transition = "none";
@@ -3519,12 +3520,19 @@ function armSwipe(onLeft, onRight){
   card.addEventListener("pointerup", end);
   card.addEventListener("pointercancel", end);
 }
+/* картка летить один раз: повторний тап під час вильоту ігноруємо, інакше
+   бокс стрибав на +2, а наступна картка зараховувалась без показу.
+   Прапорець живе на самій картці — нова картка = новий елемент. */
 function flyOut(card, dir, cb){
+  if(card.dataset.fly) return;
+  card.dataset.fly = "1";
+  card.querySelectorAll("#actL, #actR").forEach(b => b.disabled = true);
   if(noMotion.matches){ cb(); return; }
   card.style.transition = "transform .19s ease, opacity .19s ease";
   card.style.transform = "translateX("+(dir*420)+"px) rotate("+(dir*11)+"deg)";
   card.style.opacity = "0";
-  setTimeout(cb, 165);
+  const sess = S;                    // ✕ під час вильоту закриває сесію — колбек уже не потрібен
+  setTimeout(() => { if(S !== sess) return; cb(); }, 165);
 }
 
 /* те саме, що в каталозі: PL термін, опис, note, приклад фрази */
