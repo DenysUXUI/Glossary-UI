@@ -143,6 +143,7 @@ a{color:var(--pcb)}
 .l-lang button{
   font:500 9.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;
   padding:3px 7px;border:0;background:transparent;color:var(--muted);cursor:pointer;
+  min-width:24px;min-height:24px;      /* WCAG 2.2: зона дотику ≥ 24×24 */
   transition:background-color .16s ease,color .16s ease;
 }
 .l-lang button + button{border-left:1px solid var(--line)}
@@ -916,7 +917,9 @@ pre.code2 .s{color:#D9B980}
 .sessbar .tr{flex:1;height:5px;background:#D8DED9;border-radius:9px;overflow:hidden}
 .sessbar .fl{height:100%;background:var(--pcb);border-radius:9px;transition:width .25s}
 .sessbar .n{font:500 11px var(--mono);color:var(--muted)}
-.sessbar .x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;padding:2px 4px}
+/* ✕ — 44×44 за Apple HIG; від'ємні відступи тримають рядок тієї ж висоти */
+.sessbar .x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:15px;line-height:1;
+  min-width:44px;min-height:44px;padding:0;margin:-10px -8px -10px -12px}
 .qcard{background:var(--surface);border:1px solid var(--line);border-radius:5px;overflow:hidden}
 .qhead{
   display:flex;justify-content:space-between;align-items:center;gap:9px;
@@ -1046,7 +1049,7 @@ pre.code2 .s{color:#D9B980}
   padding:8px 14px 0;display:flex;justify-content:space-between;align-items:center;gap:10px;
   font:400 11.5px var(--mono);color:var(--muted);
 }
-.l-hintbtn{background:none;border:0;padding:0;cursor:pointer;font:500 11.5px var(--mono);color:var(--pcb);text-decoration:underline}
+.l-hintbtn{background:none;border:0;padding:4px 0;min-height:24px;cursor:pointer;font:500 11.5px var(--mono);color:var(--pcb);text-decoration:underline}
 .l-hintbtn[disabled]{color:var(--muted);text-decoration:none;cursor:default}
 
 /* дві дії внизу картки — вони ж індикатор свайпу */
