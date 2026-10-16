@@ -38,8 +38,15 @@ fs.mkdirSync(OUT, { recursive: true });
   await shot("04-learn"); report.push(...await small("learn"));
   await page.click("#w-eye"); await page.waitForTimeout(250); await shot("05-reveal");
   await page.click("#actL"); await page.waitForTimeout(400);
-  await page.click("#w-kbd"); await page.waitForTimeout(250); await shot("06-type"); report.push(...await small("type"));
-  await page.click("#quit");
+  // у карток без польського відповідника кнопки «Napisz» немає — гортаємо до картки, де вона є
+  for (let i = 0; i < 4 && await page.$("#w-eye") && !await page.$("#w-kbd"); i++) {
+    await page.click("#w-eye"); await page.waitForTimeout(250);
+    await page.click("#actL"); await page.waitForTimeout(400);
+  }
+  if (await page.$("#w-kbd")) {
+    await page.click("#w-kbd"); await page.waitForTimeout(250); await shot("06-type"); report.push(...await small("type"));
+  } else report.push("type: не знайшов картки з «Napisz» — скриншот 06 пропущено");
+  if (await page.$("#quit")) await page.click("#quit");
   if (await page.$("#m-pair:not([disabled])")) {
     await page.click("#m-pair"); await page.waitForTimeout(250); await shot("07-pair");
     await page.click("#quit");

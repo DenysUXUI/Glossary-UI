@@ -39,8 +39,11 @@ DATA.forEach((e, i) => {
   // поле pl проходить через esc(): сутності й позначки статусу там показались би буквально
   if (/&\w+;|[✅⚠️❌]/.test(e.pl || "")) errors.push(`${where}: у pl сутність або позначка статусу`);
   if (/[·,()]/.test(e.pl || "")) warns.push(`${where}: у pl є «·», кома чи дужки — звірка ділить відповідь лише по « / » і « vs »`);
-  // демо не повинно підказувати польську відповідь
-  const ans = e.pl.split(/\s*\/\s*|\s+vs\s+/i).map(s => s.trim().toLowerCase()).filter(s => s.length > 3);
+  // демо не повинно підказувати польську відповідь.
+  // Пропускаємо pe:1 і частини відповіді, що збігаються з EN-назвою: їх і так видно в питанні.
+  const parts = s => s.split(/\s*\/\s*|\s+vs\s+/i).map(x => x.trim().toLowerCase()).filter(Boolean);
+  const enParts = parts(e.en.replace(/\s*\([^)]*\)/g, "")).concat(e.en.toLowerCase());
+  const ans = e.pe === 1 ? [] : parts(e.pl).filter(s => s.length > 3 && !enParts.includes(s));
   const demo = strip(e.d).toLowerCase();
   ans.forEach(a => { if (demo.includes(a)) warns.push(`${where}: демо містить відповідь «${a}»`); });
   // класи демо не повинні збігатися з класами застосунку (історія з .done)
