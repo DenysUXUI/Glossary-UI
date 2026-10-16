@@ -1156,7 +1156,7 @@ pre.code2 .s{color:#D9B980}
   <section id="v-prog" class="view"></section>
 </main>
 
-<div id="copied">skopiowano</div>
+<div id="copied" role="status">skopiowano</div>
 
 <script>
 const DATA = [
@@ -3672,7 +3672,7 @@ function typeMode(e){
     </div>
     <div class="l-typemeta">
       <button class="l-hintbtn" id="hint">Podpowiedz literę</button>
-      <span id="tries">Pozostało prób: ${left}</span>
+      <span id="tries" role="status">Pozostało prób: ${left}</span>
     </div>
     <div class="l-hint3" style="padding-top:12px">Ogonki nieobowiązkowe — <b>swiatlo</b> zaliczy się tak samo.</div>`;
   const inp = document.getElementById("ans");
@@ -3736,7 +3736,7 @@ function cPair(){
       <div class="alt" lang="pl">${esc(e.pl)}</div></div>
     <div class="l-hint3">Który to? Te pojęcia najłatwiej pomylić.</div>
     <div class="l-opts two">${opts.map((o,i)=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner" inert>${o.d}</div><button type="button" class="l-optpick" aria-label="Wariant ${i+1}"></button></div>`).join("")}</div>
-    <div class="l-fbk" id="fbk"></div>`, "Co jest co?", "bez wpływu na postęp", S.i);
+    <div class="l-fbk" id="fbk" role="status"></div>`, "Co jest co?", "bez wpływu na postęp", S.i);
   bindQuit();
   const nodes = [].slice.call(vLearn.querySelectorAll(".l-optdemo"));
   nodes.forEach(n => n.querySelector(".l-optpick").onclick = () => {
