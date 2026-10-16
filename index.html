@@ -3461,7 +3461,7 @@ function renderPicker(){
     const i = ORDER.indexOf(k);
     return `<button class="l-catitem ${!SEL||SEL.has(k)?"on":""}" data-k="${k}">
       <span class="cnum">${String(i+1).padStart(2,"0")}</span>
-      <span class="mt"><b>${CATS[k][1]}</b><small>${CATS[k][0]} · ${items.length}</small></span>
+      <span class="mt"><b>${CATS[k][1]}</b><small><span lang="uk">${CATS[k][0]}</span> · ${items.length}</small></span>
       <span class="pctv">${pct}%</span>
       <span class="l-catbox">✓</span></button>`;
   };
@@ -3585,7 +3585,7 @@ function flyOut(card, dir, cb){
 function revealHTML(e){
   return `<div class="l-reveal"><div class="l-revealbox" data-lang-id="${e.id}">
     <div class="l-revhead">
-      <button class="pl" data-copy="${esc(e.pl).replace(/"/g,"&quot;")}"><span class="tagpl">PL</span><b>${esc(e.pl)}</b></button>
+      <button class="pl" lang="pl" data-copy="${esc(e.pl).replace(/"/g,"&quot;")}"><span class="tagpl">PL</span><b>${esc(e.pl)}</b></button>
       ${langHTML()}
     </div>
     <div class="l-txt">${txtHTML(e)}</div>
@@ -3611,7 +3611,7 @@ function cPick(){
   const e = S.pool[S.p];
   vLearn.innerHTML = shell(`
     <div class="qstage" inert>${e.d}</div>
-    <div class="l-prompt"><div class="big">${esc(e.en)}</div>${e.alt?`<div class="alt">${esc(e.alt)}</div>`:""}</div>
+    <div class="l-prompt"><div class="big" lang="en">${esc(e.en)}</div>${e.alt?`<div class="alt" lang="en">${esc(e.alt)}</div>`:""}</div>
     <div class="l-hint3">Znasz już to pojęcie?</div>
     ${actHTML("Już to znam", "Chcę się tego nauczyć")}`,
     "Wybór pojęć", "wybrano " + S.items.length + "/" + S.target, S.items.length);
@@ -3630,7 +3630,7 @@ function cLearn(e){
   const meta  = isRev ? (box + ". powtórka") : ("poziom " + box + "/5");
   vLearn.innerHTML = shell(`
     <div class="qstage" inert>${e.d}</div>
-    <div class="l-prompt"><div class="big">${esc(e.en)}</div>${e.alt?`<div class="alt">${esc(e.alt)}</div>`:""}</div>
+    <div class="l-prompt"><div class="big" lang="en">${esc(e.en)}</div>${e.alt?`<div class="alt" lang="en">${esc(e.alt)}</div>`:""}</div>
     <div class="l-hint3">Powiedz po polsku — potem sprawdź się.</div>
     <div class="l-ways" id="ways">
       <button class="l-way" id="w-eye">
@@ -3732,8 +3732,8 @@ function cPair(){
   const e = set[Math.random()*set.length|0];
   const opts = shuffle(set.slice());
   vLearn.innerHTML = shell(`
-    <div class="l-prompt"><div class="big">${esc(e.en)}</div>
-      <div class="alt">${esc(e.pl)}</div></div>
+    <div class="l-prompt"><div class="big" lang="en">${esc(e.en)}</div>
+      <div class="alt" lang="pl">${esc(e.pl)}</div></div>
     <div class="l-hint3">Który to? Te pojęcia najłatwiej pomylić.</div>
     <div class="l-opts two">${opts.map((o,i)=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner" inert>${o.d}</div><button type="button" class="l-optpick" aria-label="Wariant ${i+1}"></button></div>`).join("")}</div>
     <div class="l-fbk" id="fbk"></div>`, "Co jest co?", "bez wpływu na postęp", S.i);
@@ -3746,7 +3746,7 @@ function cPair(){
     ok ? S.right++ : S.wrong++;
     document.getElementById("fbk").innerHTML =
       (ok ? "✓ Tak." : "✗ Nie.") + " " +
-      opts.map(o => `<b>${esc(o.en)}</b> · <span class="pl-inline">${esc(o.pl)}</span> — ${strip(o.ua).split(".")[0]}.`).join("<br>") +
+      opts.map(o => `<b lang="en">${esc(o.en)}</b> · <span class="pl-inline" lang="pl">${esc(o.pl)}</span> — <span lang="uk">${strip(o.ua).split(".")[0]}.</span>`).join("<br>") +
       `<div style="margin-top:11px"><button class="l-opt" id="nx" style="text-align:center;width:100%">Dalej →</button></div>`;
     document.getElementById("nx").onclick = () => { S.i++; renderCard(); };
   });
@@ -3795,7 +3795,7 @@ function renderProg(){
         <span class="pc">${c.pct}%</span>
       </div>`).join("")}
     <div class="weak"><h3>Słabe punkty</h3>
-      ${weak.length ? weak.map(e=>`<div class="weakitem"><span style="color:var(--ink);font-family:var(--sans)">${esc(e.en)} · ${esc(e.pl)}</span><span>${ST[e.id].l} ${plural(ST[e.id].l,"błąd","błędy","błędów")}</span></div>`).join("")
+      ${weak.length ? weak.map(e=>`<div class="weakitem"><span style="color:var(--ink);font-family:var(--sans)"><span lang="en">${esc(e.en)}</span> · <span lang="pl">${esc(e.pl)}</span></span><span>${ST[e.id].l} ${plural(ST[e.id].l,"błąd","błędy","błędów")}</span></div>`).join("")
         : '<div class="hint2">Na razie pusto. Tu trafią pojęcia, przy których pomylisz się w powtórce co najmniej 2 razy.</div>'}
     </div>
     <div class="tools">
@@ -3856,11 +3856,14 @@ function txtOf(e){
   const t = e.o && e.o[LANG], nt = e.nt && e.nt[LANG];
   return {t: t || e.ua, note: nt || e.note || "", ex:(e.ex&&e.ex[LANG])||"", soon: !t};
 }
+/* lang — тут, щоб setLang оновлював його разом з текстом: VoiceOver
+   читає кожен блок своєю мовою (без перекладу — український текст) */
 function txtHTML(e){
   const x = txtOf(e);
-  return `<p class="ua">${x.t}${x.soon?`<span class="l-soon">${SOON[LANG]}</span>`:""}</p>
-    ${x.note?`<p class="note">${x.note}</p>`:""}
-    ${x.ex?`<div class="l-ex"><span class="l-exlab">${EXLAB[LANG]}</span><p>${x.ex}</p></div>`:""}`;
+  const lg = (LANG === "ua" || x.soon) ? "uk" : LANG;
+  return `<p class="ua" lang="${lg}">${x.t}${x.soon?`<span class="l-soon" lang="${LANG}">${SOON[LANG]}</span>`:""}</p>
+    ${x.note?`<p class="note" lang="${lg}">${x.note}</p>`:""}
+    ${x.ex?`<div class="l-ex" lang="${lg}"><span class="l-exlab">${EXLAB[LANG]}</span><p>${x.ex}</p></div>`:""}`;
 }
 function langHTML(){
   return `<span class="l-lang" role="group" aria-label="Język opisu">${
@@ -3900,9 +3903,9 @@ function entryHTML(e){
         <span class="code">${e.c}·${e.n} <span class="badge-state bs${s}">${STATE_NAMES[s]}</span></span>
         ${langHTML()}
       </div>
-      <h3 class="en">${esc(e.en)}</h3>
-      ${e.alt?`<p class="alt">${esc(e.alt)}</p>`:""}
-      <button class="pl" data-copy="${esc(e.pl).replace(/"/g,"&quot;")}"><span class="tagpl">PL</span><b>${esc(e.pl)}</b></button>
+      <h3 class="en" lang="en">${esc(e.en)}</h3>
+      ${e.alt?`<p class="alt" lang="en">${esc(e.alt)}</p>`:""}
+      <button class="pl" lang="pl" data-copy="${esc(e.pl).replace(/"/g,"&quot;")}"><span class="tagpl">PL</span><b>${esc(e.pl)}</b></button>
       <div class="l-txt">${txtHTML(e)}</div>
     </div>
     <div class="sample">${e.d}</div>
