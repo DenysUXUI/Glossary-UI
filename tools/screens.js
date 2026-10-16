@@ -2,6 +2,7 @@
 // Запуск у хмарній сесії Claude Code (Chromium уже встановлений):
 //   node tools/screens.js [папка-для-скриншотів]
 // За замовчуванням пише в ./screens/ (папка в .gitignore не потрапляє — не комітити).
+// Паузи між картками 650 мс: швидші натискання відсікає захист від подвійного тапу (FLY_UNTIL).
 const path = require("path"), fs = require("fs");
 let chromium;
 try { ({ chromium } = require("playwright")); }
@@ -34,14 +35,14 @@ fs.mkdirSync(OUT, { recursive: true });
   await shot("01-start"); report.push(...await small("start"));
   await page.click("#pick"); await shot("02-picker"); await page.click("#pk-done");
   await page.click("#m-new"); await page.waitForTimeout(250); await shot("03-pick");
-  for (let i = 0; i < 5; i++) { await page.click("#actR"); await page.waitForTimeout(350); }
+  for (let i = 0; i < 5; i++) { await page.click("#actR"); await page.waitForTimeout(650); }
   await shot("04-learn"); report.push(...await small("learn"));
   await page.click("#w-eye"); await page.waitForTimeout(250); await shot("05-reveal");
-  await page.click("#actL"); await page.waitForTimeout(400);
+  await page.click("#actL"); await page.waitForTimeout(650);
   // у карток без польського відповідника кнопки «Napisz» немає — гортаємо до картки, де вона є
   for (let i = 0; i < 4 && await page.$("#w-eye") && !await page.$("#w-kbd"); i++) {
     await page.click("#w-eye"); await page.waitForTimeout(250);
-    await page.click("#actL"); await page.waitForTimeout(400);
+    await page.click("#actL"); await page.waitForTimeout(650);
   }
   if (await page.$("#w-kbd")) {
     await page.click("#w-kbd"); await page.waitForTimeout(250); await shot("06-type"); report.push(...await small("type"));
