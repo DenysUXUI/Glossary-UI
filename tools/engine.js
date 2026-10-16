@@ -26,6 +26,6 @@ module.exports = function make(store, opts = {}) {
     "\nthis.api = {DATA, BY_ID, CATS, ORDER, PAIRS, INTERVAL, DAY, norm, accepted, checkTyped," +
     " bump, pickKnown, pickLearn, st, dueList, newList, pairSets, interleave, inSel, selKeys," +
     " save, load, saveSel, sanitizeProgress, plural, getST: () => ST, setST: v => { ST = v }, getS: () => S, setS: v => { S = v }," +
-    " getSEL: () => SEL, setSEL: v => { SEL = v }};", ctx);
+    " getSEL: () => SEL, setSEL: v => { SEL = v }, getStoreBad: () => STORE_BAD};", ctx);
   return { api: ctx.api, ls };
 };
