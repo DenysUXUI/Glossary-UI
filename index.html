@@ -4019,7 +4019,10 @@ function goToCat(key){
   markCat(key);
 }
 
+let curCat = null;
 function markCat(key){
+  if(key === curCat) return;          // scroll-spy кличе це щокадру — без зміни секції нічого не робимо
+  curCat = key;
   const pill = catsNav.querySelector('.cat[data-sec="s-' + key + '"]');
   catsNav.querySelectorAll(".cat").forEach(a => a.classList.toggle("on", a === pill));
   if(!pill) return;
@@ -4065,11 +4068,18 @@ const flash = document.getElementById("copied"); let ft;
 document.addEventListener("click", ev => {
   const btn = ev.target.closest && ev.target.closest(".pl"); if(!btn) return;
   const txt = btn.dataset.copy;
-  const done = () => { flash.textContent="skopiowano: "+txt; flash.classList.add("on");
-    clearTimeout(ft); ft=setTimeout(()=>flash.classList.remove("on"),1400); };
-  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,done);
-  else { const a=document.createElement("textarea"); a.value=txt; document.body.appendChild(a); a.select();
-    try{document.execCommand("copy")}catch(e){} document.body.removeChild(a); done(); }
+  const show = msg => { flash.textContent = msg; flash.classList.add("on");
+    clearTimeout(ft); ft = setTimeout(() => flash.classList.remove("on"), 1400); };
+  const done = () => show("skopiowano: " + txt), fail = () => show("nie skopiowano");
+  if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, fail);
+  else {
+    /* fixed — інакше iOS стрибає до textarea внизу сторінки */
+    const a = document.createElement("textarea"); a.value = txt; a.setAttribute("readonly", "");
+    a.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+    document.body.appendChild(a); a.select(); a.setSelectionRange(0, txt.length);
+    let ok = false; try{ ok = document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(a); ok ? done() : fail();
+  }
 });
 
 /* ---------- tabs ---------- */
