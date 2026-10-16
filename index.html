@@ -339,10 +339,11 @@ input[type=range]{accent-color:var(--pcb);width:100%}
   border-bottom:2px solid transparent;margin-bottom:-1px;
 }
 .tabs .tp{padding:11px 2px;font-size:12.5px;display:none;color:var(--muted)}
-.tabs #t1:checked~.tl label[for=t1],
-.tabs #t2:checked~.tl label[for=t2],
-.tabs #t3:checked~.tl label[for=t3]{color:var(--pcb);border-bottom-color:var(--pcb);font-weight:600}
-.tabs #t1:checked~.p1,.tabs #t2:checked~.p2,.tabs #t3:checked~.p3{display:block}
+/* за порядком, не за id: у навчальній картці id мають суфікс (див. uniq) */
+.tabs input:nth-of-type(1):checked~.tl label:nth-child(1),
+.tabs input:nth-of-type(2):checked~.tl label:nth-child(2),
+.tabs input:nth-of-type(3):checked~.tl label:nth-child(3){color:var(--pcb);border-bottom-color:var(--pcb);font-weight:600}
+.tabs input:nth-of-type(1):checked~.p1,.tabs input:nth-of-type(2):checked~.p2,.tabs input:nth-of-type(3):checked~.p3{display:block}
 .menu{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   box-shadow:0 6px 18px rgba(20,24,26,.11);padding:4px;width:170px;
@@ -1484,7 +1485,7 @@ const DATA = [
      pl:"Rodzicielski checkbox ma być w stanie nieokreślonym — zaznaczone są nie wszystkie wiersze.",
      en:"The parent checkbox should be indeterminate — not every row is selected."},
  d:`<div class="col">
-  <label class="chk"><input type="checkbox" id="ind"> <b>Wszystkie kategorie</b></label>
+  <label class="chk"><input type="checkbox" data-ind> <b>Wszystkie kategorie</b></label>
   <label class="chk" style="margin-left:20px"><input type="checkbox" checked> Rezystory</label>
   <label class="chk" style="margin-left:20px"><input type="checkbox"> Kondensatory</label>
  </div>`},
@@ -3540,6 +3541,16 @@ function startPair(){
   renderCard();
 }
 
+/* ---------- демо в навчанні ----------
+   Каталог і картка навчання змонтовані одночасно, тому однакові id / name
+   у демо конфліктували: радіо каталогу скидалось, label вмикав чужий input.
+   uniq() додає суфікс лише в навчанні; оболонку картки не чіпає. */
+const uniq = (h, s) => h.replace(/(\s)(id|for|name)="([^"]+)"/g, '$1$2="$3' + s + '"');
+/* indeterminate — лише властивість, в HTML його не записати */
+function fixDemos(root){
+  root.querySelectorAll("[data-ind]").forEach(x => x.indeterminate = true);
+}
+
 /* ---------- каркас картки ---------- */
 function shell(inner, label, meta, doneN){
   const pct = Math.round(doneN / Math.max(1, S.target) * 100);
@@ -3647,11 +3658,12 @@ function cPick(){
   }
   const e = S.pool[S.p];
   vLearn.innerHTML = shell(`
-    <div class="qstage" inert>${e.d}</div>
+    <div class="qstage" inert>${uniq(e.d, "-q")}</div>
     <div class="l-prompt"><div class="big" lang="en">${esc(e.en)}</div>${e.alt?`<div class="alt" lang="en">${esc(e.alt)}</div>`:""}</div>
     <div class="l-hint3">Znasz już to pojęcie?</div>
     ${actHTML("Już to znam", "Chcę się tego nauczyć")}`,
     "Wybór pojęć", "wybrano " + S.items.length + "/" + S.target, S.items.length);
+  fixDemos(vLearn);
   bindQuit();
   armSwipe(
     () => { pickKnown(e); S.p++; renderCard(); },
@@ -3666,7 +3678,7 @@ function cLearn(e){
   const label = isRev ? "Powtórka" : "Nowe pojęcie";
   const meta  = isRev ? (box + ". powtórka") : ("poziom " + box + "/5");
   vLearn.innerHTML = shell(`
-    <div class="qstage" inert>${e.d}</div>
+    <div class="qstage" inert>${uniq(e.d, "-q")}</div>
     <div class="l-prompt"><div class="big" lang="en">${esc(e.en)}</div>${e.alt?`<div class="alt" lang="en">${esc(e.alt)}</div>`:""}</div>
     <div class="l-hint3">Powiedz po polsku — potem sprawdź się.</div>
     <div class="l-ways" id="ways">
@@ -3677,6 +3689,7 @@ function cLearn(e){
         <svg viewBox="0 0 24 24"><rect x="2.2" y="6" width="19.6" height="12" rx="2"/><path d="M6 9.6h.01M9.4 9.6h.01M12.8 9.6h.01M16.2 9.6h.01M18.6 9.6h.01M6 12.8h.01M9.4 12.8h.01M12.8 12.8h.01M16.2 12.8h.01M18.6 12.8h.01M8.4 15.6h7.2"/></svg>
         <span>Napisz</span></button>
     </div>`, label, meta, S.done);
+  fixDemos(vLearn);
   bindQuit();
   document.getElementById("w-eye").onclick = () => reveal(e, null);
   document.getElementById("w-kbd").onclick = () => typeMode(e);
@@ -3774,8 +3787,9 @@ function cPair(){
     <div class="l-prompt"><div class="big" lang="en">${esc(e.en)}</div>
       <div class="alt" lang="pl">${esc(e.pl)}</div></div>
     <div class="l-hint3">Który to? Te pojęcia najłatwiej pomylić.</div>
-    <div class="l-opts two">${opts.map((o,i)=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner" inert>${o.d}</div><button type="button" class="l-optpick" aria-label="Wariant ${i+1}"></button></div>`).join("")}</div>
+    <div class="l-opts two">${opts.map((o,i)=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner" inert>${uniq(o.d, "-o" + i)}</div><button type="button" class="l-optpick" aria-label="Wariant ${i+1}"></button></div>`).join("")}</div>
     <div class="l-fbk" id="fbk" role="status"></div>`, "Co jest co?", "bez wpływu na postęp", S.i);
+  fixDemos(vLearn);
   bindQuit();
   const nodes = [].slice.call(vLearn.querySelectorAll(".l-optdemo"));
   nodes.forEach(n => n.querySelector(".l-optpick").onclick = () => {
@@ -3963,7 +3977,7 @@ function renderCat(list){
   });
   out.innerHTML = html || `<div class="empty">Nic nie znaleziono. Spróbuj krótszego słowa albo nazwy po angielsku.</div>`;
   document.getElementById("count").textContent = list.length + " / " + DATA.length;
-  const ind = document.getElementById("ind"); if(ind) ind.indeterminate = true;
+  fixDemos(out);
   syncCats();
 }
 
