@@ -3362,6 +3362,16 @@ function dueList(){
              .sort((a,b) => ST[a.id].due - ST[b.id].due);
 }
 function newList(){ return DATA.filter(e => inSel(e) && (!ST[e.id] || ST[e.id].b===0)); }
+/* коли наступна Powtórka: найближчий due серед вибраних і скільки понять
+   стане до повторення до кінця того дня. null — нічого не заплановано */
+function nextDue(){
+  const now = Date.now();
+  const later = DATA.filter(e => { const s = ST[e.id]; return inSel(e) && s && s.b>0 && s.due>now; });
+  if(!later.length) return null;
+  const first = Math.min.apply(null, later.map(e => ST[e.id].due));
+  const days = Math.max(1, Math.ceil((first - now) / DAY));
+  return {days, count: later.filter(e => ST[e.id].due <= now + days*DAY).length};
+}
 /* набір для розрізнення беремо, лише коли ВСІ його терміни у вибраних категоріях —
    інакше картка питала б про те, що користувач свідомо виключив.
    22 з 27 наборів лежать усередині однієї категорії, 5 — на межі двох. */
@@ -3430,14 +3440,18 @@ function renderStart(){
   const pairs = pairSets().length;
   const pool = DATA.filter(inSel).length;
   const names = selKeys().map(k => CATS[k][1]);
+  const nd = d ? null : nextDue();
+  const revNote = d ? "Termin minął — czas sprawdzić"
+    : nd ? `Najbliższa: za ${nd.days} ${nd.days === 1 ? "dzień" : "dni"} · ${nd.count} ${plural(nd.count,"pojęcie","pojęcia","pojęć")}`
+    : "Nic nie czeka na powtórkę";
   vLearn.innerHTML = `
    <div class="startcard">
      <h2>Co dziś ćwiczymy?</h2>
-     <p class="sub">${pool} pojęć · ${learned} już znasz</p>
+     <p class="sub">${pool} ${plural(pool,"pojęcie","pojęcia","pojęć")} · ${learned} już znasz</p>
      <button class="l-catrow" id="pick">
        <svg viewBox="0 0 24 24"><path d="M16.4 3.9a2.1 2.1 0 0 1 3 3L8.6 17.7l-4 1 1-4Z"/></svg>
        <span class="mt"><b>${SEL ? "Wybrane kategorie: " + SEL.size : "Wszystkie kategorie"}</b>
-         <small>${SEL ? names.join(" · ") : "Wszystkie " + DATA.length + " pojęć z katalogu"}</small></span>
+         <small>${SEL ? names.join(" · ") : "Wszystkie " + DATA.length + " " + plural(DATA.length,"pojęcie","pojęcia","pojęć") + " z katalogu"}</small></span>
        <span class="chev">›</span>
      </button>
      <div class="l-modes">
@@ -3445,7 +3459,7 @@ function renderStart(){
          <span class="mt"><b>Nowe pojęcia</b><small>Najpierw wybierasz, czego chcesz się uczyć</small></span>
          <span class="mn">${Math.min(NEW_LEN,n)}</span></button>
        <button class="l-mode" id="m-rev" ${d?"":"disabled"}>
-         <span class="mt"><b>Powtórka</b><small>${d?"Termin minął — czas sprawdzić":"Nic nie czeka na powtórkę"}</small></span>
+         <span class="mt"><b>Powtórka</b><small>${revNote}</small></span>
          <span class="mn">${Math.min(REV_LEN,d)}</span></button>
        <button class="l-mode" id="m-pair" ${pairs?"":"disabled"}>
          <span class="mt"><b>Co jest co?</b><small>${pairs
@@ -3478,7 +3492,7 @@ function renderPicker(){
       <div class="l-catlist">
         <button class="l-catitem all ${SEL?"":"on"}" data-k="*">
           <span class="cnum">∗</span>
-          <span class="mt"><b>Wszystkie</b><small>${DATA.length} pojęć</small></span>
+          <span class="mt"><b>Wszystkie</b><small>${DATA.length} ${plural(DATA.length,"pojęcie","pojęcia","pojęć")}</small></span>
           <span class="l-catbox">✓</span></button>
         ${ORDER.map(row).join("")}
       </div>
@@ -3777,7 +3791,7 @@ function renderDone(){
   S = null;          // сесію закінчено: повернення на вкладку Ćwicz покаже старт, не «Gotowe»
   vLearn.innerHTML = `<div class="startcard"><div class="l-done">
      <div class="big">Gotowe</div>
-     <p>${seen ? seen + " kart · " + acc + "% trafnych" : "Nic do zrobienia"}</p>
+     <p>${seen ? seen + " " + plural(seen,"karta","karty","kart") + " · " + acc + "% trafnych" : "Nic do zrobienia"}</p>
      <button class="bigbtn" id="again">${again}</button>
      <button class="bigbtn alt" id="back">Wróć</button>
    </div></div>`;
