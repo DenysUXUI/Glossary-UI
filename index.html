@@ -3684,7 +3684,19 @@ function typeMode(e){
     reveal(e, ok); };
   const tryIt = () => {
     if(inp.disabled || !norm(inp.value)) return;   // порожня відповідь спробу не забирає
-    if(checkTyped(e, inp.value)) return done(true);
+    if(checkTyped(e, inp.value)){
+      /* підказав половину відповіді чи більше — не зараховуємо (D5):
+         у нових картка йде в кінець сесії, у Powtórce — знову з рівня 1 */
+      const t = norm(inp.value);
+      if(hinted && hinted >= Math.ceil(t.length / 2)){
+        clearTimeout(shake); inp.classList.add("ok"); inp.disabled = true;
+        document.getElementById("chk").disabled = true;
+        document.getElementById("hint").disabled = true;
+        document.getElementById("tries").textContent = "Z podpowiedzią — wrócimy do tego";
+        return reveal(e, false);
+      }
+      return done(true);
+    }
     left--;
     document.getElementById("tries").textContent = "Pozostało prób: " + left;
     if(left <= 0) return done(false);              // червоний стан на останній спробі лишається
