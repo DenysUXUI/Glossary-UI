@@ -725,6 +725,8 @@ pre.code2 .s{color:#D9B980}
   .l-lang button:hover{color:var(--pcb)}
   .l-lang button.on:hover{background:var(--pcb);color:#fff}
   .bigbtn:hover{background:#0A4E39}
+  .bigbtn.alt:hover{background:var(--well)}
+  .tools button:hover{border-color:var(--ink)}
   .l-opt:hover{border-color:var(--ink)}
   .l-optdemo:hover{border-color:var(--ink)}
   .l-mode:hover:not([disabled]){border-color:var(--pcb)}
@@ -740,6 +742,9 @@ pre.code2 .s{color:#D9B980}
 .l-act .lft:active{background:var(--pcb);color:#fff}
 .l-act .rgt:active{background:var(--danger);color:#fff}
 .cat:active{border-color:var(--pcb);color:var(--pcb)}
+.bigbtn:not([disabled]):active{background:#0A4E39}
+.bigbtn.alt:active{background:var(--well)}
+.tools button:active{border-color:var(--ink);background:var(--well)}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
@@ -899,10 +904,6 @@ pre.code2 .s{color:#D9B980}
 }
 .startcard h2{font:600 19px var(--sans);margin:0 0 4px;letter-spacing:-.01em}
 .startcard .sub{font-size:13px;color:var(--muted);margin:0 0 16px}
-.qstat{display:flex;gap:8px;justify-content:center;margin-bottom:17px}
-.qstat div{flex:1;background:var(--well);border:1px solid var(--line-soft);border-radius:var(--r);padding:9px 4px}
-.qstat b{display:block;font:600 20px var(--sans);line-height:1.1}
-.qstat span{font:500 9px var(--mono);letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
 .bigbtn{
   width:100%;background:var(--pcb);color:#fff;border:0;border-radius:var(--r);
   padding:14px;font:600 15px var(--sans);cursor:pointer;
@@ -929,9 +930,6 @@ pre.code2 .s{color:#D9B980}
   background-size:11px 11px;
   padding:22px 14px;display:flex;align-items:center;justify-content:center;min-height:150px;
 }
-.qprompt{padding:15px 14px 5px;text-align:center}
-.qprompt .big{font-size:21px;font-weight:600;letter-spacing:-.01em}
-.qprompt .small{font-size:12.5px;color:var(--muted);margin-top:3px}
 .l-opts{padding:12px 14px 14px;display:grid;gap:7px}
 .l-opts.two{grid-template-columns:1fr 1fr}
 .l-opt{
@@ -953,17 +951,8 @@ pre.code2 .s{color:#D9B980}
 }
 .l-optdemo.ok{border-color:var(--pcb);box-shadow:inset 0 0 0 2px var(--pcb)}
 .l-optdemo.no{border-color:var(--danger);box-shadow:inset 0 0 0 2px var(--danger)}
-.l-grades{padding:12px 14px 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
-.l-grade{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:11px 5px;cursor:pointer;font:500 12.5px var(--sans)}
-.l-grade small{display:block;font:400 9.5px var(--mono);color:var(--muted);margin-top:2px}
-.l-grade.g1:hover{border-color:var(--danger);color:var(--danger)}
-.l-grade.g2:hover{border-color:var(--brass);color:var(--brass)}
-.l-grade.g3:hover{border-color:var(--pcb);color:var(--pcb)}
 .l-reveal{padding:0 14px 13px}
 .l-revealbox{background:var(--well);border:1px solid var(--line-soft);border-radius:var(--r);padding:11px 13px}
-.l-revealbox .rn{font-size:16px;font-weight:600}
-.l-revealbox .rp{font-family:var(--mono);font-size:13px;color:var(--pcb);margin-top:3px}
-.l-revealbox .rd{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.5}
 .l-fbk{padding:0 14px 13px;font-size:12.5px;line-height:1.5;color:var(--muted)}
 .l-fbk b{color:var(--ink)}
 .l-fbk .pl-inline{font-family:var(--mono);color:var(--pcb)}
@@ -1102,7 +1091,6 @@ pre.code2 .s{color:#D9B980}
 .weakitem span{font-family:var(--mono);font-size:11px;color:var(--danger)}
 .tools{display:flex;gap:7px;flex-wrap:wrap;margin-top:22px}
 .tools button{font:500 11.5px var(--sans);padding:8px 12px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);cursor:pointer;color:var(--ink)}
-.tools button:hover{border-color:var(--ink)}
 .tools button.dg{color:var(--danger)}
 .hint2{font-size:11.5px;color:var(--muted);margin-top:9px;line-height:1.5}
 .l-storewarn{
@@ -3343,7 +3331,7 @@ let SEL = null;
 try {
   const v = JSON.parse(localStorage.getItem(CKEY));
   if(Array.isArray(v)){
-    const k = v.filter(x => CATS[x]);
+    const k = v.filter(x => ORDER.includes(x));     // не CATS[x]: "constructor" теж «є»
     if(k.length && k.length < ORDER.length) SEL = new Set(k);
   }
 } catch(err){}
@@ -3420,7 +3408,7 @@ const vLearn = document.getElementById("v-learn");
 
 function renderStart(){
   const d = dueList().length, n = newList().length;
-  const learned = DATA.filter(e => (ST[e.id]||{}).b>=3).length;
+  const learned = DATA.filter(e => inSel(e) && (ST[e.id]||{}).b>=3).length;
   const pairs = pairSets().length;
   const pool = DATA.filter(inSel).length;
   const names = selKeys().map(k => CATS[k][1]);
@@ -3594,6 +3582,7 @@ function revealHTML(e){
 }
 
 function renderCard(){
+  window.scrollTo(0, 0);            // довге розкриття могло бути прокручене
   if(S.mode === "pair") return cPair();
   if(S.mode === "new" && S.phase === "pick") return cPick();
   if(S.i >= S.items.length) return renderDone();
@@ -3753,16 +3742,17 @@ function cPair(){
 }
 
 function renderDone(){
-  const seen = S.right + S.wrong;
+  const seen = S.right + S.wrong, mode = S.mode;
   const acc = seen ? Math.round(S.right/seen*100) : 100;
-  const again = {new:"Jeszcze pięć pojęć", rev:"Jeszcze jedna powtórka", pair:"Jeszcze raz"}[S.mode];
+  const again = {new:"Jeszcze pięć pojęć", rev:"Jeszcze jedna powtórka", pair:"Jeszcze raz"}[mode];
+  S = null;          // сесію закінчено: повернення на вкладку Ćwicz покаже старт, не «Gotowe»
   vLearn.innerHTML = `<div class="startcard"><div class="l-done">
      <div class="big">Gotowe</div>
      <p>${seen ? seen + " kart · " + acc + "% trafnych" : "Nic do zrobienia"}</p>
      <button class="bigbtn" id="again">${again}</button>
      <button class="bigbtn alt" id="back">Wróć</button>
    </div></div>`;
-  document.getElementById("again").onclick = {new:startNew, rev:startRev, pair:startPair}[S.mode];
+  document.getElementById("again").onclick = {new:startNew, rev:startRev, pair:startPair}[mode];
   document.getElementById("back").onclick = renderStart;
 }
 
@@ -3847,7 +3837,8 @@ const LANGS = [["en","EN"],["pl","PL"],["ua","UA"]];
 const EXLAB = {ua:"Як це звучить у команді", pl:"Jak to brzmi w zespole", en:"How it sounds on the team"};
 const SOON  = {pl:"PL wkrótce", en:"EN soon", ua:""};
 let LANG = "ua";
-try { const v = localStorage.getItem(LKEY); if(v && EXLAB[v]) LANG = v; } catch(err){}
+const isLang = v => Object.prototype.hasOwnProperty.call(EXLAB, v);
+try { const v = localStorage.getItem(LKEY); if(v && isLang(v)) LANG = v; } catch(err){}
 
 function txtOf(e){
   if(LANG === "ua") return {t:e.ua, note:e.note||"", ex:(e.ex&&e.ex.ua)||"", soon:false};
@@ -3868,7 +3859,7 @@ function langHTML(){
 /* Оновлює КОЖЕН текстовий блок на сторінці — і картки каталогу, і розкриття
    в навчальному режимі. Ознака блока — атрибут data-lang-id з id запису. */
 function setLang(l, keep){
-  if(l === LANG || !EXLAB[l]) return;
+  if(l === LANG || !isLang(l)) return;
   LANG = l;
   try { localStorage.setItem(LKEY, l); } catch(err){}
   const before = keep ? keep.getBoundingClientRect().top : 0;
