@@ -3313,7 +3313,7 @@ const STATE_NAMES = ["Нове","Вчу","Знаю","Засвоєно"];
    Три режими: нові поняття (відбір → вивчення), повторення, розрізнення.
    Повна специфікація — docs/learn-mode-v2.md
    Тип картки більше НЕ залежить від рівня: спосіб відповіді обирає користувач.
-   Поле st().l лишається в структурі мертвим — заради сумісності експорту. */
+   st().l — лічильник промахів у Powtórce (як у v1), st().s — кількість відповідей. */
 let S = null;
 const NEW_LEN = 5, REV_LEN = 10, PAIR_LEN = 8, TRIES = 3;
 
@@ -3377,7 +3377,12 @@ const checkTyped = (e, v) => { const t = norm(v); return !!t && accepted(e).inde
 function bump(e, ok){                    // ok = «запам'ятав / пам'ятаю»
   const s = st(e.id); s.s++;
   if(ok){ s.b = Math.min(5, s.b+1); s.due = Date.now() + INTERVAL[s.b]; }
-  else  { s.b = 1; s.due = Date.now(); }
+  else  {
+    s.b = 1; s.due = Date.now();
+    /* l — промахи лише в Powtórce: «забув після вивчення». «Pokazuj dalej»
+       під час першого вивчення помилкою не є. Читає «Słabe punkty». */
+    if(S && S.mode === "rev") s.l = (Number(s.l) || 0) + 1;
+  }
   save();
   ok ? S.right++ : S.wrong++;
 }
