@@ -974,7 +974,10 @@ pre.code2 .s{color:#D9B980}
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   padding:13px 14px;cursor:pointer;transition:border-color .16s ease;
 }
-.l-mode[disabled]{opacity:.45;cursor:default}
+/* неактивний режим: приглушені назва й число, підказка («Najbliższa: za 2 dni»)
+   лишається читабельною — це інформація, не декор */
+.l-mode[disabled]{cursor:default;background:var(--well);border-color:var(--line-soft)}
+.l-mode[disabled] b,.l-mode[disabled] .mn{opacity:.45}
 .l-mode .mt{flex:1;min-width:0}
 .l-mode b{display:block;font:600 14.5px var(--sans)}
 .l-mode small{display:block;font:400 11.5px var(--sans);color:var(--muted);margin-top:2px}
@@ -1096,11 +1099,11 @@ pre.code2 .s{color:#D9B980}
 .catrow .f3{background:var(--pcb);height:100%}
 .catrow .f2{background:#69A98D;height:100%}
 .catrow .f1{background:var(--brass);height:100%;opacity:.55}
-.catrow .pc{font:500 11px var(--mono);color:var(--muted);flex:0 0 38px;text-align:right}
+.catrow .pc{font:500 11px var(--mono);color:var(--muted);flex:0 0 44px;text-align:right}
 .weak{margin-top:20px}
 .weak h3,.pgsec{font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;margin:0 0 9px;padding-bottom:6px;border-bottom:1.5px solid var(--ink)}
 .weakitem{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line-soft);font-size:12.5px}
-.weakitem span{font-family:var(--mono);font-size:11px;color:var(--danger)}
+.weakitem .wc{font-family:var(--mono);font-size:11px;color:var(--danger);flex:0 0 auto}
 .tools{display:flex;gap:7px;flex-wrap:wrap;margin-top:22px}
 .tools button{font:500 11.5px var(--sans);padding:8px 12px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);cursor:pointer;color:var(--ink)}
 .tools button.dg{color:var(--danger)}
@@ -1119,7 +1122,7 @@ pre.code2 .s{color:#D9B980}
   .l-opts.two{grid-template-columns:1fr 1fr}
   .l-optdemo{height:112px}
   .pgrid{grid-template-columns:repeat(2,1fr)}
-  .catrow .nm{flex:0 0 96px;font-size:11.5px}
+  .catrow .nm{flex:0 0 124px;font-size:11.5px}
 }
 </style>
 </head>
@@ -3477,13 +3480,12 @@ function renderStart(){
 function renderPicker(){
   const row = k => {
     const items = DATA.filter(e => e.c === k);
-    const know = items.filter(e => (ST[e.id]||{}).b >= 3).length;
-    const pct = Math.round(know / items.length * 100);
+    const know = items.filter(e => (ST[e.id]||{}).b >= 3).length;   // «Znam» + «Opanowane»
     const i = ORDER.indexOf(k);
     return `<button class="l-catitem ${!SEL||SEL.has(k)?"on":""}" data-k="${k}">
       <span class="cnum">${String(i+1).padStart(2,"0")}</span>
       <span class="mt"><b>${CATS[k][1]}</b><small><span lang="uk">${CATS[k][0]}</span> · ${items.length}</small></span>
-      <span class="pctv">${pct}%</span>
+      <span class="pctv">${know}/${items.length}</span>
       <span class="l-catbox">✓</span></button>`;
   };
   vLearn.innerHTML = `
@@ -3807,8 +3809,9 @@ function renderProg(){
   const cats = ORDER.map(k => {
     const items = DATA.filter(e => e.c===k), n = items.length;
     const c=[0,0,0,0]; items.forEach(e => c[stateOf((ST[e.id]||{}).b||0)]++);
-    const known = c[2]+c[3];
-    return {k, n, c, pct: Math.round(known/n*100)};
+    /* дріб «3/14» замість «21 %»: відсоток рахував лише «Znam», а смужка
+       показує й «Uczę się» — поруч стояли «0 %» і заповнена смужка (D13) */
+    return {k, n, c, known: c[2]+c[3], w: n ? 100/n : 0};
   });
   const weak = DATA.filter(e => (ST[e.id]||{}).l >= 2)
                    .sort((a,b)=>ST[b.id].l-ST[a.id].l).slice(0,12);
@@ -3820,14 +3823,14 @@ function renderProg(){
     ${cats.map(c=>`<div class="catrow">
         <span class="nm">${CATS[c.k][1]}</span>
         <span class="tr">
-          <span class="f3" style="width:${c.c[3]/c.n*100}%"></span>
-          <span class="f2" style="width:${c.c[2]/c.n*100}%"></span>
-          <span class="f1" style="width:${c.c[1]/c.n*100}%"></span>
+          <span class="f3" style="width:${c.c[3]*c.w}%"></span>
+          <span class="f2" style="width:${c.c[2]*c.w}%"></span>
+          <span class="f1" style="width:${c.c[1]*c.w}%"></span>
         </span>
-        <span class="pc">${c.pct}%</span>
+        <span class="pc">${c.known}/${c.n}</span>
       </div>`).join("")}
     <div class="weak"><h3>Słabe punkty</h3>
-      ${weak.length ? weak.map(e=>`<div class="weakitem"><span style="color:var(--ink);font-family:var(--sans)"><span lang="en">${esc(e.en)}</span> · <span lang="pl">${esc(e.pl)}</span></span><span>${ST[e.id].l} ${plural(ST[e.id].l,"błąd","błędy","błędów")}</span></div>`).join("")
+      ${weak.length ? weak.map(e=>`<div class="weakitem"><span class="wn"><span lang="en">${esc(e.en)}</span> · <span lang="pl">${esc(e.pl)}</span></span><span class="wc">${ST[e.id].l} ${plural(ST[e.id].l,"błąd","błędy","błędów")}</span></div>`).join("")
         : '<div class="hint2">Na razie pusto. Tu trafią pojęcia, przy których pomylisz się w powtórce co najmniej 2 razy.</div>'}
     </div>
     <div class="tools">
