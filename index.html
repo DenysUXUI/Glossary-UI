@@ -1028,6 +1028,7 @@ pre.code2 .s{color:#D9B980}
 .l-prompt{padding:17px 14px 4px;text-align:center}
 .l-prompt .big{font-size:23px;font-weight:600;letter-spacing:-.015em;line-height:1.15}
 .l-prompt .alt{font:400 12px var(--mono);color:var(--muted);margin-top:4px}
+.l-prompt .big:focus{outline:none}     /* фокус тут — точка читання, не дія */
 
 /* два способи відповіді */
 .l-ways{padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -3416,6 +3417,12 @@ function pickLearn(e){                   // «chcę się nauczyć» → у фа�
 
 /* ---------- render: learn ---------- */
 const vLearn = document.getElementById("v-learn");
+/* Картка перемальовується через innerHTML — фокус падав на body.
+   REFOCUS = «фокус був усередині навчання», тоді після рендера ставимо його
+   на назву нової картки (або на «Jeszcze…» на екрані «Gotowe»). */
+let REFOCUS = false;
+const noteFocus = () => { REFOCUS = REFOCUS || vLearn.contains(document.activeElement); };
+const focusTo = el => { if(el) el.focus({preventScroll:true}); };
 
 function renderStart(){
   const d = dueList().length, n = newList().length;
@@ -3570,6 +3577,7 @@ function armSwipe(onLeft, onRight){
    бокс стрибав на +2, а наступна картка зараховувалась без показу.
    Прапорець живе на самій картці — нова картка = новий елемент. */
 function flyOut(card, dir, cb){
+  noteFocus();                       // до вимкнення кнопок: після нього фокус уже на body
   if(card.dataset.fly) return;
   card.dataset.fly = "1";
   card.querySelectorAll("#actL, #actR").forEach(b => b.disabled = true);
@@ -3593,11 +3601,18 @@ function revealHTML(e){
 }
 
 function renderCard(){
+  noteFocus();
   window.scrollTo(0, 0);            // довге розкриття могло бути прокручене
-  if(S.mode === "pair") return cPair();
-  if(S.mode === "new" && S.phase === "pick") return cPick();
-  if(S.i >= S.items.length) return renderDone();
-  return cLearn(S.items[S.i]);
+  if(S.mode === "pair") cPair();
+  else if(S.mode === "new" && S.phase === "pick") cPick();
+  else if(S.i >= S.items.length) renderDone();
+  else cLearn(S.items[S.i]);
+  if(REFOCUS){
+    REFOCUS = false;
+    const h = vLearn.querySelector(".l-prompt .big");
+    if(h) h.tabIndex = -1;
+    focusTo(h || document.getElementById("again"));
+  }
 }
 function nextCard(){ S.i++; renderCard(); }
 
@@ -3655,8 +3670,10 @@ function reveal(e, forced){
   if(ways) ways.outerHTML = html; else document.getElementById("card").insertAdjacentHTML("beforeend", html);
   if(forced === null){
     armSwipe(() => finish(e, true), () => finish(e, false));
+    focusTo(document.getElementById("actL"));
   } else {
     document.getElementById("nx").onclick = () => finish(e, forced);
+    focusTo(document.getElementById("nx"));
   }
 }
 
@@ -3749,6 +3766,7 @@ function cPair(){
       opts.map(o => `<b lang="en">${esc(o.en)}</b> · <span class="pl-inline" lang="pl">${esc(o.pl)}</span> — <span lang="uk">${strip(o.ua).split(".")[0]}.</span>`).join("<br>") +
       `<div style="margin-top:11px"><button class="l-opt" id="nx" style="text-align:center;width:100%">Dalej →</button></div>`;
     document.getElementById("nx").onclick = () => { S.i++; renderCard(); };
+    focusTo(document.getElementById("nx"));
   });
 }
 
