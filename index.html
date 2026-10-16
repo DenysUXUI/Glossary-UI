@@ -3382,10 +3382,14 @@ function interleave(items){
    62 зі 160 термінів мають польську діакритику, 10 — це перелік через / або vs.
    Тому звіряємо нормалізовано, а перелік зараховуємо за будь-яким фрагментом. */
 const DIA = {"ą":"a","ć":"c","ę":"e","ł":"l","ń":"n","ó":"o","ś":"s","ź":"z","ż":"z"};
-const norm = s => String(s||"").toLowerCase()
+/* NFC — бо macOS і вставлений текст дають «s + ´» замість «ś»;
+   пробіли навколо «/» необов'язкові; кінцеву крапку знімаємо після trim,
+   бо iOS ставить пробіл після крапки */
+const norm = s => String(s||"").toLowerCase().normalize("NFC")
   .replace(/[ąćęłńóśźż]/g, c => DIA[c])
-  .replace(/[.,;:!?]+$/g, "")
-  .replace(/\s+/g, " ").trim();
+  .replace(/\s*\/\s*/g, " / ")
+  .replace(/\s+/g, " ").trim()
+  .replace(/[.,;:!?]+$/, "").trim();
 function accepted(e){
   return e.pl.split(/\s*\/\s*|\s+vs\s+/i).map(norm).filter(Boolean).concat(norm(e.pl));
 }
@@ -3658,7 +3662,7 @@ function reveal(e, forced){
 
 /* написати відповідь; три спроби, підказка по літері */
 function typeMode(e){
-  let left = TRIES, hinted = 0;
+  let left = TRIES, hinted = 0, shake = 0;
   const ways = document.getElementById("ways");
   ways.outerHTML = `
     <div class="l-type">
@@ -3673,22 +3677,25 @@ function typeMode(e){
     <div class="l-hint3" style="padding-top:12px">Ogonki nieobowiązkowe — <b>swiatlo</b> zaliczy się tak samo.</div>`;
   const inp = document.getElementById("ans");
   inp.focus();
-  const done = ok => { inp.classList.add(ok?"ok":"no"); inp.disabled = true;
+  const done = ok => { clearTimeout(shake); inp.classList.add(ok?"ok":"no"); inp.disabled = true;
     document.getElementById("chk").disabled = true;
     document.getElementById("hint").disabled = true;
     if(!ok) inp.value = e.pl;
     reveal(e, ok); };
   const tryIt = () => {
-    if(inp.disabled) return;
+    if(inp.disabled || !norm(inp.value)) return;   // порожня відповідь спробу не забирає
     if(checkTyped(e, inp.value)) return done(true);
     left--;
     document.getElementById("tries").textContent = "Pozostało prób: " + left;
+    if(left <= 0) return done(false);              // червоний стан на останній спробі лишається
     inp.classList.add("no");
-    setTimeout(() => inp.classList.remove("no"), 450);
-    if(left <= 0) done(false);
+    clearTimeout(shake); shake = setTimeout(() => inp.classList.remove("no"), 450);
   };
   document.getElementById("chk").onclick = tryIt;
-  inp.addEventListener("keydown", ev => { if(ev.key === "Enter"){ ev.preventDefault(); tryIt(); } });
+  inp.addEventListener("keydown", ev => {
+    if(ev.key !== "Enter" || ev.isComposing || ev.keyCode === 229) return;   // Enter у середині набору IME
+    ev.preventDefault(); tryIt();
+  });
   document.getElementById("hint").onclick = () => {
     hinted++;
     inp.value = e.pl.slice(0, hinted);
