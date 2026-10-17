@@ -1,0 +1,10 @@
+<!-- Іконка застосунку (варіант C, обраний у handoff-02, D11). PNG перерендерюються Playwright-скриншотом цього SVG з IBM Plex Mono: apple-touch-icon.png 180, icon-512.png 512. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+    
+  <defs><pattern id="g" width="12" height="12" patternUnits="userSpaceOnUse">
+    <rect width="12" height="12" fill="#F5F7F3"/><circle cx="6" cy="6" r="1.15" fill="#C3CAC3"/></pattern></defs>
+  <rect width="180" height="180" fill="url(#g)"/>
+    <rect x="26" y="62" width="128" height="50" rx="6" fill="#0B5C43"/>
+    <text x="90" y="95" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="24" letter-spacing="1" fill="#FFFFFF">Aa</text>
+    <path d="M118 98 L118 138 L128 128 L135 143 L142 140 L135 125 L149 125 Z" fill="#14181A" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+  </svg>

@@ -1,0 +1,15 @@
+{
+  "name": "Katalog UI",
+  "short_name": "Katalog UI",
+  "description": "Słownik elementów interfejsu EN · PL · UA z nauką",
+  "lang": "pl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ECEEEA",
+  "theme_color": "#ECEEEA",
+  "icons": [
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}
