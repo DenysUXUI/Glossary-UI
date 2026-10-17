@@ -25,7 +25,7 @@ fs.mkdirSync(OUT, { recursive: true });
 
   // дрібні зони дотику в інтерфейсі застосунку (демо не рахуємо)
   const small = label => page.evaluate(label => [...document.querySelectorAll("button, a, input")]
-    .filter(el => !el.closest(".sample, .qstage, .l-optdemo"))
+    .filter(el => !el.closest(".l-well, .l-stage, .l-optdemo"))
     .map(el => ({ el, r: el.getBoundingClientRect() }))
     .filter(({ r }) => r.width && r.height && (r.width < 24 || r.height < 24))
     .map(({ el, r }) => `${label}: ${el.tagName.toLowerCase()}.${el.className || "-"} «${(el.textContent || el.placeholder || "").trim().slice(0, 20)}» ${Math.round(r.width)}×${Math.round(r.height)}`),
