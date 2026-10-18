@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe DS · v1 · specimen</title>
+<!-- Згенеровано з docs/wireframe-design-system.md (розділ 8). Правити документ, не цей файл -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ================= WIREFRAME DS v1 · ТОКЕНИ =================
+   Дзеркало «Katalog UI · ДС v3» у шкалі сірого.
+   Компоненти беруть значення ТІЛЬКИ з семантичних токенів.
+   Примітиви --g-* у компонентах не писати. */
+:root{
+  /* шкала сірого · примітиви */
+  --g-0:#FFFFFF;   --g-50:#F7F7F7;  --g-100:#F2F2F2; --g-150:#EBEBEB;
+  --g-200:#E0E0E0; --g-300:#CCCCCC; --g-400:#A3A3A3; --g-500:#858585;
+  --g-600:#6B6B6B; --g-700:#595959; --g-800:#3D3D3D; --g-900:#1A1A1A;
+  --g-1000:#000000;
+
+  /* колір · поверхні */
+  --bg:var(--g-100);               /* тло екрана */
+  --surface:var(--g-0);            /* картки, поля, таб-бар */
+  --surface-sunken:var(--g-50);    /* лунка, вставка, натиск */
+  --surface-muted:var(--g-150);    /* доріжка сегмента, нейтральний тег, вимкнена кнопка */
+  /* колір · текст */
+  --text:var(--g-900);             /* 15.6:1 на --bg */
+  --text-2:var(--g-700);           /* 6.3:1 на --bg, 7:1 на білому */
+  --text-3:var(--g-600);           /* placeholder: 5.3:1 на білому */
+  /* колір · лінії */
+  --border:var(--g-300);           /* межа вторинної кнопки, декоративна */
+  --border-strong:var(--g-500);    /* межа поля й чекбокса: 3.7:1, WCAG 1.4.11 */
+  --divider:var(--g-150);          /* роздільники в картках */
+  /* колір · акцент = найтемніше на екрані */
+  --accent:var(--g-900);
+  --accent-hover:var(--g-800);
+  --accent-soft:var(--g-200);
+  --accent-soft-hover:var(--g-300);
+  --on-accent:var(--g-0);
+  --code:var(--g-700);             /* коди, артикули — разом з --mono */
+  /* колір · статуси без відтінку: лінія, штрихування, іконка, текст */
+  --danger:var(--g-900);
+  --danger-soft:var(--g-0);
+  --danger-text:var(--g-900);
+  --success-text:var(--g-900);
+  --warn:var(--g-800);
+  --warn-soft:var(--g-150);
+  --warn-border:var(--g-500);
+  --warn-strong:var(--g-900);
+  --bw-status:2px;                 /* лінія помилки */
+  --hatch:repeating-linear-gradient(135deg,var(--g-300) 0 1.5px,transparent 1.5px 7px);
+  --scrim:rgba(0,0,0,.4);
+  /* шкала даних */
+  --data-0:var(--g-500);           /* тільки кільцем */
+  --data-1:var(--g-400);
+  --data-2:var(--g-600);
+  --data-3:var(--g-900);
+  --track:var(--g-200);
+  --dot:var(--g-300);              /* крапкова сітка лунки */
+  /* шар вайрфрейму */
+  --canvas:var(--g-200);           /* полотно під кадрами */
+  --ph-fill:var(--g-150);          /* плейсхолдер зображення */
+  --ph-line:var(--g-400);          /* діагоналі плейсхолдера */
+  --ph-text:var(--g-200);          /* сірі рядки тексту */
+  --anno:var(--g-900);             /* анотації, стрілки флоу */
+
+  /* типографіка — 7 кроків */
+  --sans:'IBM Plex Sans',system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --fs-micro:11px;
+  --fs-caption:12px;
+  --fs-small:13px;
+  --fs-body:15px;
+  --fs-lead:16px;                  /* поля вводу: менше 16 — iOS збільшує сторінку */
+  --fs-title:20px;
+  --fs-display:28px;
+  --lh-tight:1.2;
+  --lh-ui:1.4;
+  --lh-read:1.55;
+
+  /* відступи — сітка 4 px */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px;
+  --sp-5:20px; --sp-6:24px; --sp-8:32px; --sp-10:40px;
+
+  /* радіуси; вкладений радіус = зовнішній − відступ між ними */
+  --r-sm:8px;
+  --r-md:12px;
+  --r-lg:16px;
+  --r-full:999px;
+
+  /* тіні — нейтральні */
+  --sh-1:0 1px 2px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.05);
+  --sh-2:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.07);
+  --sh-thumb:0 1px 2px rgba(0,0,0,.14);
+
+  /* рух */
+  --dur-fast:.12s;
+  --dur:.2s;
+  --dur-slow:.32s;
+  --ease:cubic-bezier(.2,.7,.2,1);
+
+  /* каркас і кадри */
+  --tabbar-h:64px;
+  --col:560px;
+  --page:1180px;
+  --frame-m:390px;
+  --frame-d:1280px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--canvas);color:var(--text);
+  font-family:var(--sans);font-size:var(--fs-body);line-height:var(--lh-read);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,p{margin:0}
+a{color:var(--text);text-underline-offset:3px}
+
+/* ================= КОМПОНЕНТИ · ДЗЕРКАЛО v3 ================= */
+
+/* фокус з клавіатури — один для всіх контролів */
+:is(.w-btn,.w-row,.w-chip,.w-copy,.w-seg button,.w-tabbar button,.w-check,.w-link,.w-iconbtn,.w-choice,.w-stepper button):focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;
+}
+
+/* іконка: обвідка 1.8, колір від тексту */
+.w-i{
+  width:22px;height:22px;flex:0 0 auto;
+  fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+}
+
+/* кнопка: primary · secondary · ghost · danger; md (48) · sm (36) */
+.w-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-2);
+  min-height:48px;padding:0 var(--sp-5);
+  font:600 var(--fs-body)/1.25 var(--sans);text-align:center;text-decoration:none;
+  border:1px solid transparent;border-radius:var(--r-md);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease),
+             color var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease);
+}
+.w-btn--primary{background:var(--accent);color:var(--on-accent)}
+.w-btn--secondary{background:var(--surface);color:var(--text);border-color:var(--border)}
+.w-btn--ghost{background:transparent;color:var(--accent);min-height:44px;padding:0 var(--sp-3)}
+.w-btn--danger{background:var(--surface);color:var(--danger);border-color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
+.w-btn--sm{min-height:36px;padding:0 var(--sp-3);font-size:var(--fs-small);border-radius:var(--r-sm)}
+.w-btn--block{width:100%}
+.w-btn[disabled]{background:var(--surface-muted);color:var(--text-2);border-color:transparent;box-shadow:none;cursor:default}
+
+/* картка */
+.w-card{background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-1)}
+.w-card--pad{padding:var(--sp-4)}
+.w-list{padding:0 var(--sp-4)}
+
+/* рядок: іконка · назва + підпис · значення · шеврон */
+.w-row{
+  display:flex;align-items:center;gap:var(--sp-3);width:100%;padding:var(--sp-4);
+  text-align:left;font:inherit;color:var(--text);cursor:pointer;
+  background:var(--surface);border:1px solid transparent;border-radius:var(--r-lg);box-shadow:var(--sh-1);
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color var(--dur-fast) var(--ease),box-shadow var(--dur) var(--ease);
+}
+.w-row-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.w-row-txt b{font:600 var(--fs-lead)/var(--lh-ui) var(--sans)}
+.w-row-txt small{font:400 var(--fs-small)/var(--lh-ui) var(--sans);color:var(--text-2)}
+.w-ico{
+  flex:0 0 auto;width:44px;height:44px;display:grid;place-items:center;
+  border-radius:var(--r-md);background:var(--accent-soft);color:var(--accent);
+}
+.w-ico--solid{background:var(--accent);color:var(--on-accent)}
+.w-ico--sm{width:36px;height:36px;border-radius:calc(var(--r-md) - 2px)}
+.w-ico--sm .w-i{width:20px;height:20px}
+.w-num{flex:0 0 auto;font:600 var(--fs-title)/1 var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
+.w-chev{width:20px;height:20px;color:var(--text-2)}
+.w-row[disabled]{cursor:default;background:transparent;box-shadow:none;border:1px dashed var(--border)}
+.w-row[disabled] .w-ico{background:var(--surface-muted);color:var(--text-2)}
+.w-row[disabled] .w-row-txt b,.w-row[disabled] .w-num{color:var(--text-2)}
+
+/* тег; --dot додає крапку зі шкали даних */
+.w-tag{
+  display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 var(--sp-2);flex:0 0 auto;
+  font:600 var(--fs-micro)/1 var(--sans);white-space:nowrap;
+  color:var(--text-2);background:var(--surface-muted);border-radius:var(--r-full);
+}
+.w-tag--accent{color:var(--accent);background:var(--accent-soft)}
+.w-tag--solid{color:var(--on-accent);background:var(--accent)}
+.w-tag--dot::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--lv);box-shadow:inset 0 0 0 1.5px var(--lv-ring,var(--lv));
+}
+.w-lv0{--lv:transparent;--lv-ring:var(--data-0)}
+.w-lv1{--lv:var(--data-1)} .w-lv2{--lv:var(--data-2)} .w-lv3{--lv:var(--data-3)}
+
+/* поле вводу */
+.w-field{
+  width:100%;height:44px;padding:0 var(--sp-3);margin:0;
+  font:400 var(--fs-lead)/1.2 var(--sans);
+  color:var(--text);background:var(--surface);
+  border:1px solid var(--border-strong);border-radius:var(--r-md);
+  -webkit-appearance:none;appearance:none;
+  transition:border-color var(--dur) var(--ease),box-shadow var(--dur) var(--ease),background-color var(--dur) var(--ease);
+}
+.w-field::placeholder{color:var(--text-3)}
+.w-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.w-field.ok{background:var(--accent-soft);border-color:var(--accent);color:var(--success-text)}
+.w-field.no{background:var(--danger-soft) var(--hatch);border-color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger);color:var(--danger-text)}
+.w-field[disabled]{background:var(--surface-muted);border-color:transparent;color:var(--text-2)}
+.w-fieldset{display:grid;gap:6px}
+.w-fieldlabel{font:500 var(--fs-small)/var(--lh-ui) var(--sans);color:var(--text)}
+.w-fieldmsg{display:flex;align-items:flex-start;gap:6px;font-size:var(--fs-small);line-height:var(--lh-ui);color:var(--text-2)}
+.w-fieldmsg .w-i{width:16px;height:16px;margin-top:1px}
+.w-fieldmsg--no{color:var(--danger-text);font-weight:600}
+.w-search,.w-select{position:relative;display:block}
+.w-search .w-i,.w-select .w-i{position:absolute;top:50%;width:20px;height:20px;transform:translateY(-50%);color:var(--text-2);pointer-events:none}
+.w-search .w-i{left:var(--sp-3)}
+.w-search .w-field{padding-left:40px}
+.w-select .w-i{right:var(--sp-3)}
+.w-select .w-field{padding-right:40px}
+
+/* сегмент-контрол */
+.w-seg{
+  display:inline-flex;flex:0 0 auto;padding:2px;
+  background:var(--surface-muted);border-radius:var(--r-sm);
+}
+.w-seg button{
+  min-width:32px;min-height:28px;padding:0 var(--sp-2);
+  font:600 var(--fs-micro)/1 var(--sans);letter-spacing:.04em;
+  color:var(--text-2);background:transparent;border:0;border-radius:calc(var(--r-sm) - 2px);cursor:pointer;
+  transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease),box-shadow var(--dur) var(--ease);
+}
+.w-seg button.on{background:var(--surface);color:var(--text);box-shadow:var(--sh-thumb)}
+.w-seg--lg{display:flex;padding:3px;border-radius:var(--r-md)}
+.w-seg--lg button{flex:1;min-height:36px;font-size:var(--fs-small);letter-spacing:0;border-radius:calc(var(--r-md) - 3px)}
+
+/* значення з префіксом — тап копіює */
+.w-copy{
+  display:inline-flex;align-items:center;gap:var(--sp-2);max-width:100%;
+  padding:5px var(--sp-3) 5px 5px;
+  font:600 var(--fs-body)/1.3 var(--sans);color:var(--accent);text-align:left;
+  background:var(--accent-soft);border:0;border-radius:var(--r-sm);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transition:background-color var(--dur-fast) var(--ease);
+}
+.w-copy-tag{
+  flex:0 0 auto;padding:3px 6px;font:600 var(--fs-micro)/1 var(--sans);letter-spacing:.04em;
+  color:var(--on-accent);background:var(--accent);border-radius:calc(var(--r-sm) - 5px);
+}
+
+/* текст: опис · примітка · вставка */
+.w-desc{margin:0;font-size:var(--fs-body);line-height:var(--lh-read)}
+.w-note{margin:var(--sp-2) 0 0;font-size:var(--fs-small);line-height:var(--lh-read);color:var(--text-2)}
+.w-note b{color:var(--text);font-weight:600}
+.w-callout{margin:var(--sp-3) 0 0;padding:var(--sp-3);background:var(--surface-sunken);border-radius:var(--r-md)}
+.w-callout-lab{display:block;margin-bottom:2px;font:600 var(--fs-caption)/var(--lh-ui) var(--sans);color:var(--text-2)}
+.w-callout p{margin:0;font-size:var(--fs-body);line-height:var(--lh-read)}
+.w-code{font:500 var(--fs-caption) var(--mono);color:var(--code);white-space:nowrap}
+.w-mono{font-family:var(--mono)}
+.w-alt{margin:2px 0 0;font:400 var(--fs-small)/var(--lh-ui) var(--mono);color:var(--text-2)}
+.w-count{font-size:var(--fs-small);color:var(--text-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.w-empty{padding:var(--sp-10) var(--sp-5);text-align:center;font-size:var(--fs-body);color:var(--text-2)}
+
+/* лунка: зона чужого віджета на крапковій сітці */
+.w-well{
+  display:flex;align-items:center;justify-content:center;min-height:120px;
+  padding:var(--sp-5) var(--sp-4);
+  background-color:var(--surface-sunken);
+  background-image:radial-gradient(var(--dot) 1px,transparent 1px);
+  background-size:12px 12px;background-position:-1px -1px;
+  border-top:1px solid var(--divider);
+  font-size:var(--fs-small);color:var(--text-2);text-align:center;
+}
+.w-well>*{max-width:100%}
+.w-stage{
+  display:flex;align-items:center;justify-content:center;min-height:150px;
+  padding:var(--sp-6) var(--sp-4);border-radius:var(--r-md);
+  background-color:var(--surface-sunken);
+  background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:12px 12px;
+  font-size:var(--fs-small);color:var(--text-2);text-align:center;
+}
+
+/* картка «текст + медіа» */
+.w-split{display:grid;grid-template-columns:1fr;overflow:hidden;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-1)}
+.w-split-body{padding:var(--sp-4);min-width:0}
+.w-split>.w-img{border-radius:0}
+
+/* прогрес */
+.w-progress{flex:1;height:6px;background:var(--track);border-radius:var(--r-full);overflow:hidden}
+.w-progress-fill{height:100%;background:var(--accent);border-radius:inherit;transition:width var(--dur-slow) var(--ease)}
+.w-bar{flex:1;height:8px;display:flex;background:var(--track);border-radius:var(--r-full);overflow:hidden}
+.w-bar>*+*{border-left:1px solid var(--surface)}
+.w-bar-f3{background:var(--data-3)}
+.w-bar-f2{background:var(--data-2)}
+.w-bar-f1{background:var(--data-1)}
+
+/* заголовки */
+.w-pagehead{display:flex;flex-direction:column;gap:var(--sp-1);margin:0 0 var(--sp-6)}
+.w-eyebrow{margin:0;font:600 var(--fs-small)/var(--lh-ui) var(--sans);color:var(--accent)}
+.w-title{margin:0;font:600 var(--fs-display)/var(--lh-tight) var(--sans);letter-spacing:-.01em}
+.w-h2{margin:0;font:600 var(--fs-title)/var(--lh-tight) var(--sans)}
+.w-sub{margin:0;font-size:var(--fs-body);line-height:var(--lh-ui);color:var(--text-2)}
+.w-label{margin:var(--sp-6) var(--sp-1) var(--sp-2);font:600 var(--fs-small)/var(--lh-ui) var(--sans);color:var(--text-2)}
+.w-help{margin:var(--sp-2) var(--sp-1) 0;font-size:var(--fs-small);line-height:var(--lh-read);color:var(--text-2)}
+.w-sec{margin:0 0 var(--sp-8)}
+.w-sechead{display:flex;align-items:baseline;gap:var(--sp-2);padding:var(--sp-2) var(--sp-1);margin-bottom:var(--sp-2)}
+.w-secnum{font:500 var(--fs-small) var(--mono);color:var(--code)}
+.w-sectitle{margin:0;font:600 var(--fs-title)/var(--lh-tight) var(--sans)}
+.w-secaside{margin-left:auto;font-size:var(--fs-small);color:var(--text-2)}
+
+/* таб-бар — притиснутий до низу кадру */
+.w-tabbar{
+  position:absolute;left:0;right:0;bottom:0;z-index:60;
+  background:var(--surface);box-shadow:0 -1px 0 var(--divider);
+}
+.w-tabbar-in{display:flex;max-width:480px;height:var(--tabbar-h);margin:0 auto;padding:0 var(--sp-3)}
+.w-tabbar button{
+  position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sp-1);
+  font:500 var(--fs-micro)/1.2 var(--sans);color:var(--text-2);
+  background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:color var(--dur) var(--ease);
+}
+.w-tabbar .w-i{width:24px;height:24px}
+.w-tabbar button.on{color:var(--accent);font-weight:600}
+.w-tabbar button.on .w-i{stroke-width:2.2}
+.w-tabbar .w-badge{top:8px;right:calc(50% - 22px)}
+
+/* тост — у кадрі показується статично */
+.w-toast{
+  position:absolute;left:50%;z-index:99;max-width:calc(100% - 2 * var(--sp-4));
+  bottom:calc(var(--tabbar-h) + var(--sp-3));transform:translateX(-50%);
+  padding:var(--sp-3) var(--sp-4);font:500 var(--fs-small)/1.3 var(--sans);white-space:nowrap;
+  color:var(--surface);background:var(--text);border-radius:var(--r-md);box-shadow:var(--sh-2);
+}
+.w-toast--low{bottom:var(--sp-4)}
+
+/* банер: попередження · помилка · інформація */
+.w-banner{
+  display:flex;align-items:flex-start;gap:var(--sp-3);padding:var(--sp-3) var(--sp-4);
+  font-size:var(--fs-small);line-height:var(--lh-read);
+  color:var(--warn);background:var(--warn-soft);border:1px solid var(--warn-border);border-radius:var(--r-md);
+}
+.w-banner b{display:block;color:var(--warn-strong)}
+.w-banner .w-i{width:20px;height:20px;margin-top:1px;color:var(--warn-strong)}
+.w-banner--error{color:var(--danger-text);background:var(--danger-soft) var(--hatch);border-color:var(--danger);box-shadow:inset 0 0 0 1px var(--danger)}
+.w-banner--error b,.w-banner--error .w-i{color:var(--danger-text)}
+.w-banner--info{color:var(--text-2);background:var(--surface-sunken);border-color:var(--divider)}
+.w-banner--info b,.w-banner--info .w-i{color:var(--text)}
+
+/* рядок-чекбокс і радіо */
+.w-check{
+  display:flex;align-items:center;gap:var(--sp-3);width:100%;min-height:56px;padding:var(--sp-3) var(--sp-4);
+  text-align:left;font:inherit;color:var(--text);cursor:pointer;
+  background:none;border:0;border-bottom:1px solid var(--divider);
+  -webkit-tap-highlight-color:transparent;transition:background-color var(--dur-fast) var(--ease);
+}
+.w-list .w-check{padding-left:0;padding-right:0}
+.w-check:last-child{border-bottom:0}
+.w-check .w-row-txt b{font-weight:500;font-size:var(--fs-body)}
+.w-box{
+  flex:0 0 auto;width:22px;height:22px;display:grid;place-items:center;color:transparent;
+  border:1.5px solid var(--border-strong);border-radius:calc(var(--r-sm) - 2px);
+  transition:background-color var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease);
+}
+.w-box .w-i{width:14px;height:14px;stroke-width:2.6}
+.w-check.on .w-box{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.w-box--radio{border-radius:var(--r-full)}
+.w-check.on .w-box--radio{background:var(--surface)}
+.w-check.on .w-box--radio::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent)}
+
+/* дві рівноправні дії */
+.w-actpair{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2)}
+.w-actpair .w-btn{padding:0 var(--sp-3)}
+
+/* рядок сесії: ✕ · прогрес · лічильник */
+.w-iconbtn{
+  position:relative;flex:0 0 auto;width:44px;height:44px;
+  display:grid;place-items:center;color:var(--text-2);
+  background:none;border:0;border-radius:var(--r-full);cursor:pointer;
+}
+.w-topbar{display:flex;align-items:center;gap:var(--sp-2)}
+.w-topbar>.w-iconbtn:first-child{margin-left:calc(-1 * var(--sp-3))}
+.w-topcount{min-width:36px;text-align:right;font:500 var(--fs-small)/1 var(--sans);color:var(--text-2);font-variant-numeric:tabular-nums}
+
+/* плитки вибору */
+.w-choices{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2)}
+.w-choice{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sp-1);
+  min-height:112px;padding:var(--sp-3);
+  font:500 var(--fs-small)/var(--lh-ui) var(--sans);color:var(--text);text-align:center;cursor:pointer;
+  background:var(--surface-sunken);border:1px solid var(--divider);border-radius:var(--r-md);
+  transition:border-color var(--dur-fast) var(--ease),background-color var(--dur-fast) var(--ease);
+}
+.w-choice small{font-size:var(--fs-caption);color:var(--text-2)}
+.w-choice.on{background:var(--surface);border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.w-choice.no{background:var(--danger-soft) var(--hatch);border-color:var(--danger);box-shadow:inset 0 0 0 2px var(--danger)}
+
+/* екран результату */
+.w-result{
+  padding:var(--sp-8) var(--sp-5) var(--sp-5);text-align:center;
+  background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-1);
+}
+.w-result-ico{
+  width:56px;height:56px;margin:0 auto var(--sp-3);display:grid;place-items:center;
+  color:var(--accent);background:var(--accent-soft);border-radius:var(--r-full);
+}
+.w-result-ico .w-i{width:28px;height:28px;stroke-width:2.2}
+.w-result p{margin:var(--sp-1) 0 var(--sp-5);color:var(--text-2)}
+.w-result .w-btn+.w-btn{margin-top:var(--sp-2)}
+
+/* плитки з числом і рядки даних */
+.w-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-2)}
+.w-stat{padding:var(--sp-4)}
+.w-stat b{display:block;font:600 var(--fs-display)/1.1 var(--sans);font-variant-numeric:tabular-nums}
+.w-stat span{display:inline-flex;align-items:center;gap:6px;margin-top:var(--sp-1);font-size:var(--fs-small);color:var(--text-2)}
+.w-stat span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lv);box-shadow:inset 0 0 0 1.5px var(--lv-ring,var(--lv))}
+.w-datarow{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-3) 0;border-bottom:1px solid var(--divider)}
+.w-datarow:last-child{border-bottom:0}
+.w-dataname{flex:0 0 132px;font-size:var(--fs-small)}
+.w-dataval{flex:0 0 44px;text-align:right;font-size:var(--fs-small);color:var(--text-2);font-variant-numeric:tabular-nums}
+
+/* пошук і пігулки в липкій смузі */
+.w-masthead{position:sticky;top:0;z-index:50;padding:var(--sp-3) var(--sp-4);background:var(--bg);box-shadow:0 1px 0 var(--divider)}
+.w-chips{
+  display:flex;gap:var(--sp-2);overflow-x:auto;scrollbar-width:none;
+  margin:var(--sp-3) calc(-1 * var(--sp-4)) 0;padding:2px var(--sp-4) var(--sp-1);
+}
+.w-chips::-webkit-scrollbar{display:none}
+.w-chip{
+  flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;
+  font:500 var(--fs-small)/1 var(--sans);color:var(--text);text-decoration:none;white-space:nowrap;
+  background:var(--surface);border:0;border-radius:var(--r-full);box-shadow:var(--sh-1);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+.w-chip span{color:var(--text-2);font-variant-numeric:tabular-nums}
+.w-chip.on{background:var(--accent);color:var(--on-accent)}
+.w-chip.on span{color:inherit}
+.w-chip.w-off{opacity:.4;pointer-events:none}
+
+/* текстова дія */
+.w-link{
+  min-height:32px;padding:0;background:none;border:0;cursor:pointer;
+  font:600 var(--fs-small)/1.2 var(--sans);color:var(--accent);
+  text-decoration:underline;text-underline-offset:3px;
+}
+.w-link[disabled]{color:var(--text-2);text-decoration:none;cursor:default}
+
+/* ================= КОМПОНЕНТИ · ДОДАНІ ДЛЯ ВАЙРФРЕЙМІВ ================= */
+
+/* верхня панель: назад · назва · дії */
+.w-appbar{display:flex;align-items:center;gap:var(--sp-1);height:56px;padding:0 var(--sp-1);background:var(--bg)}
+.w-appbar .w-iconbtn{color:var(--text)}
+.w-appbar-title{flex:1;min-width:0;font:600 var(--fs-lead)/var(--lh-ui) var(--sans);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.w-appbar--sticky{position:sticky;top:0;z-index:50;box-shadow:0 1px 0 var(--divider)}
+
+/* лічильник на іконці — суцільний */
+.w-badge{
+  position:absolute;top:4px;right:2px;min-width:18px;height:18px;padding:0 5px;
+  display:grid;place-items:center;
+  font:600 var(--fs-micro)/1 var(--sans);font-variant-numeric:tabular-nums;
+  color:var(--on-accent);background:var(--accent);border-radius:var(--r-full);box-shadow:0 0 0 2px var(--surface);
+}
+
+/* модальне вікно й аркуш */
+.w-scrim{position:absolute;inset:0;z-index:70;background:var(--scrim)}
+.w-sheet{
+  position:absolute;left:0;right:0;bottom:0;z-index:71;
+  padding:var(--sp-2) var(--sp-4) var(--sp-6);
+  background:var(--surface);border-radius:var(--r-lg) var(--r-lg) 0 0;box-shadow:var(--sh-2);
+}
+.w-sheet::before{content:"";display:block;width:36px;height:4px;margin:0 auto var(--sp-4);background:var(--border);border-radius:var(--r-full)}
+.w-dialog{
+  position:absolute;left:var(--sp-4);right:var(--sp-4);top:50%;z-index:71;transform:translateY(-50%);
+  padding:var(--sp-6) var(--sp-5) var(--sp-5);
+  background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-2);
+}
+
+/* лічильник кількості */
+.w-stepper{display:inline-flex;align-items:center;height:44px;background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--r-md)}
+.w-stepper button{width:44px;height:100%;display:grid;place-items:center;color:var(--text);background:none;border:0;border-radius:var(--r-md);cursor:pointer}
+.w-stepper button[disabled]{color:var(--border-strong);cursor:default}
+.w-stepper .w-i{width:20px;height:20px}
+.w-stepper output{min-width:32px;text-align:center;font:600 var(--fs-lead)/1 var(--sans);font-variant-numeric:tabular-nums}
+
+/* ціна */
+.w-price{font:600 var(--fs-lead)/var(--lh-tight) var(--sans);font-variant-numeric:tabular-nums;white-space:nowrap}
+.w-price--lg{font-size:var(--fs-title)}
+.w-price-old{margin-left:var(--sp-2);font:400 var(--fs-small)/1 var(--sans);color:var(--text-2);text-decoration:line-through;white-space:nowrap}
+.w-price-unit{display:block;font:400 var(--fs-caption)/var(--lh-ui) var(--sans);color:var(--text-2)}
+
+/* панель головної дії внизу кадру */
+.w-ctabar{
+  position:absolute;left:0;right:0;bottom:0;z-index:60;
+  display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-4);
+  background:var(--surface);box-shadow:0 -1px 0 var(--divider);
+}
+.w-ctabar .w-btn{flex:1}
+.w-ctabar--above-tabbar{bottom:var(--tabbar-h)}
+
+/* розкладка */
+.w-screen{padding:var(--sp-4) var(--sp-4) var(--sp-10)}
+.w-screen--tabbar{padding-bottom:calc(var(--tabbar-h) + var(--sp-10))}
+.w-screen--cta{padding-bottom:calc(72px + var(--sp-10))}
+.w-screen--tabbar.w-screen--cta{padding-bottom:calc(var(--tabbar-h) + 72px + var(--sp-10))}
+.w-stack{display:grid;gap:var(--sp-3)}
+.w-stack--lg{gap:var(--sp-6)}
+.w-hstack{display:flex;align-items:center;gap:var(--sp-2)}
+.w-spread{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3)}
+.w-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:var(--sp-3)}
+.w-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ================= ШАР ВАЙРФРЕЙМУ ================= */
+
+/* полотно */
+.w-board{display:flex;flex-direction:column;gap:var(--sp-10);min-height:100vh;padding:var(--sp-10)}
+.w-board>.w-pagehead{max-width:880px;margin:0}
+.w-assume{max-width:880px;margin:0;padding:var(--sp-4) var(--sp-5);font-size:var(--fs-small);line-height:var(--lh-read);background:var(--surface);border-radius:var(--r-lg);box-shadow:0 0 0 1px var(--border)}
+.w-assume ul{margin:var(--sp-1) 0 0;padding-left:var(--sp-5)}
+
+/* флоу: кадр → дія → кадр */
+.w-flow{display:flex;align-items:flex-start;gap:var(--sp-4);overflow-x:auto;padding:var(--sp-3) var(--sp-3) var(--sp-4)}
+.w-step{
+  position:relative;flex:0 0 120px;align-self:center;padding-top:var(--sp-5);
+  font:500 var(--fs-small)/var(--lh-ui) var(--sans);text-align:center;color:var(--text);
+}
+.w-step::before{content:"";position:absolute;top:5px;left:0;right:8px;height:2px;background:var(--anno)}
+.w-step::after{
+  content:"";position:absolute;top:0;right:0;
+  border-style:solid;border-width:6px 0 6px 9px;border-color:transparent transparent transparent var(--anno);
+}
+
+/* кадр */
+.w-shot{flex:0 0 auto;display:flex;flex-direction:column;gap:var(--sp-2)}
+.w-shot-label{display:flex;align-items:baseline;gap:var(--sp-2);font:500 var(--fs-caption)/var(--lh-ui) var(--mono);color:var(--text-2)}
+.w-shot-label b{font:600 var(--fs-small)/var(--lh-ui) var(--sans);color:var(--text)}
+.w-frame{
+  position:relative;width:var(--frame-m);min-height:844px;overflow:hidden;
+  background:var(--bg);box-shadow:0 0 0 1px var(--border),var(--sh-2);
+  container-type:inline-size;
+}
+.w-frame--d{width:var(--frame-d);min-height:800px}
+.w-frame--fit{min-height:0}
+.w-frame--d .w-screen{max-width:var(--page);margin:0 auto;padding:var(--sp-6) var(--sp-6) var(--sp-10)}
+
+/* адаптивність від ширини кадру */
+@container (min-width:820px){
+  .w-split{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}
+  .w-split .w-well{border-top:0;border-left:1px solid var(--divider)}
+  .w-dialog{left:50%;right:auto;width:480px;transform:translate(-50%,-50%)}
+  .w-sheet{left:50%;right:auto;width:560px;transform:translateX(-50%)}
+}
+@container (max-width:520px){
+  .w-stats{grid-template-columns:repeat(2,1fr)}
+}
+
+/* плейсхолдери */
+.w-img{
+  position:relative;display:block;width:100%;aspect-ratio:4/3;overflow:hidden;
+  background:
+    linear-gradient(to top right,transparent calc(50% - .75px),var(--ph-line) calc(50% - .75px),var(--ph-line) calc(50% + .75px),transparent calc(50% + .75px)),
+    linear-gradient(to bottom right,transparent calc(50% - .75px),var(--ph-line) calc(50% - .75px),var(--ph-line) calc(50% + .75px),transparent calc(50% + .75px)),
+    var(--ph-fill);
+  border-radius:var(--r-md);
+}
+.w-img--1x1{aspect-ratio:1/1}
+.w-img--16x9{aspect-ratio:16/9}
+.w-img--3x4{aspect-ratio:3/4}
+.w-img[data-label]::after{
+  content:attr(data-label);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  max-width:calc(100% - 2 * var(--sp-2));padding:2px var(--sp-2);
+  font:500 var(--fs-caption)/var(--lh-ui) var(--mono);color:var(--text-2);text-align:center;
+  background:var(--ph-fill);border-radius:var(--r-sm);
+}
+.w-lines{display:grid;gap:calc(var(--fs-body) * var(--lh-read) - 8px);padding:var(--sp-2) 0}
+.w-lines i{display:block;height:8px;background:var(--ph-text);border-radius:var(--r-full)}
+.w-lines i:last-child:not(:first-child){width:62%}
+.w-lines--sm{gap:calc(var(--fs-small) * var(--lh-read) - 6px)}
+.w-lines--sm i{height:6px}
+.w-avatar{flex:0 0 auto;display:inline-block;width:40px;height:40px;border-radius:var(--r-full);background:var(--ph-fill);box-shadow:inset 0 0 0 1px var(--border)}
+.w-avatar--sm{width:32px;height:32px}
+.w-avatar--lg{width:56px;height:56px}
+.w-tbd{
+  display:inline-flex;align-items:center;height:20px;padding:0 6px;vertical-align:middle;
+  font:600 var(--fs-micro)/1 var(--mono);letter-spacing:.04em;color:var(--text);
+  background:var(--surface) var(--hatch);border:1px solid var(--text);border-radius:calc(var(--r-sm) - 2px);
+}
+.w-hatch{background-image:var(--hatch)}
+
+/* анотації: порожнистий маркер на елементі + легенда поза кадром */
+.w-anno{
+  display:inline-grid;place-items:center;flex:0 0 auto;width:22px;height:22px;
+  font:600 var(--fs-micro)/1 var(--mono);color:var(--anno);
+  background:var(--surface);border:2px solid var(--anno);border-radius:var(--r-full);
+}
+.w-anno-at{position:relative}
+.w-anno-at>.w-anno{position:absolute;top:-11px;left:-11px;z-index:80}
+.w-anno-at--r>.w-anno{left:auto;right:-11px}
+.w-board--clean .w-anno,.w-board--clean .w-notes{display:none}
+.w-notes{
+  flex:0 0 280px;align-self:flex-start;display:grid;gap:var(--sp-3);
+  margin:0;padding:var(--sp-4);list-style:none;
+  background:var(--surface);border-radius:var(--r-lg);box-shadow:0 0 0 1px var(--border);
+}
+.w-notes li{display:flex;align-items:flex-start;gap:var(--sp-2);font-size:var(--fs-small);line-height:var(--lh-read)}
+.w-notes li b{font-weight:600}
+
+/* ================= HOVER · ACTIVE · MOTION ================= */
+/* hover тільки там, де є справжня мишка (sticky hover на iOS) */
+@media (hover:hover) and (pointer:fine){
+  .w-btn--primary:not([disabled]):hover{background:var(--accent-hover)}
+  .w-btn--secondary:not([disabled]):hover{border-color:var(--border-strong)}
+  .w-btn--danger:not([disabled]):hover{background:var(--surface-sunken)}
+  .w-btn--ghost:not([disabled]):hover{background:var(--accent-soft)}
+  .w-row:not([disabled]):hover{box-shadow:var(--sh-2)}
+  .w-check:hover{background:var(--surface-sunken)}
+  .w-chip:not(.on):hover{background:var(--surface-sunken)}
+  .w-copy:hover{background:var(--accent-soft-hover)}
+  .w-seg button:not(.on):hover{color:var(--text)}
+  .w-tabbar button:not(.on):hover{color:var(--text)}
+  .w-iconbtn:hover{background:var(--surface-muted)}
+  .w-choice:not(.on):hover{border-color:var(--border-strong)}
+  .w-stepper button:not([disabled]):hover{background:var(--surface-sunken)}
+}
+/* відгук на дотик */
+.w-btn--primary:not([disabled]):active{background:var(--accent-hover)}
+.w-btn--secondary:not([disabled]):active,.w-btn--danger:not([disabled]):active{background:var(--surface-sunken)}
+.w-btn--ghost:not([disabled]):active{background:var(--accent-soft)}
+.w-row:not([disabled]):active,.w-check:active{background:var(--surface-sunken)}
+.w-chip:not(.on):active{background:var(--surface-sunken)}
+.w-copy:active{background:var(--accent-soft-hover)}
+.w-iconbtn:active{background:var(--surface-muted)}
+.w-choice:active{background:var(--accent-soft)}
+.w-stepper button:not([disabled]):active{background:var(--surface-muted)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+/* ===== розкладка цього файлу ===== */
+/* плитка товару в сітці */
+.w-tile{overflow:hidden}
+.w-tile>.w-img{border-radius:0}
+.w-tile-body{display:grid;gap:2px;padding:var(--sp-3)}
+.w-tile-name{font:500 var(--fs-small)/var(--lh-ui) var(--sans)}
+/* позиція кошика */
+.w-line{display:flex;gap:var(--sp-3);align-items:flex-start}
+.w-line>.w-img{flex:0 0 72px;width:72px}
+.w-line-body{flex:1;min-width:0;display:grid;gap:2px}
+.w-line-body b{font:600 var(--fs-body)/var(--lh-ui) var(--sans)}
+/* підсумок */
+.w-sum{display:grid;gap:var(--sp-2);font-size:var(--fs-small)}
+.w-sum .w-spread:last-child{padding-top:var(--sp-2);border-top:1px solid var(--divider);font-size:var(--fs-body);font-weight:600}
+.w-sum .w-spread>:last-child{font-variant-numeric:tabular-nums}
+/* ціни progowe */
+.w-tiers{display:grid;gap:var(--sp-1);font-size:var(--fs-small)}
+.w-tiers .w-spread>:last-child{font-weight:600;font-variant-numeric:tabular-nums}
+/* десктоп: шапка й картка товару */
+.w-deskbar{display:flex;align-items:center;gap:var(--sp-4);height:64px;padding:0 var(--sp-6);background:var(--surface);box-shadow:0 1px 0 var(--divider)}
+.w-deskbar .w-search{flex:1;max-width:480px}
+.w-deskbar .w-iconbtn{color:var(--text)}
+.w-pdp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--sp-8);align-items:start}
+.w-crumbs{margin:0 0 var(--sp-4);font-size:var(--fs-small);color:var(--text-2)}
+/* галерея компонентів */
+.w-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-4);align-items:start}
+.w-spec{display:grid;gap:var(--sp-3);align-content:start}
+.w-spec>.w-label{margin:0}
+.w-wrap{display:flex;flex-wrap:wrap;gap:var(--sp-2);align-items:center}
+.w-spec-focus{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.w-spec-static{position:static;transform:none;display:inline-block}
+.w-swatches{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:var(--sp-1)}
+.w-swatch{display:grid;gap:var(--sp-1);font:500 var(--fs-micro)/1.2 var(--mono);color:var(--text-2)}
+.w-swatch i{display:block;height:56px;border-radius:var(--r-sm);box-shadow:inset 0 0 0 1px var(--divider)}
+</style>
+</head>
+<body>
+<main class="w-board">
+
+  <header class="w-pagehead">
+    <p class="w-eyebrow">Wireframe DS · v1 · specimen · 18.10.2026</p>
+    <h1 class="w-title">Zamówienie komponentów: od listy do potwierdzenia</h1>
+    <p class="w-sub">Przykładowy flow e-commerce B2B i galeria komponentów. Wszystko zbudowane z&nbsp;CSS z&nbsp;rozdziału 8 dokumentu.</p>
+  </header>
+
+  <section class="w-assume" aria-label="Założenia">
+    <b>Założenia</b>
+    <ul>
+      <li>Cel użytkownika: szybko zamówić brakujące komponenty do produkcji.</li>
+      <li>Cel biznesu: więcej zamówień powyżej progu cenowego.</li>
+      <li>Klient B2B jest zalogowany, ceny netto, minimalna ilość zamówienia (MOQ) znana dla każdej pozycji.</li>
+    </ul>
+  </section>
+
+  <!-- ================= FLOW · MOBILE ================= -->
+  <div class="w-flow">
+
+    <!-- 01 Lista -->
+    <div class="w-shot">
+      <div class="w-shot-label"><b>01 · Lista produktów</b> 390</div>
+      <div class="w-frame">
+        <div class="w-screen w-screen--tabbar">
+          <div class="w-pagehead" style="margin-bottom:var(--sp-4)">
+            <p class="w-eyebrow">Elementy pasywne</p>
+            <h1 class="w-title">Kondensatory</h1>
+          </div>
+          <label class="w-search">
+            <svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input class="w-field" type="search" placeholder="Szukaj: 100 nF, 0805, X7R…" aria-label="Szukaj w kategorii">
+          </label>
+          <div class="w-anno-at" style="margin-top:var(--sp-3)">
+            <span class="w-anno">1</span>
+            <nav class="w-chips" aria-label="Typ" style="margin-top:0">
+              <a class="w-chip on" href="#">Wszystkie <span>248</span></a>
+              <a class="w-chip" href="#">Ceramiczne <span>120</span></a>
+              <a class="w-chip" href="#">Elektrolityczne <span>86</span></a>
+              <a class="w-chip" href="#">Tantalowe <span>42</span></a>
+            </nav>
+          </div>
+          <div class="w-spread" style="margin:var(--sp-4) 0 var(--sp-3)">
+            <span class="w-count">248 produktów</span>
+            <div class="w-hstack">
+              <button class="w-btn w-btn--secondary w-btn--sm"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filtry</button>
+            </div>
+          </div>
+          <div class="w-grid">
+            <article class="w-card w-tile">
+              <div class="w-img w-img--1x1" data-label="foto"></div>
+              <div class="w-tile-body">
+                <span class="w-code">SKU 4711-22</span>
+                <span class="w-tile-name">Kondensator 100&nbsp;nF 50&nbsp;V X7R</span>
+                <span class="w-price">0,12 zł</span><span class="w-price-unit">netto · od 100 szt.</span>
+              </div>
+            </article>
+            <article class="w-card w-tile">
+              <div class="w-img w-img--1x1" data-label="foto"></div>
+              <div class="w-tile-body">
+                <span class="w-code">SKU 4711-30</span>
+                <span class="w-tile-name">Kondensator 10&nbsp;µF 25&nbsp;V</span>
+                <span><span class="w-price">0,48 zł</span><span class="w-price-old">0,60 zł</span></span><span class="w-price-unit">netto · od 50 szt.</span>
+              </div>
+            </article>
+            <article class="w-card w-tile">
+              <div class="w-img w-img--1x1" data-label="foto"></div>
+              <div class="w-tile-body"><div class="w-lines w-lines--sm"><i></i><i></i></div></div>
+            </article>
+            <article class="w-card w-tile">
+              <div class="w-img w-img--1x1" data-label="foto"></div>
+              <div class="w-tile-body"><div class="w-lines w-lines--sm"><i></i><i></i></div></div>
+            </article>
+          </div>
+        </div>
+        <nav class="w-tabbar" aria-label="Główna nawigacja"><div class="w-tabbar-in">
+          <button><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6h-6v6H4z"/></svg><span>Start</span></button>
+          <button class="on" aria-current="page"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span>Kategorie</span></button>
+          <button><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.5l2.2 11h10.6L20.5 8H6.6"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg><span>Koszyk</span><span class="w-badge">2</span></button>
+          <button><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg><span>Konto</span></button>
+        </div></nav>
+      </div>
+    </div>
+
+    <div class="w-step">Tap: karta produktu</div>
+
+    <!-- 02 Karta produktu -->
+    <div class="w-shot">
+      <div class="w-shot-label"><b>02 · Karta produktu</b> 390</div>
+      <div class="w-frame">
+        <div class="w-appbar">
+          <button class="w-iconbtn" aria-label="Wróć"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <span class="w-appbar-title"></span>
+          <button class="w-iconbtn" aria-label="Dodaj do ulubionych"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg></button>
+          <button class="w-iconbtn" aria-label="Koszyk, 2 produkty"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.5l2.2 11h10.6L20.5 8H6.6"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg><span class="w-badge">2</span></button>
+        </div>
+        <div class="w-img" data-label="Zdjęcie produktu · galeria" style="border-radius:0"></div>
+        <div class="w-screen w-screen--cta">
+          <div class="w-stack">
+            <div class="w-hstack">
+              <span class="w-tag w-tag--dot w-lv3">W magazynie</span>
+              <span class="w-tag">Wysyłka 24 h</span>
+            </div>
+            <h1 class="w-h2">Kondensator ceramiczny 100&nbsp;nF 50&nbsp;V X7R 0805</h1>
+            <div><button class="w-copy" aria-label="SKU 4711-22, skopiuj"><span class="w-copy-tag">SKU</span><span class="w-mono">4711-22</span></button></div>
+            <div class="w-callout w-anno-at" style="margin:0">
+              <span class="w-anno">2</span>
+              <span class="w-callout-lab">Ceny progowe, netto</span>
+              <div class="w-tiers">
+                <div class="w-spread"><span>od 100 szt.</span><span>0,12 zł</span></div>
+                <div class="w-spread"><span>od 1&nbsp;000 szt.</span><span>0,09 zł</span></div>
+                <div class="w-spread"><span>od 5&nbsp;000 szt.</span><span>0,07 zł</span></div>
+              </div>
+            </div>
+            <div class="w-seg w-seg--lg" role="tablist" aria-label="Informacje o produkcie">
+              <button role="tab" aria-selected="true" class="on">Opis</button>
+              <button role="tab" aria-selected="false">Specyfikacja</button>
+              <button role="tab" aria-selected="false">Pliki</button>
+            </div>
+            <div class="w-lines"><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="w-ctabar">
+          <div class="w-stepper">
+            <button aria-label="Zmniejsz ilość" disabled><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+            <output aria-live="polite">100</output>
+            <button aria-label="Zwiększ ilość"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+          <button class="w-btn w-btn--primary">Dodaj do koszyka</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-step">Tap: Dodaj do koszyka → koszyk</div>
+
+    <!-- 03 Koszyk -->
+    <div class="w-shot">
+      <div class="w-shot-label"><b>03 · Koszyk</b> 390 · 2 pozycje</div>
+      <div class="w-frame">
+        <div class="w-appbar">
+          <button class="w-iconbtn" aria-label="Wróć"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <h1 class="w-appbar-title">Koszyk</h1>
+          <button class="w-btn w-btn--ghost">Wyczyść</button>
+        </div>
+        <div class="w-screen w-screen--cta">
+          <div class="w-stack">
+            <div class="w-banner w-anno-at" role="status">
+              <span class="w-anno">3</span>
+              <svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.2v.1"/></svg>
+              <div><b>Zostało 300 szt. kondensatora 10&nbsp;µF</b>Reszta zamówienia dojdzie w&nbsp;ciągu 7&nbsp;dni.</div>
+            </div>
+            <article class="w-card w-card--pad w-line">
+              <div class="w-img w-img--1x1" data-label="foto"></div>
+              <div class="w-line-body">
+                <b>Kondensator 100&nbsp;nF 50&nbsp;V</b>
+                <span class="w-code">SKU 4711-22</span>
+                <div class="w-spread" style="margin-top:var(--sp-2)">
+                  <div class="w-stepper">
+                    <button aria-label="Zmniejsz ilość" disabled><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output>100</output>
+                    <button aria-label="Zwiększ ilość"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="w-price">12,00 zł</span>
+                </div>
+              </div>
+            </article>
+            <article class="w-card w-card--pad w-line">
+              <div class="w-img w-img--1x1" data-label="foto"></div>
+              <div class="w-line-body">
+                <b>Kondensator 10&nbsp;µF 25&nbsp;V</b>
+                <span class="w-code">SKU 4711-30</span>
+                <div class="w-spread" style="margin-top:var(--sp-2)">
+                  <div class="w-stepper">
+                    <button aria-label="Zmniejsz ilość"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                    <output>500</output>
+                    <button aria-label="Zwiększ ilość"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                  </div>
+                  <span class="w-price">240,00 zł</span>
+                </div>
+              </div>
+            </article>
+            <label class="w-fieldset">
+              <span class="w-fieldlabel">Kod rabatowy</span>
+              <input class="w-field ok" value="B2B10" aria-describedby="promo-ok">
+              <span class="w-fieldmsg" id="promo-ok"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Rabat 10% naliczony</span>
+            </label>
+            <div class="w-card w-card--pad w-sum">
+              <div class="w-spread"><span>Wartość netto</span><span>252,00 zł</span></div>
+              <div class="w-spread"><span>Rabat B2B10</span><span>−25,20 zł</span></div>
+              <div class="w-spread"><span>VAT 23%</span><span>52,16 zł</span></div>
+              <div class="w-spread"><span>Razem brutto</span><span>278,96 zł</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="w-ctabar">
+          <div><span class="w-price w-price--lg">278,96 zł</span><span class="w-price-unit">brutto</span></div>
+          <button class="w-btn w-btn--primary">Do dostawy</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-step">Tap: Do dostawy</div>
+
+    <!-- 04b Dostawa · błąd -->
+    <div class="w-shot">
+      <div class="w-shot-label"><b>04b · Dostawa</b> 390 · błąd</div>
+      <div class="w-frame">
+        <div class="w-screen w-screen--cta">
+          <div class="w-topbar">
+            <button class="w-iconbtn" aria-label="Zamknij"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <div class="w-progress" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="2" aria-label="Krok 2 z 3"><div class="w-progress-fill" style="width:66%"></div></div>
+            <span class="w-topcount">2/3</span>
+          </div>
+          <div class="w-pagehead" style="margin:var(--sp-3) 0 0">
+            <h1 class="w-title">Dostawa</h1>
+          </div>
+          <p class="w-label">Sposób dostawy</p>
+          <div class="w-choices" role="radiogroup" aria-label="Sposób dostawy">
+            <button class="w-choice on" role="radio" aria-checked="true"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Kurier<small>24 h · 19,90 zł</small></button>
+            <button class="w-choice" role="radio" aria-checked="false"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg>Paczkomat<small>24–48 h · 12,90 zł</small></button>
+            <button class="w-choice" role="radio" aria-checked="false"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6h-6v6H4z"/></svg>Odbiór osobisty<small>Kraków · 0 zł</small></button>
+            <div class="w-anno-at" style="display:grid">
+              <span class="w-anno">4</span>
+              <button class="w-choice" role="radio" aria-checked="false"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Paleta<small><span class="w-tbd">TBD</span></small></button>
+            </div>
+          </div>
+          <p class="w-label">Adres dostawy</p>
+          <div class="w-stack">
+            <div class="w-banner w-banner--error" role="alert">
+              <svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.2v.1"/></svg>
+              <div><b>Sprawdź adres</b>Jedno pole wymaga poprawki.</div>
+            </div>
+            <label class="w-fieldset">
+              <span class="w-fieldlabel">Ulica i&nbsp;numer</span>
+              <input class="w-field" value="ul. Przemysłowa 12">
+            </label>
+            <div class="w-hstack" style="align-items:flex-start;gap:var(--sp-3)">
+              <label class="w-fieldset w-anno-at w-anno-at--r" style="flex:0 0 132px">
+                <span class="w-anno">5</span>
+                <span class="w-fieldlabel">Kod pocztowy</span>
+                <input class="w-field no" value="3011" aria-invalid="true" aria-describedby="zip-err">
+                <span class="w-fieldmsg w-fieldmsg--no" id="zip-err"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.2v.1"/></svg>Format 00-000</span>
+              </label>
+              <label class="w-fieldset" style="flex:1">
+                <span class="w-fieldlabel">Miasto</span>
+                <input class="w-field" value="Kraków">
+              </label>
+            </div>
+            <label class="w-fieldset">
+              <span class="w-fieldlabel">Kraj</span>
+              <span class="w-select">
+                <select class="w-field"><option>Polska</option></select>
+                <svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </span>
+            </label>
+            <div class="w-card w-list">
+              <button class="w-check on" aria-pressed="true"><span class="w-box"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="w-row-txt"><b>Faktura VAT na firmę</b></span></button>
+              <button class="w-check" aria-pressed="false"><span class="w-box"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="w-row-txt"><b>Inny adres do faktury</b></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="w-ctabar">
+          <button class="w-btn w-btn--primary">Dalej: płatność</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-step">Płaci → potwierdzenie</div>
+
+    <!-- 05 Potwierdzenie -->
+    <div class="w-shot">
+      <div class="w-shot-label"><b>05 · Potwierdzenie</b> 390</div>
+      <div class="w-frame">
+        <div class="w-screen" style="padding-top:var(--sp-10)">
+          <div class="w-result">
+            <div class="w-result-ico"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+            <h1 class="w-h2">Zamówienie przyjęte</h1>
+            <p>Potwierdzenie i&nbsp;fakturę wyślemy na adres zakupy@firma.pl.</p>
+            <div style="margin:0 0 var(--sp-5)"><button class="w-copy" aria-label="Nr zamówienia ZK/2026/10/0481, skopiuj"><span class="w-copy-tag">NR</span><span class="w-mono">ZK/2026/10/0481</span></button></div>
+            <button class="w-btn w-btn--primary w-btn--block">Śledź przesyłkę</button>
+            <button class="w-btn w-btn--secondary w-btn--block">Wróć do sklepu</button>
+          </div>
+        </div>
+        <div class="w-toast w-toast--low" role="status">Skopiowano numer zamówienia</div>
+      </div>
+    </div>
+
+    <ol class="w-notes" aria-label="Adnotacje">
+      <li><span class="w-anno">1</span><span><b>Szybkie filtry.</b> Przewijane poziomo, licznik to liczba produktów. Pełne filtry pod przyciskiem „Filtry” (01a).</span></li>
+      <li><span class="w-anno">2</span><span><b>Ceny progowe.</b> Aktualny próg wyróżniony po wyborze ilości? <span class="w-tbd">TBD</span></span></li>
+      <li><span class="w-anno">3</span><span><b>Stan magazynowy.</b> Banner pojawia się, gdy ilość w&nbsp;koszyku &gt; stan. Zamówienie dzielimy na dwie wysyłki.</span></li>
+      <li><span class="w-anno">4</span><span><b>Paleta.</b> Czy pokazujemy przy małych zamówieniach? Decyzja logistyki.</span></li>
+      <li><span class="w-anno">5</span><span><b>Walidacja kodu.</b> Po opuszczeniu pola, komunikat pod polem + banner u&nbsp;góry sekcji.</span></li>
+    </ol>
+  </div>
+
+  <!-- ================= STANY · MOBILE + DESKTOP ================= -->
+  <div class="w-flow">
+
+    <div class="w-shot">
+      <div class="w-shot-label"><b>01a · Lista produktów</b> 390 · filtry</div>
+      <div class="w-frame">
+        <div class="w-screen">
+          <div class="w-pagehead"><h1 class="w-title">Kondensatory</h1></div>
+          <div class="w-grid">
+            <div class="w-card w-tile"><div class="w-img w-img--1x1"></div><div class="w-tile-body"><div class="w-lines w-lines--sm"><i></i><i></i></div></div></div>
+            <div class="w-card w-tile"><div class="w-img w-img--1x1"></div><div class="w-tile-body"><div class="w-lines w-lines--sm"><i></i><i></i></div></div></div>
+          </div>
+        </div>
+        <div class="w-scrim"></div>
+        <div class="w-sheet" role="dialog" aria-modal="true" aria-labelledby="flt-h">
+          <div class="w-spread" style="margin-bottom:var(--sp-2)">
+            <h2 class="w-h2" id="flt-h">Filtry</h2>
+            <button class="w-btn w-btn--ghost" style="margin-right:calc(-1 * var(--sp-3))">Wyczyść</button>
+          </div>
+          <p class="w-label" style="margin-top:var(--sp-2)">Obudowa</p>
+          <div class="w-card w-list" style="box-shadow:none;background:var(--surface-sunken)">
+            <button class="w-check on" role="radio" aria-checked="true"><span class="w-box w-box--radio"></span><span class="w-row-txt"><b>0805</b></span><span class="w-count">64</span></button>
+            <button class="w-check" role="radio" aria-checked="false"><span class="w-box w-box--radio"></span><span class="w-row-txt"><b>0603</b></span><span class="w-count">41</span></button>
+            <button class="w-check" role="radio" aria-checked="false"><span class="w-box w-box--radio"></span><span class="w-row-txt"><b>THT</b></span><span class="w-count">15</span></button>
+          </div>
+          <p class="w-label">Dostępność</p>
+          <div class="w-wrap" style="margin-bottom:var(--sp-6)">
+            <button class="w-chip on">W magazynie</button>
+            <button class="w-chip">Na zamówienie</button>
+          </div>
+          <button class="w-btn w-btn--primary w-btn--block">Pokaż 64 produkty</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-shot">
+      <div class="w-shot-label"><b>03a · Koszyk</b> 390 · usuwanie</div>
+      <div class="w-frame">
+        <div class="w-appbar"><span style="width:44px"></span><span class="w-appbar-title">Koszyk</span><span style="width:44px"></span></div>
+        <div class="w-screen"><div class="w-stack">
+          <div class="w-card w-card--pad"><div class="w-lines"><i></i><i></i></div></div>
+          <div class="w-card w-card--pad"><div class="w-lines"><i></i><i></i></div></div>
+        </div></div>
+        <div class="w-scrim"></div>
+        <div class="w-dialog" role="dialog" aria-modal="true" aria-labelledby="del-h">
+          <h2 class="w-h2" id="del-h">Usunąć produkt z&nbsp;koszyka?</h2>
+          <p class="w-desc" style="margin:var(--sp-2) 0 var(--sp-5);color:var(--text-2)">Kondensator 10&nbsp;µF 25&nbsp;V, 500 szt.</p>
+          <div class="w-actpair">
+            <button class="w-btn w-btn--secondary">Anuluj</button>
+            <button class="w-btn w-btn--danger"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Usuń</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-shot">
+      <div class="w-shot-label"><b>02 · Karta produktu</b> 1280</div>
+      <div class="w-frame w-frame--d">
+        <header class="w-deskbar">
+          <div class="w-img" data-label="logo" style="width:120px;aspect-ratio:3/1;border-radius:var(--r-sm)"></div>
+          <label class="w-search">
+            <svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input class="w-field" type="search" placeholder="Szukaj produktu, SKU, producenta" aria-label="Szukaj">
+          </label>
+          <span style="flex:1"></span>
+          <button class="w-iconbtn" aria-label="Konto"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg></button>
+          <button class="w-iconbtn" aria-label="Koszyk, 2 produkty"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.5l2.2 11h10.6L20.5 8H6.6"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg><span class="w-badge">2</span></button>
+        </header>
+        <div class="w-screen">
+          <p class="w-crumbs">Elementy pasywne / Kondensatory / Ceramiczne</p>
+          <div class="w-pdp">
+            <div class="w-img w-img--1x1" data-label="Zdjęcie produktu · galeria"></div>
+            <div class="w-stack w-stack--lg">
+              <div class="w-stack">
+                <div class="w-hstack"><span class="w-tag w-tag--dot w-lv3">W magazynie</span><span class="w-tag">Wysyłka 24 h</span><span class="w-tag w-tag--solid">−20%</span></div>
+                <h1 class="w-title">Kondensator ceramiczny 100&nbsp;nF 50&nbsp;V X7R 0805</h1>
+                <div><button class="w-copy" aria-label="SKU 4711-22, skopiuj"><span class="w-copy-tag">SKU</span><span class="w-mono">4711-22</span></button></div>
+              </div>
+              <div><span class="w-price w-price--lg">0,12 zł</span><span class="w-price-old"><span class="w-sr">Poprzednia cena:</span>0,15 zł</span><span class="w-price-unit">netto za szt. · od 100 szt.</span></div>
+              <div class="w-callout" style="margin:0">
+                <span class="w-callout-lab">Ceny progowe, netto</span>
+                <div class="w-tiers">
+                  <div class="w-spread"><span>od 100 szt.</span><span>0,12 zł</span></div>
+                  <div class="w-spread"><span>od 1&nbsp;000 szt.</span><span>0,09 zł</span></div>
+                  <div class="w-spread"><span>od 5&nbsp;000 szt.</span><span>0,07 zł</span></div>
+                </div>
+              </div>
+              <div class="w-hstack" style="gap:var(--sp-3)">
+                <div class="w-stepper">
+                  <button aria-label="Zmniejsz ilość" disabled><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                  <output>100</output>
+                  <button aria-label="Zwiększ ilość"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                </div>
+                <button class="w-btn w-btn--primary" style="flex:1">Dodaj do koszyka</button>
+              </div>
+              <div class="w-seg w-seg--lg" role="tablist" aria-label="Informacje o produkcie">
+                <button role="tab" aria-selected="false">Opis</button>
+                <button role="tab" aria-selected="true" class="on">Specyfikacja</button>
+                <button role="tab" aria-selected="false">Pliki</button>
+              </div>
+              <div class="w-card w-list">
+                <div class="w-datarow"><span class="w-dataname">Pojemność</span><span style="flex:1">100 nF</span></div>
+                <div class="w-datarow"><span class="w-dataname">Napięcie</span><span style="flex:1">50 V</span></div>
+                <div class="w-datarow"><span class="w-dataname">Dielektryk</span><span style="flex:1">X7R</span></div>
+                <div class="w-datarow"><span class="w-dataname">Obudowa</span><span style="flex:1">0805</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= GALERIA KOMPONENTÓW ================= -->
+  <div class="w-flow">
+    <div class="w-shot">
+      <div class="w-shot-label"><b>Komponenty</b> 1280 · galeria</div>
+      <div class="w-frame w-frame--d w-frame--fit">
+        <div class="w-screen">
+
+          <section class="w-sec">
+            <div class="w-sechead"><span class="w-secnum">3.1</span><h2 class="w-sectitle">Skala szarości</h2><span class="w-secaside">--g-0 … --g-1000</span></div>
+            <div class="w-swatches">
+              <div class="w-swatch"><i style="background:var(--g-0)"></i>0</div>
+              <div class="w-swatch"><i style="background:var(--g-50)"></i>50</div>
+              <div class="w-swatch"><i style="background:var(--g-100)"></i>100</div>
+              <div class="w-swatch"><i style="background:var(--g-150)"></i>150</div>
+              <div class="w-swatch"><i style="background:var(--g-200)"></i>200</div>
+              <div class="w-swatch"><i style="background:var(--g-300)"></i>300</div>
+              <div class="w-swatch"><i style="background:var(--g-400)"></i>400</div>
+              <div class="w-swatch"><i style="background:var(--g-500)"></i>500</div>
+              <div class="w-swatch"><i style="background:var(--g-600)"></i>600</div>
+              <div class="w-swatch"><i style="background:var(--g-700)"></i>700</div>
+              <div class="w-swatch"><i style="background:var(--g-800)"></i>800</div>
+              <div class="w-swatch"><i style="background:var(--g-900)"></i>900</div>
+              <div class="w-swatch"><i style="background:var(--g-1000)"></i>1000</div>
+            </div>
+          </section>
+
+          <div class="w-gallery">
+
+            <div class="w-card w-card--pad w-spec">
+              <p class="w-label">Przyciski · .w-btn</p>
+              <button class="w-btn w-btn--primary w-btn--block">Primary</button>
+              <button class="w-btn w-btn--secondary w-btn--block">Secondary</button>
+              <div class="w-wrap">
+                <button class="w-btn w-btn--ghost">Ghost</button>
+                <button class="w-btn w-btn--danger"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Usuń</button>
+                <button class="w-btn w-btn--primary" disabled>Disabled</button>
+              </div>
+              <div class="w-wrap">
+                <button class="w-btn w-btn--primary w-btn--sm">Small</button>
+                <button class="w-btn w-btn--secondary w-btn--sm">Small</button>
+                <button class="w-link">Pokaż więcej</button>
+              </div>
+            </div>
+
+            <div class="w-card w-card--pad w-spec">
+              <p class="w-label">Pola · .w-field</p>
+              <input class="w-field" placeholder="Placeholder" aria-label="Domyślne">
+              <input class="w-field w-spec-focus" value="Focus" aria-label="Focus">
+              <input class="w-field ok" value="Ok · B2B10" aria-label="Ok">
+              <input class="w-field no" value="Błąd · 3011" aria-label="Błąd" aria-invalid="true">
+              <input class="w-field" value="Disabled" disabled aria-label="Disabled">
+            </div>
+
+            <div class="w-card w-card--pad w-spec">
+              <p class="w-label">Tagi · segment · kopiowanie</p>
+              <div class="w-wrap">
+                <span class="w-tag">Neutralny</span>
+                <span class="w-tag w-tag--accent">Accent</span>
+                <span class="w-tag w-tag--solid">−20%</span>
+              </div>
+              <div class="w-wrap">
+                <span class="w-tag w-tag--dot w-lv0">Nowe</span>
+                <span class="w-tag w-tag--dot w-lv1">Poziom 1</span>
+                <span class="w-tag w-tag--dot w-lv2">Poziom 2</span>
+                <span class="w-tag w-tag--dot w-lv3">Pełny</span>
+              </div>
+              <div class="w-seg" role="group" aria-label="Ceny"><button class="on" aria-pressed="true">NETTO</button><button aria-pressed="false">BRUTTO</button></div>
+              <div class="w-seg w-seg--lg" role="tablist" aria-label="Widok"><button role="tab" aria-selected="true" class="on">Siatka</button><button role="tab" aria-selected="false">Lista</button></div>
+              <div><button class="w-copy" aria-label="Kod PROMO10, skopiuj"><span class="w-copy-tag">KOD</span><span class="w-mono">PROMO10</span></button></div>
+            </div>
+
+            <div class="w-card w-card--pad w-spec">
+              <p class="w-label">Wiersze · .w-row</p>
+              <button class="w-row"><span class="w-ico w-ico--solid"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></span><span class="w-row-txt"><b>Moje zamówienia</b><small>2 w&nbsp;realizacji</small></span><span class="w-num">2</span></button>
+              <button class="w-row"><span class="w-ico"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.2-3.8 4-5.5 7.5-5.5s6.3 1.7 7.5 5.5"/></svg></span><span class="w-row-txt"><b>Dane firmy</b><small>NIP, adresy, osoby</small></span><svg class="w-i w-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+              <button class="w-row" disabled><span class="w-ico"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><span class="w-row-txt"><b>Limit kredytowy</b><small>Dostępny po 3&nbsp;zamówieniach</small></span></button>
+            </div>
+
+            <div class="w-card w-card--pad w-spec">
+              <p class="w-label">Banery · toast</p>
+              <div class="w-banner"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.2v.1"/></svg><div><b>Ostrzeżenie</b>Zostały 3 sztuki.</div></div>
+              <div class="w-banner w-banner--error"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.2v.1"/></svg><div><b>Błąd</b>Płatność odrzucona.</div></div>
+              <div class="w-banner w-banner--info"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.8v.1"/></svg><div><b>Informacja</b>Dostawa w&nbsp;24 h.</div></div>
+              <div><span class="w-toast w-spec-static">Skopiowano</span></div>
+            </div>
+
+            <div class="w-card w-card--pad w-spec">
+              <p class="w-label">Wybór · .w-check · .w-choice</p>
+              <div class="w-card w-list" style="box-shadow:none;background:var(--surface-sunken)">
+                <button class="w-check on" aria-pressed="true"><span class="w-box"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span class="w-row-txt"><b>Checkbox on</b></span></button>
+                <button class="w-check" role="radio" aria-checked="false"><span class="w-box w-box--radio"></span><span class="w-row-txt"><b>Radio off</b></span></button>
+                <button class="w-check on" role="radio" aria-checked="true"><span class="w-box w-box--radio"></span><span class="w-row-txt"><b>Radio on</b></span></button>
+              </div>
+              <div class="w-choices">
+                <button class="w-choice on">Wybrane<small>.on</small></button>
+                <button class="w-choice no">Błąd<small>.no</small></button>
+              </div>
+            </div>
+
+            <div class="w-card w-card--pad w-spec">
+              <p class="w-label">Dane · .w-progress · .w-bar · .w-stat</p>
+              <div class="w-progress"><div class="w-progress-fill" style="width:40%"></div></div>
+              <div>
+                <div class="w-datarow"><span class="w-dataname">Kondensatory</span><div class="w-bar" role="img" aria-label="Pełny 30, poziom 2 20, poziom 1 15"><i class="w-bar-f3" style="width:30%"></i><i class="w-bar-f2" style="width:20%"></i><i class="w-bar-f1" style="width:15%"></i></div><span class="w-dataval">65%</span></div>
+                <div class="w-datarow"><span class="w-dataname">Rezystory</span><div class="w-bar" role="img" aria-label="Pełny 10, poziom 2 15, poziom 1 25"><i class="w-bar-f3" style="width:10%"></i><i class="w-bar-f2" style="width:15%"></i><i class="w-bar-f1" style="width:25%"></i></div><span class="w-dataval">50%</span></div>
+              </div>
+              <div class="w-stats" style="grid-template-columns:repeat(2,1fr)">
+                <div class="w-card w-stat w-lv0" style="box-shadow:none;background:var(--surface-sunken)"><b>42</b><span>Nowe</span></div>
+                <div class="w-card w-stat w-lv3" style="box-shadow:none;background:var(--surface-sunken)"><b>118</b><span>Pełne</span></div>
+              </div>
+            </div>
+
+            <div class="w-card w-card--pad w-spec">
+              <p class="w-label">Placeholdery · warstwa wireframe</p>
+              <div class="w-hstack" style="align-items:flex-end;gap:var(--sp-3)">
+                <div class="w-img w-img--1x1" data-label="1:1" style="width:72px"></div>
+                <div class="w-img w-img--3x4" data-label="3:4" style="width:72px"></div>
+                <div class="w-img w-img--16x9" data-label="16:9" style="flex:1"></div>
+              </div>
+              <div class="w-lines"><i></i><i></i><i></i></div>
+              <div class="w-hstack"><span class="w-avatar w-avatar--sm"></span><span class="w-avatar"></span><span class="w-avatar w-avatar--lg"></span><span class="w-tbd">TBD</span></div>
+              <div class="w-hstack" style="gap:var(--sp-4)">
+                <span class="w-hstack"><span class="w-anno">7</span><span class="w-count">adnotacja</span></span>
+                <span class="w-hstack"><span class="w-iconbtn" style="color:var(--text)"><svg class="w-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2.5l2.2 11h10.6L20.5 8H6.6"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg><span class="w-badge">2</span></span><span class="w-count">licznik</span></span>
+              </div>
+            </div>
+
+            <div class="w-card w-card--pad w-spec">
+              <p class="w-label">Studzienka · .w-well · .w-stage</p>
+              <div class="w-stage">Mapa paczkomatów<br>(widżet zewnętrzny)</div>
+              <div class="w-callout" style="margin:0"><span class="w-callout-lab">Wstawka · .w-callout</span><p>Jedno zdanie wyjaśnienia na szarym tle.</p></div>
+            </div>
+
+          </div>
+
+          <section class="w-sec" style="margin-top:var(--sp-6)">
+            <div class="w-sechead"><span class="w-secnum">4.x</span><h2 class="w-sectitle">Karta „tekst + media” · .w-split</h2></div>
+            <article class="w-split">
+              <div class="w-split-body">
+                <span class="w-code">B2B · 01</span>
+                <h3 class="w-h2" style="margin:var(--sp-1) 0 var(--sp-2)">Ceny progowe od pierwszej sztuki</h3>
+                <div class="w-lines"><i></i><i></i><i></i></div>
+                <button class="w-btn w-btn--secondary w-btn--sm" style="margin-top:var(--sp-3)">Zobacz cennik</button>
+              </div>
+              <div class="w-well">Ilustracja albo wykres <span class="w-tbd">TBD</span></div>
+            </article>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>

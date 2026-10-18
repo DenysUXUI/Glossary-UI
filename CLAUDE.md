@@ -21,6 +21,8 @@
 | `docs/research-02-tokeny-typografia.md` | Словник для нових записів L-17…L-36 і категорії M (43 терміни з джерелами) |
 | `docs/research-02-sources/` | Сирі перевірені таблиці: EN-цитати, PL-відповідники, код-рев'ю |
 | `tools/check-data.js` · `tools/engine.js` · `tools/screens.js` | Перевірка даних · стенд рушія в node · скриншоти 390 px і зони дотику |
+| `docs/wireframe-design-system.md` | **Окрема** ДС для вайрфреймів (сіра шкала, префікс `w-`) — дзеркало v3 для інших проєктів. До застосунку не застосовується |
+| `docs/wireframe-ds-specimen.html` · `tools/wireframe-specimen.js` | Зразок вайрфрейм-ДС · перезбірка його CSS з документа |
 
 ## Структура коду в `index.html`
 
