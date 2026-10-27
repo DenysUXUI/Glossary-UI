@@ -193,6 +193,7 @@ a{color:var(--accent)}
   color:var(--text-2);background:var(--surface-muted);border-radius:var(--r-full);
 }
 .l-tag--accent{color:var(--accent);background:var(--accent-soft)}
+.l-tag--danger{color:var(--danger-text);background:var(--danger-soft)}
 .l-tag--dot::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--lv)}
 .l-lv0{--lv:var(--lv-0)} .l-lv1{--lv:var(--lv-1-fill)} .l-lv2{--lv:var(--lv-2-fill)} .l-lv3{--lv:var(--lv-3)}
 
@@ -244,7 +245,7 @@ a{color:var(--accent)}
 .l-exlab{display:block;margin-bottom:2px;font:600 var(--fs-caption)/var(--lh-ui) var(--sans);color:var(--text-2)}
 .l-ex p{margin:0;font-size:var(--fs-body);line-height:var(--lh-read)}
 .l-ex b{font-weight:600;color:var(--accent)}
-body.l-swap .l-txt{animation:l-fade var(--dur) var(--ease)}
+body.l-swap :is(.l-txt,.l-optdesc){animation:l-fade var(--dur) var(--ease)}
 @keyframes l-fade{from{opacity:.3}to{opacity:1}}
 /* позначка «цією мовою ще нема, показано UA» */
 .l-soon{
@@ -923,7 +924,7 @@ pre.code2 .s{color:#D9B980}
   .l-lang button:not(.on):hover{color:var(--text)}
   .l-tabbar button:not(.on):hover{color:var(--text)}
   .l-quit:hover{background:var(--surface-muted)}
-  .l-optdemo:hover{border-color:var(--border-strong)}
+  .l-opts:not(.l-answered) .l-optdemo:hover{border-color:var(--border-strong)}
 }
 /* відгук на дотик — замість hover */
 .l-btn--primary:not([disabled]):active{background:var(--accent-hover)}
@@ -934,7 +935,7 @@ pre.code2 .s{color:#D9B980}
 .l-chip:not(.on):active{color:var(--accent)}
 .l-pl:active{background:var(--accent-soft-hover)}
 .l-quit:active{background:var(--surface-muted)}
-.l-optdemo:active{background:var(--accent-soft)}
+.l-opts:not(.l-answered) .l-optdemo:active .l-optview{background:var(--accent-soft)}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
@@ -1163,31 +1164,49 @@ pre.code2 .s{color:#D9B980}
 .l-act-r.arm{background:var(--danger);border-color:var(--danger);color:var(--on-accent)}
 .l-next{padding:var(--sp-4) var(--sp-5) var(--sp-5)}
 
-/* розрізнення: два демо на вибір */
-.l-opts{display:grid;gap:var(--sp-2);padding:var(--sp-4) var(--sp-5) var(--sp-5)}
-.l-opts.two{grid-template-columns:1fr 1fr}
+/* розрізнення: варіанти стовпцем. Після відповіді під кожним демо з'являється
+   підпис — назва, PL і перше речення пояснення, тож текст стоїть біля свого
+   демо і нумерація не потрібна. Демо в повну ширину — масштаб .75 замість .62 */
+.l-opts{display:grid;gap:var(--sp-2);padding:var(--sp-3) var(--sp-5) 0}
 .l-optdemo{
-  position:relative;height:128px;overflow:hidden;padding:var(--sp-1);cursor:pointer;
-  background:var(--surface-sunken);border:1px solid var(--divider);border-radius:var(--r-md);
-  transition:border-color var(--dur-fast) var(--ease),background-color var(--dur-fast) var(--ease);
+  position:relative;overflow:hidden;cursor:pointer;
+  background:var(--surface);border:1px solid var(--divider);border-radius:var(--r-md);
+  transition:border-color var(--dur-fast) var(--ease);
 }
-.l-optdemo .inner{
-  transform:scale(.62);transform-origin:center center;
-  width:161%;height:161%;margin-left:-30.5%;margin-top:-30.5%;
+.l-optview{position:relative;height:120px;overflow:hidden;background:var(--surface-sunken);transition:background-color var(--dur-fast) var(--ease)}
+/* центр через translate: відсотковий margin-top рахується від ширини й зсував демо вгору */
+.l-optview .inner{
+  position:absolute;left:50%;top:50%;width:133.34%;height:133.34%;
+  transform:translate(-50%,-50%) scale(.75);
   display:flex;align-items:center;justify-content:center;pointer-events:none;
 }
 /* прозора кнопка поверх демо: демо з власними <button> не можна вкладати в <button> */
 .l-optpick{position:absolute;inset:0;width:100%;height:100%;
   background:none;border:0;padding:0;margin:0;cursor:pointer;border-radius:var(--r-md)}
-.l-optpick[disabled]{cursor:default}
 .l-optpick:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
-.l-optdemo.ok{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
-.l-optdemo.no{border-color:var(--danger);box-shadow:inset 0 0 0 2px var(--danger)}
-.l-fbk{padding:0 var(--sp-5) var(--sp-5);font-size:var(--fs-small);line-height:var(--lh-read);color:var(--text-2)}
-.l-fbk:empty{padding:0}
-.l-fbk b{color:var(--text)}
-.l-fbk .l-plin{color:var(--accent);font-weight:600}
-.l-fbk .l-next{padding:var(--sp-3) 0 0}
+.l-answered .l-optdemo{cursor:default}
+/* рамка стану — псевдоелементом поверх дітей: тінь самого блока ховається під їхнім тлом */
+.l-optdemo.ok,.l-optdemo.no{border-color:transparent}
+.l-optdemo.ok::after,.l-optdemo.no::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  box-shadow:inset 0 0 0 2px var(--accent);
+}
+.l-optdemo.no::after{box-shadow:inset 0 0 0 2px var(--danger)}
+.l-optcap{padding:var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-4);border-top:1px solid var(--divider)}
+.l-opthead{display:flex;align-items:flex-start;gap:var(--sp-2)}
+.l-optname{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 var(--sp-2)}
+.l-optname b{font:600 var(--fs-body)/var(--lh-ui) var(--sans);color:var(--text)}
+.l-optname .l-plin{font:600 var(--fs-small)/var(--lh-ui) var(--sans);color:var(--accent)}
+.l-optdesc{margin:var(--sp-1) 0 0;font-size:var(--fs-small);line-height:var(--lh-read);color:var(--text-2)}
+/* рядок над варіантами: до відповіді — підказка, після — вердикт і мова пояснень */
+.l-pairbar{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2) var(--sp-3);
+  min-height:32px;padding:var(--sp-2) var(--sp-5) 0;
+}
+.l-pairbar .l-hint{padding:0}
+.l-verdict{font:600 var(--fs-body)/var(--lh-ui) var(--sans)}
+.l-verdict.ok{color:var(--success-text)}
+.l-verdict.no{color:var(--danger-text)}
 
 /* кінець сесії */
 .l-done{
@@ -1225,7 +1244,6 @@ pre.code2 .s{color:#D9B980}
 .l-tools{display:flex;gap:var(--sp-2);flex-wrap:wrap}
 
 @media(max-width:520px){
-  .l-optdemo{height:112px}
   .l-stats{grid-template-columns:repeat(2,1fr)}
   .l-cpname{flex-basis:124px}
 }
@@ -3919,6 +3937,12 @@ function finish(e, ok){
 }
 
 /* ---------- розрізнення схожих ---------- */
+/* підпис варіанта після відповіді: назва, PL і стан — під своїм демо */
+function optCapHTML(o, tag){
+  return `<div class="l-optcap">
+    <div class="l-opthead"><span class="l-optname"><b lang="en">${esc(o.en)}</b><span class="l-plin" lang="pl">${esc(o.pl)}</span></span>${tag}</div>
+    ${shortHTML(o)}</div>`;
+}
 function cPair(){
   if(S.i >= S.sets.length) return renderDone();
   const set = S.sets[S.i].map(id => BY_ID[id]);
@@ -3927,21 +3951,30 @@ function cPair(){
   vLearn.innerHTML = shell(`
     <div class="l-prompt"><div class="l-big" lang="en">${esc(e.en)}</div>
       <div class="l-alt" lang="pl">${esc(e.pl)}</div></div>
-    <div class="l-hint">Który to? Te pojęcia najłatwiej pomylić.</div>
-    <div class="l-opts two">${opts.map((o,i)=>`<div class="l-optdemo" data-id="${o.id}"><div class="inner" inert>${uniq(o.d, "-o" + i)}</div><button type="button" class="l-optpick" aria-label="Wariant ${i+1}"></button></div>`).join("")}</div>
-    <div class="l-fbk" id="fbk" role="status"></div>`, "Co jest co?", "bez wpływu na postęp", S.i);
+    <div class="l-pairbar"><p class="l-hint" id="fbk" role="status">Który to? Te pojęcia najłatwiej pomylić.</p></div>
+    <div class="l-opts">${opts.map((o,i)=>`<div class="l-optdemo" data-id="${o.id}"><div class="l-optview"><div class="inner" inert>${uniq(o.d, "-o" + i)}</div></div><button type="button" class="l-optpick" aria-label="Wariant ${i+1}"></button></div>`).join("")}</div>
+    <div class="l-next" id="nxbox"></div>`, "Co jest co?", "bez wpływu na postęp", S.i);
   fixDemos(vLearn);
   bindQuit();
   const nodes = [].slice.call(vLearn.querySelectorAll(".l-optdemo"));
   nodes.forEach(n => n.querySelector(".l-optpick").onclick = () => {
     const ok = n.dataset.id === e.id;
-    nodes.forEach(x => { x.querySelector(".l-optpick").disabled = true;
-      if(x.dataset.id === e.id) x.classList.add("ok"); else if(x === n) x.classList.add("no"); });
     ok ? S.right++ : S.wrong++;
-    document.getElementById("fbk").innerHTML =
-      (ok ? "✓ Tak." : "✗ Nie.") + " " +
-      opts.map(o => `<b lang="en">${esc(o.en)}</b> · <span class="l-plin" lang="pl">${esc(o.pl)}</span> — <span lang="uk">${strip(o.ua).split(".")[0]}.</span>`).join("<br>") +
-      `<div class="l-next"><button class="l-btn l-btn--primary l-btn--block" id="nx">Dalej →</button></div>`;
+    vLearn.querySelector(".l-opts").classList.add("l-answered");
+    nodes.forEach((x, i) => {
+      const right = x.dataset.id === e.id;
+      if(right) x.classList.add("ok"); else if(x === n) x.classList.add("no");
+      /* кнопка вибору більше не потрібна: без неї читач екрана дійде до підпису */
+      x.querySelector(".l-optpick").remove();
+      x.insertAdjacentHTML("beforeend", optCapHTML(opts[i],
+        right ? `<span class="l-tag l-tag--accent">✓ Poprawny</span>`
+        : x === n ? `<span class="l-tag l-tag--danger">✗ Twój wybór</span>` : ""));
+    });
+    const fbk = document.getElementById("fbk");
+    fbk.className = "l-verdict " + (ok ? "ok" : "no");
+    fbk.textContent = ok ? "✓ Tak, dobrze" : "✗ Nie tym razem";
+    fbk.insertAdjacentHTML("afterend", langHTML());
+    document.getElementById("nxbox").innerHTML = `<button class="l-btn l-btn--primary l-btn--block" id="nx">Dalej →</button>`;
     document.getElementById("nx").onclick = () => { S.i++; renderCard(); };
     focusTo(document.getElementById("nx"));
   });
@@ -4070,6 +4103,13 @@ function txtHTML(e){
     ${x.note?`<p class="l-note" lang="${lg}">${x.note}</p>`:""}
     ${x.ex?`<div class="l-ex" lang="${lg}"><span class="l-exlab">${EXLAB[LANG]}</span><p>${x.ex}</p></div>`:""}`;
 }
+/* перше речення пояснення — підпис варіанта в «Co jest co?». Атрибут
+   data-lang-short — щоб setLang оновлював його разом з рештою текстів */
+function shortHTML(e){
+  const x = txtOf(e);
+  const lg = (LANG === "ua" || x.soon) ? "uk" : LANG;
+  return `<p class="l-optdesc" data-lang-short="${e.id}" lang="${lg}">${strip(x.t).split(/\.(?:\s|$)/)[0]}.${x.soon?`<span class="l-soon" lang="${LANG}">${SOON[LANG]}</span>`:""}</p>`;
+}
 function langHTML(){
   return `<span class="l-lang" role="group" aria-label="Język opisu">${
     LANGS.map(([k,lab])=>`<button type="button" data-l="${k}" class="${k===LANG?"on":""}" aria-pressed="${k===LANG}">${lab}</button>`).join("")
@@ -4087,6 +4127,10 @@ function setLang(l, keep){
   document.querySelectorAll("[data-lang-id]").forEach(host => {
     const e = BY_ID[host.dataset.langId], box = host.querySelector(".l-txt");
     if(e && box) box.innerHTML = txtHTML(e);
+  });
+  document.querySelectorAll("[data-lang-short]").forEach(x => {
+    const e = BY_ID[x.dataset.langShort];
+    if(e) x.outerHTML = shortHTML(e);
   });
   document.querySelectorAll(".l-lang button").forEach(x => {
     const on = x.dataset.l === LANG;
